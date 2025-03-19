@@ -9,19 +9,19 @@
 
     …or through the VM’s menu…
 
-    ![Untitled](images\Untitled.png){ width="50%" }
+    ![Untitled](img\Untitled.png){ width="50%" }
     ///caption
     Menu
     ///
 
     If this is your first time opening Burp, there are some extra clicks for you to do…
 
-    ![Untitled](images\Untitled%201.png){ width="50%" }
+    ![Untitled](img\Untitled%201.png){ width="50%" }
     ///caption
     JRE Warning
     ///
 
-    ![Untitled](images\Untitled%202.png){ width="50%" }
+    ![Untitled](img\Untitled%202.png){ width="50%" }
     ///caption
     T&C
     ///
@@ -51,60 +51,60 @@ Burp Suite is a powerful web testing tool that functions as an interception prox
 
 First things first. Let’s create a new temporary Burp project by following the screenshots below.
 
-![Untitled](images\Untitled%203.png){ width="50%" }
+![Untitled](img\Untitled%203.png){ width="50%" }
 
-![Untitled](images\Untitled%204.png){ width="50%" }
+![Untitled](img\Untitled%204.png){ width="50%" }
 
 1. Burp has an awesome embedded browser so we can skip the hassle of importing CA certificates and get right to hacking!
     
     Click on the “Proxy” tab → “Intercept” sub-tab → “Open Browser” button
     
-    ![Untitled](images\Untitled%205.png){ width="50%" }
+    ![Untitled](img\Untitled%205.png){ width="50%" }
     
 2. Open `http://127.0.0.1:42000` in the browser window.
 3. Make sure “Intercept” is off
     
-    ![Untitled](images\Untitled%206.png){ width="50%" }
+    ![Untitled](img\Untitled%206.png){ width="50%" }
     
 
 ### The Tour de Tabs
 
 Let’s explore some of the functionality within Burp’s tabs.
 
-![Untitled](images\Untitled%207.png){ width="50%" }
+![Untitled](img\Untitled%207.png){ width="50%" }
 
 #### Settings
 
 > You can access most of Burp Suite's settings via the **Settings** dialog. To access this dialog, click **Settings** on the top menu.
 > 
 
-![Untitled](images\Untitled%208.png){ width="50%" }
+![Untitled](img\Untitled%208.png){ width="50%" }
 
 There are two categories of settings “User” and “Project” level.
 
-![Expanded Settings Pane](images\Untitled%209.png){ width="50%" }
+![Expanded Settings Pane](img\Untitled%209.png){ width="50%" }
 
 Expanded Settings Pane
 
 There are WAY too many settings to discuss in the class but some of the key ones are shown below. Starting with the Proxy settings.
 
-![Untitled](images\Untitled%2010.png){ width="50%" }
+![Untitled](img\Untitled%2010.png){ width="50%" }
 
 Everything from Proxy listeners, Interception, and Match & Replace rules can be set here.
 
 Find the “Default Proxy Interception State” setting to get rid of the pesky auto-intercept when you first start Burp.
 
-![Stop the auto-intercepting](images\Untitled%2011.png){ width="50%" }
+![Stop the auto-intercepting](img\Untitled%2011.png){ width="50%" }
 
 Stop the auto-intercepting
 
 Also explore the different options available on the proxy listeners.
 
-![Listener Editing](images\Untitled%2012.png){ width="50%" }
+![Listener Editing](img\Untitled%2012.png){ width="50%" }
 
 Listener Editing
 
-![Interface Binding](images\Untitled%2013.png){ width="50%" }
+![Interface Binding](img\Untitled%2013.png){ width="50%" }
 
 Interface Binding
 
@@ -117,13 +117,13 @@ This controls which interface and port the Burp interception proxy is available 
 
 This is where you can see all the traffic flowing through Burp.
 
-![Proxy Traffic](images\Untitled%2014.png){ width="50%" }
+![Proxy Traffic](img\Untitled%2014.png){ width="50%" }
 
 Proxy Traffic
 
 It can become overwhelming at first, but don’t worry. It has robust filter settings to help focus your attention. Like the “Show only in-scope items” option.
 
-![Filtering In-Scope Only](images\Untitled%2015.png){ width="50%" }
+![Filtering In-Scope Only](img\Untitled%2015.png){ width="50%" }
 
 Filtering In-Scope Only
 
@@ -142,11 +142,11 @@ We haven’t set a scope yet. So don’t worry about that just now, but REMEMBER
 
 You can send any request from the Proxy tab to the Repeater by right clicking on that request and selecting “Send to Repeater”.
 
-![Untitled](images\Untitled%2016.png){ width="50%" }
+![Untitled](img\Untitled%2016.png){ width="50%" }
 
 Then select the “Repeater” tab in the GUI. From there you can replay requests by clicking the “Send” button
 
-![Untitled](images\Untitled%2017.png){ width="50%" }
+![Untitled](img\Untitled%2017.png){ width="50%" }
 
  AND you can make manual modifications to the requests to see how that changes the web server’s responses. Like adding or removing headers, and manipulating request body parameters
 
@@ -159,17 +159,17 @@ This is where the fun begins…
 
 Wherever there’s a request in Burp, you can also right click and select “Send to Intruder”.
 
-![Untitled](images\Untitled%2018.png){ width="50%" }
+![Untitled](img\Untitled%2018.png){ width="50%" }
 
 From the Intruder tab, you can define injection points or “payload markers”, as well as the “Attack Type”.
 
-![Untitled](images\Untitled%2019.png){ width="50%" }
+![Untitled](img\Untitled%2019.png){ width="50%" }
 
 Choose a request from the Proxy tab, send it to Intruder and click the “Auto” payload position button shown above.
 
 This will select all available payload positions for you.
 
-![Untitled](images\Untitled%2020.png){ width="50%" }
+![Untitled](img\Untitled%2020.png){ width="50%" }
 
 Some explanations for these various settings are listed below.
 
@@ -182,11 +182,11 @@ Some explanations for these various settings are listed below.
 
 Your choice of “Attack Type” will have the biggest impact on you target. There are four to choose from.
 
-![Untitled](images\Untitled%2021.png){ width="50%" }
+![Untitled](img\Untitled%2021.png){ width="50%" }
 
 Once your finished defining your payload positions and selected an attack type, it’s time to choose you specific payloads.
 
-![Untitled](images\Untitled%2022.png){ width="50%" }
+![Untitled](img\Untitled%2022.png){ width="50%" }
 
 ???+ warning
     This is, unfortunately, where the free Community Edition starts to fail us. It doesn’t include Burp’s payload lists so you have to find your own. 
@@ -200,7 +200,7 @@ Once your finished defining your payload positions and selected an attack type, 
 
 You can do a lot from the but the most important is to set your scope. You can do this by right clicking on a “target” and selecting “Add to scope”.
 
-![Untitled](images\Untitled%2023.png){ width="50%" }
+![Untitled](img\Untitled%2023.png){ width="50%" }
 ///caption
 Add To Scope
 ///
@@ -219,11 +219,11 @@ Now you can use that filter option we talked about in the Proxy tab to focus you
 
 You can open Inspector from the collapsed right pane next to any request/response pane.
 
-![Untitled](images\Untitled%2024.png){ width="50%" }
+![Untitled](img\Untitled%2024.png){ width="50%" }
 
 This will show the below dialog which “inspects” the request/response headers and various details.
 
-![Untitled](images\Untitled%2025.png){ width="50%" }
+![Untitled](img\Untitled%2025.png){ width="50%" }
 
 #### Collaborator (Pro Version Only)
 
@@ -252,7 +252,7 @@ This will show the below dialog which “inspects” the request/response header
 > Burp Clickbandit makes it quicker and easier to test for clickjacking vulnerabilities. This is when an attack overlays a frame on a decoy website to trick a user into clicking on actionable content. Clickbandit enables you to create an attack to confirm that this vulnerability can be successfully exploited. You use your browser to perform actions on a website, then Clickbandit creates an HTML file with a clickjacking overlay.
 > 
 
-![Untitled](images\Untitled%2026.png){ width="50%" }
+![Untitled](img\Untitled%2026.png){ width="50%" }
 
 Burp Clickbandit runs in your browser using JavaScript. It works on all modern browsers except for Microsoft IE and Edge. To run Burp Clickbandit, use the following steps:
 
@@ -270,7 +270,7 @@ Burp Clickbandit runs in your browser using JavaScript. It works on all modern b
 > - To compare similar requests that give rise to different application behavior.
 > - To compare responses when testing for blind SQL injection bugs using Boolean condition injection, to see whether injecting different conditions results in a relevant difference in responses.
 
-![Untitled](images\Untitled%2027.png){ width="50%" }
+![Untitled](img\Untitled%2027.png){ width="50%" }
 
 #### Decoder
 
@@ -301,7 +301,7 @@ Burp Clickbandit runs in your browser using JavaScript. It works on all modern b
 #### Explore JWTs
 Add the “JSON Web Tokens” extension to Burp and explore how it can make identifying and decoding JWTs easier.
 
-![JWTs](images\Untitled%2028.png){ width="50%" }
+![JWTs](img\Untitled%2028.png){ width="50%" }
 ///caption
 JWTs
 ///

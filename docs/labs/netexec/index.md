@@ -15,12 +15,12 @@ The results of SMB relay often land us SAM tables and credential material. The N
 netexec --help
 ```
 
-![First time use](images\Untitled.png){ width="50%" }
+![First time use](img\Untitled.png){ width="50%" }
 ///caption
 First time use
 ///
 
-![Help Dialog](images\Untitled%201.png){ width="50%" }
+![Help Dialog](img\Untitled%201.png){ width="50%" }
 ///caption
 Help Dialog
 ///
@@ -33,7 +33,7 @@ With the SMB (Server Message Block) protocol, and the **`--help`** flag is askin
 netexec smb --help
 ```
 
-![SMB module specific dialog](images\Untitled%202.png){ width="50%" }
+![SMB module specific dialog](img\Untitled%202.png){ width="50%" }
 ///caption
 SMB module specific dialog
 ///
@@ -48,7 +48,7 @@ We can check which of our targets have SMB signing both enabled AND required by 
 sudo nmap -Pn -sV --script=smb2-security-mode 192.168.56.11,22
 ```
 
-![Nmap Results](images\image.png){ width="50%" }
+![Nmap Results](img\image.png){ width="50%" }
 ///caption
 Nmap Results
 ///
@@ -64,7 +64,7 @@ netexec smb 192.168.56.10-23
 - **`smb`**: Specifies that the SMB module of CrackMapExec is to be used. This module focuses on actions and enumeration tasks that can be performed over the SMB protocol.
 - **`192.168.56.10-23`**: This defines the target range for the command. It tells CME to operate on a range of IP addresses starting from 192.168.56.10 through 192.168.56.23. The tool will attempt to connect to each IP address in this range and perform its SMB protocol-based operations.
 
-![SMB Signing is not required](images\Untitled%203.png){ width="50%" }
+![SMB Signing is not required](img\Untitled%203.png){ width="50%" }
 ///caption
 SMB Signing is not required
 ///
@@ -102,7 +102,7 @@ netexec smb 192.168.56.10-23 --users
 
 **`--users`**: This flag is attempting to list or retrieve information about domain users on the target systems or SMB shares. If a user is specified, then only its information is queried.
 
-![User Enumeration](images\image%201.png){ width="50%" }
+![User Enumeration](img\image%201.png){ width="50%" }
 ///caption
 User Enumeration
 ///
@@ -127,7 +127,7 @@ Well, it can really save time during password cracking if we can eliminate passw
 
 It can also be beneficial to learn the lockout policy of a target so you can properly throttle any password attacks to not inadvertently lockout accounts during an engagement.
 
-![Password Policy](images\image%202.png){ width="50%" }
+![Password Policy](img\image%202.png){ width="50%" }
 ///caption
 Password Policy
 ///

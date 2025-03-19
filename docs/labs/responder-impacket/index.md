@@ -64,7 +64,7 @@ nano Responder.conf
 
 The image below shows us adding an IPv4 AND IPv6 address to the out-of-scope list. We want to avoid poisoning our gateway or else the tool will error out and break the Lab.
 
-![`DontRespondTo` Config Setting](images\image.png){ width="50%" }
+![`DontRespondTo` Config Setting](img\image.png){ width="50%" }
 ///caption
 `DontRespondTo` Config Setting
 ///
@@ -80,14 +80,14 @@ To save these config changes you can hit `Ctrl-x` → `y` → `Enter`.
 
     When you start to see errors like the image below after starting Responder, hit `Ctrl-c` (repeatedly) until the execution stops. Then copy the IPv6 address that’s part of the error and add it to the `DontRespondTo` list like the image above showed.
 
-    ![Evil IPv6 Gremlin](images\image%201.png){ width="50%" }
+    ![Evil IPv6 Gremlin](img\image%201.png){ width="50%" }
     ///caption
     Evil IPv6 Gremlin
     ///
 
 When we start Responder up we should see both the in-scope and out-of-scope settings reflected in the terminal output.
 
-![Scope Config](images\image%202.png){ width="50%" }
+![Scope Config](img\image%202.png){ width="50%" }
 ///caption
 Scope Config
 ///
@@ -95,7 +95,7 @@ Scope Config
 ???+ note
     You can also set specific systems to *ONLY* respond to, but we do **not** want to do that today.
 
-    ![`RespondTo`  Config Setting](images\Untitled.png){ width="50%" }
+    ![`RespondTo`  Config Setting](img\Untitled.png){ width="50%" }
     ///caption
     `RespondTo`  Config Setting
     ///
@@ -114,7 +114,7 @@ Scope Config
 
     If you don’t do this, the *should* still work but the terminal won’t *show* the hashes Instead, it would look like this.
 
-    ![Skipping Hash Output](images\Untitled%201.png){ width="50%" }
+    ![Skipping Hash Output](img\Untitled%201.png){ width="50%" }
     ///caption
     Skipping Hash Output
     ///
@@ -125,7 +125,7 @@ First, we need to figure out which network interface to have Responder listen on
 ip addr
 ```
 
-![Network Interfaces](images\Untitled%202.png){ width="50%" }
+![Network Interfaces](img\Untitled%202.png){ width="50%" }
 ///caption
 Network Interfaces
 ///
@@ -146,7 +146,7 @@ There is a bot on our `GOAD-DC02` target VM trying to make a SMB connections to 
 
 By saying *we* are `bravos` the `GOAD-DC02` systems sends us the user hashes while trying to make a SMB connection. Resulting in us capturing a couple NTLMv2 hashes.
 
-![Hashes Captured](images\Untitled%203.png){ width="50%" }
+![Hashes Captured](img\Untitled%203.png){ width="50%" }
 ///caption
 Hashes Captured
 ///
@@ -174,7 +174,7 @@ To make things easier, Responder included a python script which grabs the unique
 sudo -E -H $VIRTUAL_ENV/bin/python DumpHash.py
 ```
 
-![DumpHash.py](images\image%203.png){ width="50%" }
+![DumpHash.py](img\image%203.png){ width="50%" }
 ///caption
 DumpHash.py
 ///
@@ -213,7 +213,7 @@ We must stop the responder SMB and HTTP server as we don’t want to get the has
 nano ~/git-tools/Responder/Responder.conf
 ```
 
-![Turn Off Services](images\Untitled%204.png){ width="50%" }
+![Turn Off Services](img\Untitled%204.png){ width="50%" }
 ///caption
 Turn Off Services
 ///
@@ -224,7 +224,7 @@ Once you've turned off SMB and HTTP. in the configuration. you can start Respond
 sudo -E -H $VIRTUAL_ENV/bin/python [Responder.py](http://responder.py/) -I ens36
 ```
 
-![Services are Off](images\Untitled%205.png){ width="50%" }
+![Services are Off](img\Untitled%205.png){ width="50%" }
 ///caption
 Services are Off
 ///
@@ -245,7 +245,7 @@ We are now configured to start relaying hashes to various targets on our network
 
 Well remember back when we captured those hashes with Responder? The protocol defined alongside the hash capturing output was `[SMB]`.
 
-![Protocol Used To Capture Hashes](images\image%204.png){ width="50%" }
+![Protocol Used To Capture Hashes](img\image%204.png){ width="50%" }
 ///caption
 Protocol Used To Capture Hashes
 ///
@@ -283,7 +283,7 @@ The output from this command is shown below, which highlights the SMB authentica
 
 The below screenshot was cleaned up a bit to fit everything in neatly. Your output may appear…more jumbled.
 
-![Relaying SUCCESS!](images\Untitled%206.png){ width="50%" }
+![Relaying SUCCESS!](img\Untitled%206.png){ width="50%" }
 ///caption
 Relaying SUCCESS!
 ///
@@ -353,7 +353,7 @@ netexec smb 192.168.56.22 -u eddard.stark -H '76E26250ABF96A09E68ADC5A9B1A4C29' 
 - **`--local-auth`**: This flag indicates that local authentication should be used. This means the authentication attempt will be made assuming the provided credentials are for a local account on the target system, as opposed to a domain account.
 - `--shares`: An option to list or interact with the SMB shares on the target machine.
 
-![Untitled](images\Untitled%207.png){ width="50%" }
+![Untitled](img\Untitled%207.png){ width="50%" }
 
 You won’t get the same results with the `robb.stark` user’s command below because that user doesn’t have the rights to access and list out the different shares.
 

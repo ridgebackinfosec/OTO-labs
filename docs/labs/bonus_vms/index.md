@@ -7,7 +7,7 @@ There are no specific class Labs for these extra VMs and they are only meant for
 
 [https://oto.sfo2.cdn.digitaloceanspaces.com/live/extra_vms.zip](https://oto.sfo2.cdn.digitaloceanspaces.com/live/extra_vms.zip)
 
-![Full GOAD Environment](images\image%204.png){ width="50%" }
+![Full GOAD Environment](img\image%204.png){ width="50%" }
 /// caption
 Full GOAD Environment
 ///

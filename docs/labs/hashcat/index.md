@@ -44,7 +44,7 @@ hashcat -m 5600 --force -a 0 ~/responder.hashes /usr/share/eaphammer/wordlists/r
 ???+ warning
     This process might take a while depending on your setup so get comfortable and watch for the output below. You should be able to crack Robb's password but not Eddard's.
 
-![The King in the North!](images\Untitled.png){ width="50%" }
+![The King in the North!](img\Untitled.png){ width="50%" }
 ///caption
 The King in the North!
 ///
@@ -89,7 +89,7 @@ hashcat -m 16500 hashes.txt /opt/wordlists/<file>.txt \
 
 [https://hashcat.net/wiki/doku.php?id=example_hashes](https://hashcat.net/wiki/doku.php?id=example_hashes)
 
-![Sample Set](images\Untitled%201.png){ width="50%" }
+![Sample Set](img\Untitled%201.png){ width="50%" }
 ///caption
 Sample Set
 ///
@@ -111,7 +111,7 @@ If you had collected a user list in your travels (like we just created above), a
 netexec smb 192.168.56.22 -u ~/last-names.txt -p 'sexywolfy'
 ```
 
-![Untitled](images\Untitled%202.png){ width="50%" }
+![Untitled](img\Untitled%202.png){ width="50%" }
 
 Wait we weren’t targeting the user “SMITH”. What happened??
 
@@ -122,7 +122,7 @@ echo "robb.stark" > ~/kinginthenorth
 netexec smb 192.168.56.22 -u ~/kinginthenorth -p 'sexywolfy'
 ```
 
-![Shared Passwords](images\image.png){ width="50%" }
+![Shared Passwords](img\image.png){ width="50%" }
 ///caption
 Shared Passwords
 ///
@@ -139,7 +139,7 @@ netexec smb 192.168.56.10-23 -u robb.stark -p sexywolfy --local-groups
 ???+ warning
     You’ll need the GOAD-DC02 VM running to see these results.
 
-![Local Groups](images\image%201.png){ width="50%" }
+![Local Groups](img\image%201.png){ width="50%" }
 ///caption
 Local Groups
 ///
@@ -149,7 +149,7 @@ Local Groups
 netexec smb 192.168.56.10-23 -u robb.stark -p sexywolfy --interfaces
 ```
 
-![Network Interfaces](images\image%202.png){ width="50%" }
+![Network Interfaces](img\image%202.png){ width="50%" }
 ///caption
 Network Interfaces
 ///
