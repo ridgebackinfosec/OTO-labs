@@ -17,6 +17,7 @@ extra:
       link: https://www.linkedin.com/company/ridgeback-infosec
 
 plugins:
+  - search
   - glightbox
   - offline:
       enabled: true # https://squidfunk.github.io/mkdocs-material/plugins/offline/
@@ -45,6 +46,8 @@ theme:
   logo: assets/logo.png
   favicon: assets/favicon.ico
   features:
+    - search.suggest
+    - search.highlight
     # - navigation.footer
     - content.code.annotate
     - content.code.copy
