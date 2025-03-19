@@ -13,7 +13,7 @@ Bettercap is a powerful, flexible, and portable tool designed for network attack
 sudo bettercap --help
 ```
 
-![Help Dialog](img\Untitled.png){ width="50%" }
+![Help Dialog](img\Untitled.png){ width="70%" }
 ///caption
 Help Dialog
 ///
@@ -23,7 +23,7 @@ Help Dialog
 To start Bettercap with superuser privileges, simply run:
 
 ???+ warning
-    Remember your interface name might be different. Be sure to change it to match your VM.
+    Remember your interface name might be different. Be sure to change `ens36` from the below command to match the interface you set a static IP on at the beginning of class.
 
 ```bash
 sudo bettercap -iface ens36
@@ -35,11 +35,11 @@ This launches the Bettercap interactive session. From here, you can execute comm
 ?
 ```
 
-![Untitled](img\Untitled%201.png){ width="50%" }
+![Untitled](img\Untitled%201.png){ width="70%" }
 
 When bettercap starts up it, similarly to Responder, lists out the various services it has enabled. A list of the default start up services is shown below.
 
-![Untitled](img\Untitled%202.png){ width="50%" }
+![Untitled](img\Untitled%202.png){ width="70%" }
 ///caption
 Modules
 ///
@@ -52,7 +52,7 @@ One of the first steps in using Bettercap is to perform network discovery. This 
 net.probe on
 ```
 
-![Untitled](img\Untitled%203.png){ width="50%" }
+![Untitled](img\Untitled%203.png){ width="70%" }
 ///caption
 net.probe
 ///
@@ -63,7 +63,7 @@ This command scans the network for active hosts. Use `net.show` to list the disc
 net.show
 ```
 
-![Untitled](img\Untitled%204.png){ width="50%" }
+![Untitled](img\Untitled%204.png){ width="70%" }
 ///caption
 net.show
 ///
@@ -76,7 +76,7 @@ To start sniffing network traffic, you can enable the `net.sniff` module:
 net.sniff on
 ```
 
-![Untitled](img\Untitled%205.png){ width="50%" }
+![Untitled](img\Untitled%205.png){ width="70%" }
 ///caption
 net.sniff
 ///
@@ -91,7 +91,7 @@ It's also possible from within bettercap to start up your own HTTP server on the
 https.server on
 ```
 
-![Untitled](img\Untitled%206.png){ width="50%" }
+![Untitled](img\Untitled%206.png){ width="70%" }
 ///caption
 https.server
 ///
@@ -106,7 +106,7 @@ A "caplet" is a script or automation file used by Bettercap to execute a series 
 caplets.update
 ```
 
-![Untitled](img\Untitled%207.png){ width="50%" }
+![Untitled](img\Untitled%207.png){ width="70%" }
 ///caption
 caplets.update
 ///
@@ -117,7 +117,7 @@ The caplets will be installed at `/usr/local/share/bettercap/caplets` on your at
 cat /usr/local/share/bettercap/caplets/mitm6.cap
 ```
 
-![Caplet Format](img\image.png){ width="50%" }
+![Caplet Format](img\image.png){ width="70%" }
 ///caption
 Caplet Format
 ///
@@ -130,7 +130,7 @@ We can also simply list all the installed capelets from within Bettercap using t
 caplets.show
 ```
 
-![Caplet List](img\Untitled%208.png){ width="50%" }
+![Caplet List](img\Untitled%208.png){ width="70%" }
 ///caption
 Caplet List
 ///
@@ -147,7 +147,7 @@ After which you can run the below command to see what the caplet activated via i
 active
 ```
 
-![Checking What’s Active](img\image%201.png){ width="50%" }
+![Checking What’s Active](img\image%201.png){ width="70%" }
 ///caption
 Checking What’s Active
 ///
@@ -161,7 +161,7 @@ set arp.spoof.targets [target IP address(es)]
 arp.spoof on
 ```
 
-![Untitled](img\Untitled%209.png){ width="50%" }
+![Untitled](img\Untitled%209.png){ width="70%" }
 
 Specify the target(s) you want to intercept traffic from. This command tricks the target devices into sending their traffic through your machine, allowing you to capture and manipulate it.
 
@@ -179,10 +179,10 @@ set https.proxy.sslstrip true
 https.proxy on
 ```
 
-![Untitled](img\Untitled%2010.png){ width="50%" }
+![Untitled](img\Untitled%2010.png){ width="70%" }
 
 ```bash
 include hstshijack/hstshijack
 ```
 
-![Untitled](img\Untitled%2011.png){ width="50%" }
+![Untitled](img\Untitled%2011.png){ width="70%" }
