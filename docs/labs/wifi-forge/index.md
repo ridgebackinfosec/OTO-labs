@@ -14,6 +14,11 @@ In this lab, we will familiarize ourselves with Bettercap, a common wireless aud
 
 ## Getting Started with Bettercap
 
+```bash
+cd ~/Wifi-Forge/Framework
+sudo python3 WifiForge.py
+```
+
 Select **Bettercap Recon** from the menu. Allow up to 30 seconds to initialize the network.
 
 ![Bettercap Recon](img/main-menu.png)
