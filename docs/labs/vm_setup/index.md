@@ -110,7 +110,7 @@ This is intended to reduce initial download size, make it easy for students to h
 
 ```bash linenums="1"
 cd ~
-curl -sSfL https://raw.githubusercontent.com/ridgebackinfosec/OTO-supp/refs/heads/main/install-tools.sh -o ~/install-tools.sh
+curl -sSfL https://raw.githubusercontent.com/ridgebackinfosec/OTO-labs/refs/heads/main/install-tools.sh -o ~/install-tools.sh
 chmod 744 ~/install-tools.sh
 ./install-tools.sh
 ```
