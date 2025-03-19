@@ -1,18 +1,27 @@
-# Welcome to MkDocs
+# Welcome to Offensive Tooling for Operators
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+I hope y'all are as excited for class as I am.
 
-## Commands
+## Download the VMs
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+Before class starts, please please please download the virtual machines. The VMs are very large (~27GB) and can take a long time to finish. So, please start downloading them now.
 
-## Project layout
+- If you are taking this class LIVE, then use:
+[https://oto.sfo2.cdn.digitaloceanspaces.com/live/vms.zip](https://oto.sfo2.cdn.digitaloceanspaces.com/live/vms.zip).
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        lab-0.md
-        ...       # Other markdown pages, images and other files.
+- If you are taking this class ON-DEMAND, then use:
+[https://oto.sfo2.cdn.digitaloceanspaces.com/on-demand/vms.zip](https://oto.sfo2.cdn.digitaloceanspaces.com/on-demand/vms.zip).
+
+I will go over the VM setup steps during class.
+
+## Waiting is hard
+
+If you're looking for something to fill the time before class, here are some webcasts I've done on the BHIS YouTube channel.
+
+The Illustrated Pentester - Short (True) Stories of Security
+
+* Vol. 1 - https://www.youtube.com/watch?v=4v2lBK21sfs 
+* Vol. 2 - https://www.youtube.com/watch?v=MASebPO6eHo
+* Vol. 3 - https://www.youtube.com/watch?v=ir0R5GjrH5s
+
+See y'all at the start of class!

@@ -16,21 +16,26 @@ extra:
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/company/ridgeback-infosec
 
+plugins:
+  - glightbox
+  - offline:
+      enabled: true # https://squidfunk.github.io/mkdocs-material/plugins/offline/
+
 nav:
   - Home: index.md
-  - Labs:
+  - Lab - VM Setup:
     - 'Setup': 'labs/vm_setup/index.md'
-    - 'Nmap Check': 'labs/nmap_check/index.md'
-    - 'Bonus VMs': 'labs/bonus_vms/index.md'
+    - 'Optional - Nmap Check': 'labs/nmap_check/index.md'
+    - 'Optional - Bonus VMs': 'labs/bonus_vms/index.md'
     - 'Lab - GoPhish': 'labs/gophish/index.md'
-    - 'Lab 2': 'labs/lab-2/index.md'
-    - 'Lab 3': 'labs/lab-3/index.md'
-    - 'Lab 4': 'labs/lab-4/index.md'
-    - 'Lab 5': 'labs/lab-5/index.md'
-    - 'Lab 6': 'labs/lab-6/index.md'
-    - 'Lab 7': 'labs/lab-7/index.md'
-    - 'Lab 8': 'labs/lab-8/index.md'
-    - 'Lab 9': 'labs/lab-9/index.md'
+    - 'Lab - Burp': 'labs/burp/index.md'
+    - 'Lab - Nuclei': 'labs/nuclei/index.md'
+    - 'Lab - WiFi Forge': 'labs/wifi-forge/index.md'
+    - 'Lab - NetExec': 'labs/netexec/index.md'
+    - 'Lab - Bloodhound & Plumbhound': 'labs/bloodhound-plumhound/index.md'
+    - 'Lab - Responder & Impacket': 'labs/responder-impacket/index.md'
+    - 'Lab - Bettercap': 'labs/bettercap/index.md'
+    - 'Lab - Hashcat': 'labs/hashcat/index.md'
 
 theme:
   font:
@@ -40,7 +45,7 @@ theme:
   logo: assets/logo.png
   favicon: assets/favicon.ico
   features:
-    - navigation.footer
+    # - navigation.footer
     - content.code.annotate
     - content.code.copy
     - content.code.select
@@ -128,6 +133,3 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.tilde
-
-plugins:
-  - glightbox

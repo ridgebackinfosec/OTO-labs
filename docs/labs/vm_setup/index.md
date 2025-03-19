@@ -24,77 +24,6 @@
 
 ---
 
-This course will make use of several virtual machines for use in the Labs. The details for each VM and their network configuration is below.
-
-The virtual machines can be downloaded at the URLs below for use in this class. This download is very large and can take a while to complete. It is recommended that students download the VMs *prior* to class.
-
-???+ warning
-    Do not install updates to the VMs unless specifically directed to do so. Updates tend to break labs.
-
-## Download the VMs
-
-First, you will need to download the class VMs from the linked zip file below.
-
-[https://aot.sfo2.cdn.digitaloceanspaces.com/live/vms.zip](https://aot.sfo2.cdn.digitaloceanspaces.com/live/vms.zip)
-
-When should you download it? ***NOW!***
-
-It will take some time to get it downloaded. *Please* start the process now…
-
-As in, ***right now***.
-
-At this very moment. Unless you are on a cell network.
-
-Then, get to a solid network connection. Home? A coffee shop parking lot? A closed motel parking lot? It does not matter. Just someplace with a solid and fast internet connection.
-
-## Virtualization Software
-
-### VMware
-
-First, you will need to download and install VMware on your host machine. Both Workstation Pro (Windows/Linux) and Fusion Pro (Mac) are now FREE!
-
-You can follow the guide in the below blog post’s URL to obtain installation file you need.
-[https://blogs.vmware.com/workstation/2024/05/vmware-workstation-pro-now-available-free-for-personal-use.html](https://blogs.vmware.com/workstation/2024/05/vmware-workstation-pro-now-available-free-for-personal-use.html)
-
-Be sure to select the “Personal Use” option to avoid needing a paid license.
-
-![image.png](images\image.png)
-
-### Alternative: VirtualBox
-
-You can use VirtualBox, but it fails about 25% of the time on either networking or USB support. **USB support is necessary for the classes and labs.** If you hate yourself, use VirtualBox. Otherwise, use VMware.
-
-???+ warning
-    We only officially support VMWare for class troubleshooting.
-
-## Extracting the VMs
-
-Next, you will want to extract the compressed files to a directory on your system. The exact process will change based on your system. Usually right-clicking and extracting the files with the 7-Zip tool (or your local decompression tool) you chose to install will do the trick.
-
-### 7-Zip
-
-7-Zip is a good option because it is the most consistent for decompressing large files. (Native unzipping utilities tend to choke on very large files.)
-
-Below are some options:
-
-- **7-ZiP:** [https://www.7-zip.org/download.html](https://www.7-zip.org/download.html)
-- **7-Zip support for Linux:** [https://itsfoss.com/use-7zip-ubuntu-linux/](https://itsfoss.com/use-7zip-ubuntu-linux/)
-- **7-Zip utility for Mac:** [https://www.keka.io/en/](https://www.keka.io/en/)
-
-## Importing the VMs
-
-Next, we need to get the VMs loaded in VMWare.
-
-To do that, Open VMWare and then select **File > Open (use “Import” on VMware Fusion) >** then navigate to where you downloaded the files.
-
-![Untitled](images\Untitled.png)
-
-Give the VM a name and click **Import**.
-
-![Untitled](images\Untitled%201.png)
-
-You may get a consistency error. If you do, do not worry. Just select **Retry** or **Try Again**. It should work.
-
 ## Network Configuration
 
 All virtual machines should be pre-configured with at least one network interface in Network Address Translation (NAT) mode. This is required for the VMs to access the internet. After downloading and importing the VMs, students should verify each VM is indeed in NAT mode. This can be done using the steps below.
@@ -131,10 +60,16 @@ Once the VMs are imported, click “VM” → “Settings” in VMware for each 
 Click “Add”.
 
 ![Untitled](images\Untitled%203.png)
+///caption
+Add Virtual Hardware
+///
 
 Select “Network Adapter” and click “Finish”.
 
 ![Untitled](images\Untitled%204.png)
+///caption
+Add Network Adapter
+///
 
 You should now have a new “Network Adapter 2” (or similar) for the VM. Select it and choose the “Custom: Specific virtual network” radio button. From there, use the dropdown to select the name of the Host-only virtual network you created in a previous step.
 
@@ -167,12 +102,17 @@ Fusion GUI
 
 This will be the primary VM and will be used as the “attacker’s” machine.
 
+### Tool Install Script
+
 Once imported into VMware, turn the VM on, login, open a terminal and run the below commands to install the tools for the class. 
 
 This is intended to reduce initial download size, make it easy for students to hit the ground running, control tool versions, and permit dynamic updating of the course material.
 
-```bash
-cd ~ && curl -sSfL https://raw.githubusercontent.com/ridgebackinfosec/OTO-supp/refs/heads/main/install-tools.sh -o ~/install-tools.sh && chmod 744 ~/install-tools.sh && ./install-tools.sh
+```bash linenums="1"
+cd ~
+curl -sSfL https://raw.githubusercontent.com/ridgebackinfosec/OTO-supp/refs/heads/main/install-tools.sh -o ~/install-tools.sh
+chmod 744 ~/install-tools.sh
+./install-tools.sh
 ```
 
 ???+ warning
@@ -221,6 +161,7 @@ Make sure you have set a static IP for The Forge VM.
     /// caption
     Updated Interface Config File
     ///
+
 6. **Restart the networking service or reboot your computer to apply the changes:**
     
     ```bash
@@ -262,7 +203,7 @@ You can now access the vulnerable web app by loading [http://127.0.0.1:42000](ht
 The command below will stop the local instance of OWASP Juice Shop.
 
 ```bash
-$ sudo juice-shop-stop -h
+sudo juice-shop-stop -h
 ```
 
 ![Stopping Juice Shop](images\Untitled%209.png)
@@ -274,7 +215,7 @@ Stopping Juice Shop
 ???+ warning "Credentials"
     You shouldn’t *need* to login to these, but the username in `vagrant` and password is `vagrant` if you are curious or need to troubleshoot a machine.
 
-    Game of Active Directory (GOAD) GOAD is a pentest Active Directory LAB project. The purpose of this lab is to give pentesters a vulnerable Active directory environment ready to use to practice usual attack techniques.
+    Game of Active Directory (GOAD) is a pentest Active Directory LAB project. The purpose of this lab is to give pentesters a vulnerable Active directory environment ready to use to practice usual attack techniques.
 
 ???+ warning
     *This lab is extremely vulnerable, do not reuse recipe to build your [Production] environment and do not deploy this environment on internet without isolation (this is a recommendation, use it as your own risk).*
@@ -282,7 +223,7 @@ Stopping Juice Shop
     *This lab use free windows VM only (180 days). After that timeframe enter a license on each server or rebuild all the lab (may be it's time for an update ;))
     ~* [https://github.com/Orange-Cyberdefense/GOAD](https://github.com/Orange-Cyberdefense/GOAD)
 
-The diagram below depicts the three GOAD VMs (GOAD-DC01, GOAD-DC02, and GOAD-SRV02), but ***we won’t be using GOAD-DC01 in this class***. We will be targeting the other two with our tools.
+The diagram below depicts three GOAD VMs (GOAD-DC01, GOAD-DC02, and GOAD-SRV02), ***but we won’t be using GOAD-DC01 in this class***. We will be targeting the other two with our tools.
 
 ![Untitled](images\Untitled%2010.png)
 
