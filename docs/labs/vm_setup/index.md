@@ -33,7 +33,7 @@ You will **ALSO** need to create a new custom network for the environment to wor
 ### Create Custom Virtual Network Configuration
 
 ???+ warning
-    This is REQUIRED for certain target VMs to work properly. DO NOT SKIP THIS!
+    This is **REQUIRED** for the target VMs to work properly. DO NOT SKIP THIS!
 
 1. Within VMware Workstation/Fusion/Player click Edit → Virtual Network Editor →
     

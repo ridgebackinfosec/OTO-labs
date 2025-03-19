@@ -3,7 +3,7 @@ Welcome to Offensive Tooling for Operators!
 
 ## Pre-class VM Setup
 
-You should have received the VM download link via email of Discord.
+You should have received the VM download link via email of Discord. If you have not already done so, download the VMs **now**.
 
 Please read through and complete the instructions below regarding supported virtualization software, extracting the VMs, and importing the VMs before class. 
 
