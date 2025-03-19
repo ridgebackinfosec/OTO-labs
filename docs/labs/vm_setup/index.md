@@ -42,7 +42,7 @@ You will **ALSO** need to create a new custom network for the environment to wor
     
     Create a new “Host-only” type virtual network that matches the image below.
     
-    ![Untitled](images\Untitled%202.png)
+    ![Untitled](images\Untitled%202.png){ width="50%" }
     
     ???+ warning
         "Host-only Networking" is called "Private to my Mac” in VMware Fusion.
@@ -59,21 +59,21 @@ Once the VMs are imported, click “VM” → “Settings” in VMware for each 
 
 Click “Add”.
 
-![Untitled](images\Untitled%203.png)
+![Untitled](images\Untitled%203.png){ width="50%" }
 ///caption
 Add Virtual Hardware
 ///
 
 Select “Network Adapter” and click “Finish”.
 
-![Untitled](images\Untitled%204.png)
+![Untitled](images\Untitled%204.png){ width="50%" }
 ///caption
 Add Network Adapter
 ///
 
 You should now have a new “Network Adapter 2” (or similar) for the VM. Select it and choose the “Custom: Specific virtual network” radio button. From there, use the dropdown to select the name of the Host-only virtual network you created in a previous step.
 
-![Untitled](images\Untitled%205.png)
+![Untitled](images\Untitled%205.png){ width="50%" }
 
 ???+ warning
     Remember to go back and do this with EACH of the VMs listed at the top of this section.
@@ -85,9 +85,9 @@ You should now have a new “Network Adapter 2” (or similar) for the VM. Selec
 
 This is how it looks in Fusion…
 
-![Untitled](images\Untitled%206.png)
+![Untitled](images\Untitled%206.png){ width="50%" }
 
-![Fusion GUI](images\Untitled%207.png)
+![Fusion GUI](images\Untitled%207.png){ width="50%" }
 /// caption
 Fusion GUI
 ///
@@ -129,7 +129,7 @@ Make sure you have set a static IP for The Forge VM.
     ip a
     ```
     
-    ![Network Interfaces](images\image%201.png)
+    ![Network Interfaces](images\image%201.png){ width="50%" }
     /// caption
     Network Interfaces
     ///
@@ -157,7 +157,7 @@ Make sure you have set a static IP for The Forge VM.
     
     The file should look something like this afterwards.
     
-    ![Updated Interface Config File](images\image%202.png)
+    ![Updated Interface Config File](images\image%202.png){ width="50%" }
     /// caption
     Updated Interface Config File
     ///
@@ -194,7 +194,7 @@ The application contains a vast number of hacking challenges of varying difficul
 sudo juice-shop -h
 ```
 
-![Starting Juice Shop](images\Untitled%208.png)
+![Starting Juice Shop](images\Untitled%208.png){ width="50%" }
 /// caption
 Starting Juice Shop
 ///
@@ -206,7 +206,7 @@ The command below will stop the local instance of OWASP Juice Shop.
 sudo juice-shop-stop -h
 ```
 
-![Stopping Juice Shop](images\Untitled%209.png)
+![Stopping Juice Shop](images\Untitled%209.png){ width="50%" }
 /// caption
 Stopping Juice Shop
 ///
@@ -225,7 +225,7 @@ Stopping Juice Shop
 
 The diagram below depicts three GOAD VMs (GOAD-DC01, GOAD-DC02, and GOAD-SRV02), ***but we won’t be using GOAD-DC01 in this class***. We will be targeting the other two with our tools.
 
-![Untitled](images\Untitled%2010.png)
+![Untitled](images\Untitled%2010.png){ width="50%" }
 
 ## Check Connectivity
 
@@ -249,7 +249,7 @@ ping -c 4 192.168.56.22
 
 If everything is setup correctly, you should see `0% packet loss` following each ping command.
 
-![Successful Pings!](images\image%203.png)
+![Successful Pings!](images\image%203.png){ width="50%" }
 /// caption
 Successful Pings!
 ///

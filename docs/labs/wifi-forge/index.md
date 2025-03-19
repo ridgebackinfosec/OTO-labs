@@ -21,7 +21,7 @@ sudo python3 WifiForge.py
 
 Select **Bettercap Recon** from the menu. Allow up to 30 seconds to initialize the network.
 
-![Bettercap Recon](img/main-menu.png)
+![Bettercap Recon](img/main-menu.png){ width="50%" }
 
 !!! note
     Normally, when using Bettercap with physical network cards, it is necessary to use `airmon-ng check kill` to terminate processes that may interfere. However, running this command in the mininet-wifi network is unnecessary and may cause failures.
@@ -29,16 +29,16 @@ Select **Bettercap Recon** from the menu. Allow up to 30 seconds to initialize t
 Start by putting the interface `a-wlan0` in monitor mode:
 
 ```bash
-airmon-ng start a-wlan0
+airmon-ng start Attacker-wlan0
 ```
 
 If prompted, input **y** and hit enter.
 
-![Prompt](img/prompts.png)
+![Prompt](img/prompts.png){ width="50%" }
 
 Successful initialization will appear as shown below:
 
-![Initialization Success](img/init-success.png)
+![Initialization Success](img/init-success.png){ width="50%" }
 
 Verify that the interface has been put into monitor mode:
 
@@ -48,7 +48,7 @@ ifconfig | grep flags
 
 The interface `a-wlan0mon` should now be present:
 
-![Monitor Mode Active](img/monitor-mode.png)
+![Monitor Mode Active](img/monitor-mode.png){ width="50%" }
 
 ## Launching Bettercap
 
@@ -60,7 +60,7 @@ bettercap -iface a-wlan0mon
 
 You will be greeted by a prompt displaying the network interface name:
 
-![Bettercap Interface](img/interface.png)
+![Bettercap Interface](img/interface.png){ width="50%" }
 
 The following commands configure the console for a more understandable workflow to view the de-authentication attack:
 
@@ -73,7 +73,7 @@ set wifi.show.sort clients desc
 
 After running these commands, you should see the following on your screen:
 
-![Bettercap Console](img/console.png)
+![Bettercap Console](img/console.png){ width="50%" }
 
 Disable console logging using:
 
@@ -104,7 +104,7 @@ wifi.deauth 76:df:71:67:40:2b
 
 It may take a few seconds, but Bettercap will catch the handshake:
 
-![Handshake Captured](img/handshake.png)
+![Handshake Captured](img/handshake.png){ width="50%" }
 
 A handshake is an encrypted WPA2 password intercepted between the client and router, which can be decrypted offline.
 

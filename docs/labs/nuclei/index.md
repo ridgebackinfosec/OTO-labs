@@ -24,7 +24,7 @@ First, let’s look at the `help` information for Nuclei.
 nuclei -h
 ```
 
-![image.png](images\image.png)
+![image.png](images\image.png){ width="50%" }
 
 There’s a LOT in that `help` output, but first and foremost it gives us some options around targeting and templates.
 
@@ -41,7 +41,7 @@ First, let’s look at an example template since template are what makes Nuclei 
 
 This vulnerability gained some notoriety in for being particularly wide spread and critical. It was so severe that the Cybersecurity & Infrastructure Security Agency (CISA) issued guidance on it ([CISA Alert](https://www.cisa.gov/news-events/news/apache-log4j-vulnerability-guidance)).
 
-![Template Snippet](images\image%201.png)
+![Template Snippet](images\image%201.png){ width="50%" }
 ///caption
 Template Snippet
 ///
@@ -50,7 +50,7 @@ As we can see from the image above, the template provides helpful references and
 
 Further down in the template we see the actual HTTP request and matching rules used to fingerprint the existence of this RCE vuln on a target.
 
-![image.png](images\image%202.png)
+![image.png](images\image%202.png){ width="50%" }
 
 ### HTTP
 
@@ -62,7 +62,7 @@ nuclei -tl | grep "http/"
 
 Taking a look at the output snippet below we can see there is a good variety of checks related to HTTP. Including specific CVEs, OSINT, known vulnerabilities, and more.
 
-![HTTP Templates (Snippet)](images\image%203.png)
+![HTTP Templates (Snippet)](images\image%203.png){ width="50%" }
 ///caption
 HTTP Templates (Snippet)
 ///
@@ -75,7 +75,7 @@ nuclei -target 127.0.0.1:42000
 
 - `-target 127.0.0.1:42000`: [using -u also works for specifying a target] Specifies the **target** for scanning, which in this case is the local machine (`127.0.0.1`) on port `42000`. That’s where OWASP juice shop is running.
 
-![Basic Command Output](images\image%204.png)
+![Basic Command Output](images\image%204.png){ width="50%" }
 ///caption
 Basic Command Output
 ///
@@ -90,7 +90,7 @@ nuclei -target https://ginandjuice.shop/
 
 This will produce more broad results as it is a proper deployed web application on the open internet.
 
-![ginandjuice.shop](images\image%205.png)
+![ginandjuice.shop](images\image%205.png){ width="50%" }
 ///caption
 ginandjuice.shop
 ///
@@ -105,7 +105,7 @@ Nuclei isn’t just for HTTP and web apps. It also has a LOT of network focused 
 nuclei -tl | grep "network/"
 ```
 
-![Network Templates (Snippet)](images\image%206.png)
+![Network Templates (Snippet)](images\image%206.png){ width="50%" }
 ///caption
 Network Templates (Snippet)
 ///
@@ -121,7 +121,7 @@ nuclei -target 192.168.56.22
 
 We can see in the screenshot below that Nuclei detected MSSQL, SMB, and IIS running on the target. Also, it did additional checks when there were applicable templates after a service was detected.
 
-![Network Scanning (Snippet)](images\image%207.png)
+![Network Scanning (Snippet)](images\image%207.png){ width="50%" }
 ///caption
 Network Scanning (Snippet)
 ///
