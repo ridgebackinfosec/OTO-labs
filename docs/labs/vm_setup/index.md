@@ -43,6 +43,9 @@ You will **ALSO** need to create a new custom network for the environment to wor
     Create a new “Host-only” type virtual network that matches the image below.
     
     ![Untitled](img\Untitled%202.png){ width="50%" }
+    ///caption
+    Host Only Network
+    ///
     
     ???+ warning
         "Host-only Networking" is called "Private to my Mac” in VMware Fusion.
@@ -59,14 +62,14 @@ Once the VMs are imported, click “VM” → “Settings” in VMware for each 
 
 Click “Add”.
 
-![Untitled](img\Untitled%203.png){ width="50%" }
+![Add Virtual Hardware](img\Untitled%203.png){ width="50%" }
 ///caption
 Add Virtual Hardware
 ///
 
 Select “Network Adapter” and click “Finish”.
 
-![Untitled](img\Untitled%204.png){ width="50%" }
+![Add Network Adapter](img\Untitled%204.png){ width="50%" }
 ///caption
 Add Network Adapter
 ///
@@ -74,6 +77,9 @@ Add Network Adapter
 You should now have a new “Network Adapter 2” (or similar) for the VM. Select it and choose the “Custom: Specific virtual network” radio button. From there, use the dropdown to select the name of the Host-only virtual network you created in a previous step.
 
 ![Untitled](img\Untitled%205.png){ width="50%" }
+///caption
+Select Network
+///
 
 ???+ warning
     Remember to go back and do this with EACH of the VMs listed at the top of this section.
@@ -86,11 +92,15 @@ You should now have a new “Network Adapter 2” (or similar) for the VM. Selec
 This is how it looks in Fusion…
 
 ![Untitled](img\Untitled%206.png){ width="50%" }
+///caption
+Fusion Add Network
+///
 
 ![Fusion GUI](img\Untitled%207.png){ width="50%" }
 /// caption
 Fusion GUI
 ///
+
 ## “The Forge” VM
 
 ???+ warning
@@ -133,6 +143,7 @@ Make sure you have set a static IP for The Forge VM.
     /// caption
     Network Interfaces
     ///
+
 3. **Edit the network interfaces file:**
     
     ```bash
@@ -174,7 +185,6 @@ Make sure you have set a static IP for The Forge VM.
     sudo reboot
     ```
     
-
 ### OWASP Juice Shop
 
 The Forge VM will have the `juice-shop` APT package to deploy a local instance of the Open Worldwide Application Security Project (OWASP) Juice Shop for you to play with before, during, or after the class.
@@ -198,6 +208,7 @@ sudo juice-shop -h
 /// caption
 Starting Juice Shop
 ///
+
 You can now access the vulnerable web app by loading [http://127.0.0.1:42000](http://127.0.0.1:42000) in your VM’s browser.
 
 The command below will stop the local instance of OWASP Juice Shop.
@@ -210,6 +221,7 @@ sudo juice-shop-stop -h
 /// caption
 Stopping Juice Shop
 ///
+
 ## “GOAD” VMs
 
 ???+ warning "Credentials"
@@ -226,6 +238,9 @@ Stopping Juice Shop
 The diagram below depicts three GOAD VMs (GOAD-DC01, GOAD-DC02, and GOAD-SRV02), ***but we won’t be using GOAD-DC01 in this class***. We will be targeting the other two with our tools.
 
 ![Untitled](img\Untitled%2010.png){ width="50%" }
+///caption
+GOAD Environment
+///
 
 ## Check Connectivity
 
