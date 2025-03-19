@@ -5,7 +5,7 @@ There are 3 additional “bonus” VMs (2 Domain Controllers and 1 Server) avail
 
 There are no specific class Labs for these extra VMs and they are only meant for you to explore/attack on your own if you wish.
 
-[https://aot.sfo2.cdn.digitaloceanspaces.com/live/supp/extra_vms.zip](https://aot.sfo2.cdn.digitaloceanspaces.com/live/supp/extra_vms.zip)
+[https://oto.sfo2.cdn.digitaloceanspaces.com/live/extra_vms.zip](https://oto.sfo2.cdn.digitaloceanspaces.com/live/extra_vms.zip)
 
 ![Full GOAD Environment](images\image%204.png)
 /// caption
