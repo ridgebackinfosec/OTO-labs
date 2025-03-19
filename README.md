@@ -3,17 +3,9 @@ Welcome to Offensive Tooling for Operators!
 
 ## Pre-class VM Setup
 
-This course will make use of 3 main virtual machines in the Labs. So before class starts, please please please download the VMs. They are very large (~27GB) and can take a long time to finish. So, please start downloading them **now**.
+You should have received the VM download link via email of Discord.
 
-NOTE: Do not install updates to the VMs unless specifically directed to do so. Updates tend to break labs.
-
-- If you are taking this class LIVE, then ->
-[Download Virtual Machines Here](https://oto.sfo2.cdn.digitaloceanspaces.com/live/vms.zip)
-
-- If you are taking this class ON-DEMAND, then ->
-[Download Virtual Machines Here](https://oto.sfo2.cdn.digitaloceanspaces.com/on-demand/vms.zip).
-
-Please also read through and complete the instructions below regarding supported virtualization software, extracting the VMs, and importing the VMs before class. 
+Please read through and complete the instructions below regarding supported virtualization software, extracting the VMs, and importing the VMs before class. 
 
 Additional setup details for each VM (credentials, network config, etc.) will be covered during class.
 
