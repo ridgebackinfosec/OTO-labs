@@ -30,7 +30,7 @@ You can follow the guide in the below blog post’s URL to obtain installation f
 
 Be sure to select the “Personal Use” option to avoid needing a paid license.
 
-![image.png](img\image.png)
+![image](https://github.com/user-attachments/assets/047ea115-1852-4e73-9cd5-1b2b283e768f)
 
 ### Alternative: VirtualBox
 
@@ -66,11 +66,11 @@ Next, we need to get the VMs loaded in VMWare.
 
 To do that, Open VMWare and then select **File > Open (use “Import” on VMware Fusion) >** then navigate to where you downloaded the files.
 
-![Untitled](img\Untitled.png)
+![Untitled](https://github.com/user-attachments/assets/ce437693-2c66-4b86-9934-f0ece820ec01)
 
 Give the VM a name and click **Import**.
 
-![Untitled](img\Untitled1.png)
+![Untitled1](https://github.com/user-attachments/assets/40bbc892-7788-40ee-ac0b-ebfea0d961c8)
 
 You may get a consistency error. If you do, do not worry. Just select **Retry** or **Try Again**. It should work.
 
