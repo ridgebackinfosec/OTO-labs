@@ -31,11 +31,11 @@ nav:
     - 'Lab - GoPhish': 'labs/gophish/index.md'
     - 'Lab - Burp': 'labs/burp/index.md'
     - 'Lab - Nuclei': 'labs/nuclei/index.md'
-    - 'Lab - WiFi Forge': 'labs/wifi-forge/index.md'
+    - 'Lab - Bettercap': 'labs/bettercap/index.md'
+    - 'Optional - WiFi Forge': 'labs/wifi-forge/index.md'
     - 'Lab - NetExec': 'labs/netexec/index.md'
     - 'Lab - Bloodhound & Plumbhound': 'labs/bloodhound-plumhound/index.md'
     - 'Lab - Responder & Impacket': 'labs/responder-impacket/index.md'
-    - 'Lab - Bettercap': 'labs/bettercap/index.md'
     - 'Lab - Hashcat': 'labs/hashcat/index.md'
 
 theme:
