@@ -5,6 +5,9 @@
 
     A forked version can be found at [https://github.com/ridgebackinfosec/Wifi-Forge](https://github.com/ridgebackinfosec/Wifi-Forge) which should work with this Lab.
 
+!!! warning
+    Wifi-Forge can take up a lot of space on a VM and can create unpredicatable consequences between dependencies. It is recommended that you either create a new VM from The Forge base image or snapshot your class VM ***before*** installing Wifi-Forge.
+
 !!! note
     This and many more WiFi-Forge Labs are available at [https://wififorge.github.io/](https://wififorge.github.io/). 
     
