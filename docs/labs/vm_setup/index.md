@@ -255,10 +255,8 @@ GOAD Environment
 
 Once all of the steps above have been completed, turn on each VM, log in to The Forge, and run the below commands to verify network connectivity.
 
-<aside>
-💡 You don’t *have* to turn on *all* the VMs at once if your host machine has lower resources. You can start/stop them as necessary.
-
-</aside>
+!!! note
+    You don’t *have* to turn on *all* the VMs at once if your host machine has lower resources. You can start/stop them as necessary.
 
 ```bash
 # Verify internet access
