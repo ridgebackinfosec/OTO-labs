@@ -235,12 +235,21 @@ Stopping Juice Shop
     *This lab use free windows VM only (180 days). After that timeframe enter a license on each server or rebuild all the lab (may be it's time for an update ;))
     ~* [https://github.com/Orange-Cyberdefense/GOAD](https://github.com/Orange-Cyberdefense/GOAD)
 
-The diagram below depicts three GOAD VMs (GOAD-DC01, GOAD-DC02, and GOAD-SRV02), ***but we won’t be using GOAD-DC01 in this class***. We will be targeting the other two with our tools.
+The diagram below depicts two GOAD VMs (GOAD-DC02, and GOAD-SRV02). We will be targeting these for our class.
 
-![Untitled](img\Untitled%2010.png){ width="70%" }
+![Untitled](img/class-goad-target.png){ width="70%" }
 ///caption
 GOAD Environment
 ///
+
+!!! note
+    The full GOAD target environment is comprised of 5 systems. 
+
+    You can download the pre-built and configured extra 3 target systems at the link below. The VM setup steps are the same as your class VMs.
+
+    ***This are not required for the class but are offered to help extend what you have learned here.***
+
+    [https://oto.sfo2.cdn.digitaloceanspaces.com/live/extra_vms.zip](https://oto.sfo2.cdn.digitaloceanspaces.com/live/extra_vms.zip)
 
 ## Check Connectivity
 
