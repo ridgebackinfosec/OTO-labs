@@ -112,9 +112,9 @@ Fusion GUI
 
 This will be the primary VM and will be used as the “attacker’s” machine.
 
-### Tool Install Script
+### Lab Guide & Tool Install Script
 
-Once imported into VMware, turn The Forge VM on, login, open a terminal and run the below commands to install the tools for the class. 
+Once imported into VMware, turn The Forge VM on, login, open a terminal and run the below commands to download and setup the Lab Guide and tools for the class. 
 
 This is intended to reduce initial download size, make it easy for students to hit the ground running, control tool versions, and permit dynamic updating of the course material.
 
