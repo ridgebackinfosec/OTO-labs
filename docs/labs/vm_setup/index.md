@@ -114,19 +114,19 @@ This will be the primary VM and will be used as the “attacker’s” machine.
 
 ### Tool Install Script
 
-Once imported into VMware, turn the VM on, login, open a terminal and run the below commands to install the tools for the class. 
+Once imported into VMware, turn The Forge VM on, login, open a terminal and run the below commands to install the tools for the class. 
 
 This is intended to reduce initial download size, make it easy for students to hit the ground running, control tool versions, and permit dynamic updating of the course material.
 
 ```bash linenums="1"
 cd ~
-curl -sSfL https://raw.githubusercontent.com/ridgebackinfosec/OTO-labs/refs/heads/main/install-tools.sh -o ~/install-tools.sh
-chmod 744 ~/install-tools.sh
-./install-tools.sh
+curl -sSfL https://raw.githubusercontent.com/ridgebackinfosec/OTO-labs/refs/heads/main/labs-and-tools.sh -o ~/labs-and-tools.sh
+chmod 744 ~/labs-and-tools.sh
+./labs-and-tools.sh
 ```
 
 ???+ warning
-    You will be prompted for the password when running the `install-tools.sh` script.
+    You will be prompted for the password when running the `labs-and-tools.sh` script.
 
 ### Static IP Address Assignment
 
