@@ -3,6 +3,9 @@
 ???+ note
     You can stop bettercap by entering `exit` in the terminal when you’re done.
 
+???+ warning
+    You will need The Forge VM and at least one of the GOAD VMs turned on for this Lab.
+
 ## Intro
 
 Bettercap is a powerful, flexible, and portable tool designed for network attacks and monitoring. It's suitable for various cybersecurity tasks such as network sniffing, man-in-the-middle attacks, real-time packet manipulation, network reconnaissance, and more. Bettercap is often praised for its ease of use and the wide array of features it offers.

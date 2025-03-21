@@ -36,6 +36,13 @@ sudo apt install pipx -y
 sudo apt install nmap locate python3-pip python3-venv aircrack-ng burpsuite eaphammer gophish bettercap python3-certipy hashcat tcpdump wireshark juice-shop powershell seclists jq john -y
 # sudo apt install kismet -y
 
+# BloodHound GUI
+# https://bloodhound.readthedocs.io/en/latest/installation/linux.html
+sudo apt install openjdk-11-jdk neo4j -y
+cd
+wget https://github.com/SpecterOps/BloodHound-Legacy/releases/download/v4.3.1/BloodHound-linux-x64.zip
+unzip BloodHound-linux-x64.zip -d .
+
 # pipx method
 pipx install git+https://github.com/ridgebackinfosec/Coercer
 pipx install git+https://github.com/ridgebackinfosec/kerbrute

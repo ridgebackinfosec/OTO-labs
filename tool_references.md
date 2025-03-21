@@ -1,5 +1,7 @@
 # References
 
+- CredMaster
+    - [https://www.blackhillsinfosec.com/reconnaissance-azure-cloud-w-kevin-klingbile/](https://www.blackhillsinfosec.com/reconnaissance-azure-cloud-w-kevin-klingbile/)
 - GoPhish
     - [https://www.youtube.com/watch?v=VglCgoIjztE&t=1100s](https://www.youtube.com/watch?v=VglCgoIjztE&t=1100s)
     - [https://www.blackhillsinfosec.com/wp-content/uploads/2020/09/SLIDES_AttackTactics5ZerotoHeroAttacks.pdf](https://www.blackhillsinfosec.com/wp-content/uploads/2020/09/SLIDES_AttackTactics5ZerotoHeroAttacks.pdf)

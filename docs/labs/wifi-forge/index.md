@@ -1,4 +1,4 @@
-# OPTIONAL WiFi-Forge Lab
+# OPTIONAL Lab - WiFi-Forge
 
 !!! warning
     WiFi-Forge is under **active development** (AKA - this Lab may have issues) by the good folks at Black Hills Information Security. They are seeking feedback on the tool and welcome the submission of any issues on the [main GitHub page](https://github.com/blackhillsinfosec/Wifi-Forge/issues).

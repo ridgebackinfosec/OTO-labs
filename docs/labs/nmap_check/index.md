@@ -15,7 +15,7 @@
 
 ## Intro
 
-???+ warning
+???+ note
     A full listing of Nmap’s NSE scripts can be found at [https://nmap.org/nsedoc/scripts/](https://nmap.org/nsedoc/scripts/).
 
 Nmap is a powerful tool used for network exploration, management, and security auditing. It can help you discover hosts and services on a network, map out your network topology, and identify security risks. In this lab, you will learn how to use Nmap to scan a network, discover hosts and services, and identify security vulnerabilities.

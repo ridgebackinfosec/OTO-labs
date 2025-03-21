@@ -1,4 +1,4 @@
-# Gophish Lab
+# Lab - GoPhish
 
 ## Tabletop Exercise: Planning a Phishing Campaign
 
