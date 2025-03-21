@@ -70,9 +70,9 @@ SMB Signing is not required
 ///
 
 ???+ note
-    This lack of SMB Signing on `192.168.56.22` is what makes it possible for us to relay hashes with ntlmrelayx to execute a pass-the-hash attack.
+    This lack of SMB Signing on `192.168.56.22` is what makes it possible for us to relay hashes with ntlmrelayx later on.
 
-    [https://www.blackhillsinfosec.com/an-smb-relay-race-how-to-exploit-llmnr-and-smb-message-signing-for-fun-and-profit/](https://www.blackhillsinfosec.com/an-smb-relay-race-how-to-exploit-llmnr-and-smb-message-signing-for-fun-and-profit/)
+    There's a good BHIS blog post on this very topic [here](https://www.blackhillsinfosec.com/an-smb-relay-race-how-to-exploit-llmnr-and-smb-message-signing-for-fun-and-profit/).
 
 Additional options and flags can be added to the command to specify credentials (if known), perform more specific enumeration tasks, or execute certain actions on the target hosts. Examples of such options include:
 
