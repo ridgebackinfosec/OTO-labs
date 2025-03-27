@@ -168,10 +168,13 @@ Make sure you have set a static IP for The Forge VM.
     
     The file should look something like this afterwards.
     
-    ![Updated Interface Config File](img\image%202.png){ width="70%" }
+    ![Updated Interface Config File](img\network_config.png){ width="70%" }
     /// caption
     Updated Interface Config File
     ///
+
+    !!! warning
+        Do NOT specify a gateway in this config file or your traffic may get interrupted.
 
 6. **Restart the networking service or reboot your computer to apply the changes:**
     

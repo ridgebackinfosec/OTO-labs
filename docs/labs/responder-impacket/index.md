@@ -102,24 +102,7 @@ Scope Config
 
 ### Multicast DNS Poisoning with Responder
 
-???+ warning
-    Responder logs and execution history can be found in `~/git-tools/Responder/`.
-    You can run the below commands to clear out Responder’s history to re-run the Lab from scratch.
-
-    ```bash
-    # To reset Responder...
-    sudo rm ~/git-tools/Responder/logs/*.log
-    sudo rm ~/git-tools/Responder/*.db
-    ```
-
-    If you don’t do this, the *should* still work but the terminal won’t *show* the hashes Instead, it would look like this.
-
-    ![Skipping Hash Output](img\Untitled%201.png){ width="70%" }
-    ///caption
-    Skipping Hash Output
-    ///
-
-First, we need to figure out which network interface to have Responder listen on. To do that, run the command below and look for the interface that has our IP address (`192.168.56.100`) that was set at the beginning of this Lab. You did do that step right? Right??
+Now, we need to figure out which network interface to have Responder listen on. To do that, run the command below and look for the interface that has our IP address (`192.168.56.100`) that was set at the beginning of this Lab. You did do that step right? Right??
 
 ```bash
 ip addr
@@ -133,7 +116,7 @@ Network Interfaces
 Now let’s take that value and use it in the `-I` option when we start Responder using the command below.
 
 ```bash
-sudo -E -H $VIRTUAL_ENV/bin/python [Responder.py](http://responder.py/) -I ens36
+sudo -E -H $VIRTUAL_ENV/bin/python Responder.py -I ens36
 ```
 
 ???+ warning
@@ -200,7 +183,7 @@ eddard.stark::NORTH:1122334455667788:76E26250ABF96A09E68ADC5A9B1A4C29:0101000000
 ???+ warning
     Keep these for when we get to Hashcat.
 
-## Relaying with Impacket
+### Relaying with Impacket
 
 ???+ warning
     You’ll need BOTH `GOAD-DC02` and `GOAD-SRV02` targets running in order to relay successfully.
@@ -221,7 +204,7 @@ Turn Off Services
 Once you've turned off SMB and HTTP. in the configuration. you can start Responder back up using the same command. that you ran before in the first section of this lab. As you can see from the screenshot below, it should be indicated when responder starts up that both those services are disabled.
 
 ```bash
-sudo -E -H $VIRTUAL_ENV/bin/python [Responder.py](http://responder.py/) -I ens36
+sudo -E -H $VIRTUAL_ENV/bin/python Responder.py -I ens36
 ```
 
 ![Services are Off](img\Untitled%205.png){ width="70%" }
@@ -327,6 +310,24 @@ We can always go back and reread this output with the below command.
 # Follow it up with...
 less smb-relay.log
 ```
+
+## Resetting The Board
+
+Responder logs and execution history can be found in `~/git-tools/Responder/`.
+You can run the below commands to clear out Responder’s history to re-run the Lab from scratch.
+
+```bash
+# To reset Responder...
+sudo rm ~/git-tools/Responder/logs/*.log
+sudo rm ~/git-tools/Responder/*.db
+```
+
+If you don’t do this, the Lab *should* still work but the terminal won’t *show* the hashes. Instead, it would look like this.
+
+![Skipping Hash Output](img\Untitled%201.png){ width="70%" }
+///caption
+Skipping Hash Output
+///
 
 <!-- The following section is not accurate and needs close review. -->
 <!-- ## Optional: SMB Auth / Pass-the-Hash
