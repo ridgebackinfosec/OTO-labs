@@ -1,24 +1,11 @@
 # Lab - Responder & Impacket
 
-???+ warning
-    Sometimes GoPhish is still running on a port we need for this Lab. So, run the below command BEFORE starting the Lab to make sure it is shut down.
-
-    You’ll probably be prompted for the telchar user’s password after this command.
-
-    ```bash
-    gophish-stop
-    ```
-???+ warning
-    The Forge is also configured to have an RDP service automatically running on boot up. This was included for flexibility in deployment options for students. Let’s go ahead and stop that service too so it doesn’t interfere with Responder’s services.
-
-    ```bash
-    sudo systemctl stop xrdp
-    ```
-
 ???+ warning "Setup" 
-    Don’t forget to use `sudo` with Responder
+    Don’t forget to use `sudo` with Responder AND ntlmrelayx.
 
-    Have at least `GOAD-DC02` target VM and The Forge VM online for the Responder portion.
+    In addition to The Forge VM, you will need the `GOAD-DC02` VM powered on to capture the hashes with Responder. 
+
+    **AND** you will need the `GOAD-SRV02` VM powered on in order to successfully relay to SMB.
 
 ## Intro
 
@@ -32,10 +19,41 @@ Together, Responder and Impacket create a formidable combination for carrying ou
 
 ## Walkthrough
 
-???+ warning
-    You will need the `GOAD-DC02` VM powered on to capture the hashes with Responder. 
+### Temporarily Disable Troublesome Services & Protocols
 
-    **AND** you will need the `GOAD-SRV02` VM powered on in order to successfully relay to SMB.
+Temporarily disabling the below services and protocols is necessary within our testing environment to ensure the Lab run smoothly. Normally, you wouldn't have all these things running at the same time on an engagement.
+
+!!! note
+    These changes will only persist until the next reboot of The Forge VM.
+
+**GoPhish:**
+
+First, GoPhish is likely still running on port 80 which can cause a small error for this Lab. So, run the below command to make sure it is shut down.
+
+You’ll probably be prompted for the telchar user’s password after this command.
+
+```bash
+gophish-stop
+```
+
+**RDP:**
+
+Next, The Forge is also configured to have an RDP service automatically running on boot up. This was included for flexibility in deployment options for students. 
+
+Let’s go ahead and stop that service too so it doesn’t interfere with Responder’s services.
+
+```bash
+sudo systemctl stop xrdp
+```
+
+**IPv6:**
+
+Finally, lets disable IPv6 via the `sysctl` command. This will simplify configuring Responder's out-of-scope/exclude list.
+
+```bash
+sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
+sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+```
 
 ### Activating the Python Virtual Environment
 
@@ -51,18 +69,37 @@ source venv/bin/activate
 ???+ warning
     THESE SCOPE CHANGES ARE REQUIRED FOR THE LAB TO WORK!
 
-    Not doing this will cause the lab to error out due to the way VMWare’s virtual network operates.
+    Not doing this could cause the lab to error out.
 
 The `~/git-tools/Responder/Responder.conf` is the file we’re interested in. We want to make sure we ONLY target the systems we care about and NOT ones that are off limits. We can do this two ways.
 
 1. Setting `RespondTo` to our target/in-scope systems
 2. Setting `DontRespondTo` to any IPs we consider out-of-scope
 
+We're going to focus on the `DontRespondTo` approach for this Lab.
+
+#### *What* To Exclude
+
+We need to add the IPv4 address assigned to the VMWare virtual network we setup for class. 
+
+The image below shows the `192.168.56.1` IP added to the out-of-scope list of our config file. This is so we avoid poisoning our gateway or else the tool will error out and break the Lab.
+
+![`DontRespondTo` Config Setting](img\image.png){ width="70%" }
+///caption
+`DontRespondTo` Config Setting
+///
+
+The IPv4 address of “192.168.56.1” **should** stay the same for you if you followed the setup instructions at the beginning of class.
+
+#### Updating The Config File
+ 
+Let's now add `192.168.56.1` to the `DontRespondTo` list in the config file like the image above showed. Do this by running...
+
 ```bash
 nano Responder.conf
 ```
 
-The image below shows us adding an IPv4 AND IPv6 address to the out-of-scope list. We want to avoid poisoning our gateway or else the tool will error out and break the Lab.
+Find the `DontRespondTo` line and add the IPv4 address as shown below.
 
 ![`DontRespondTo` Config Setting](img\image.png){ width="70%" }
 ///caption
@@ -70,30 +107,16 @@ The image below shows us adding an IPv4 AND IPv6 address to the out-of-scope lis
 ///
 
 To save these config changes you can hit `Ctrl-x` → `y` → `Enter`.
+ 
+Once, we start Responder up we should see the `192.168.56.1` address in the out-of-scope settings reflected in the terminal output.
 
-???+ warning
-    The IPv4 address of “192.168.56.1” will stay the same for you, so add that to the `DontRespondTo` list now.
-
-    BUT the IPv6 address “FE80::DAA5:8125:436B:291B” will likely be different for you. 
-
-    Unfortunately, the only way to determine the IPv6 address you need will be to let the tool error out. Then go back, add it to the config, and re-run Responder.
-
-    When you start to see errors like the image below after starting Responder, hit `Ctrl-c` (repeatedly) until the execution stops. Then copy the IPv6 address that’s part of the error and add it to the `DontRespondTo` list like the image above showed.
-
-    ![Evil IPv6 Gremlin](img\image%201.png){ width="70%" }
-    ///caption
-    Evil IPv6 Gremlin
-    ///
-
-When we start Responder up we should see both the in-scope and out-of-scope settings reflected in the terminal output.
-
-![Scope Config](img\image%202.png){ width="70%" }
+![Scope Config](img\exclude_output.png){ width="70%" }
 ///caption
 Scope Config
 ///
 
 ???+ note
-    You can also set specific systems to *ONLY* respond to, but we do **not** want to do that today.
+    You can also set specific systems to *ONLY* respond to, but we are **not** going to do that today.
 
     ![`RespondTo`  Config Setting](img\Untitled.png){ width="70%" }
     ///caption
@@ -129,14 +152,14 @@ There is a bot on our `GOAD-DC02` target VM trying to make a SMB connections to 
 
 By saying *we* are `bravos` the `GOAD-DC02` systems sends us the user hashes while trying to make a SMB connection. Resulting in us capturing a couple NTLMv2 hashes.
 
-![Hashes Captured](img\Untitled%203.png){ width="70%" }
+![Hashes Captured](img\hashes_captured.png){ width="70%" }
 ///caption
 Hashes Captured
 ///
 
-Once you have captured the hashes for `robb.stark` and `eddard.stark`, let’s stop Responder with `Ctrl`+`c`.
+Once you have captured the hashes for ***BOTH*** `robb.stark` and `eddard.stark`, let’s stop Responder with `Ctrl`+`c`.
 
-The NTLMv2 hashes are not usable to do pass-the-hash with just Responder, but you CAN crack them to retrieve the password.
+The NTLMv2 hashes are not usable to do pass-the-hash with just Responder, but you CAN crack them to retrieve the cleartext passwords.
 
 ???+ note
     Captured hashes can also be used with NetExec to SMB enumeration. We’ll show an optional example of this later in the Lab.
@@ -162,16 +185,13 @@ sudo -E -H $VIRTUAL_ENV/bin/python DumpHash.py
 DumpHash.py
 ///
 
-There Won't be any NTLMv1 hashes so don't worry about that line.
+There won't be any NTLMv1 hashes so don't worry about that line.
 
 Copy the NTLMv2 hashes in their entirety to a file called `responder.hashes` in your home directory.
 
 ```bash
 nano ~/responder.hashes
 ```
-
-???+ warning
-    If that python command errors out, then just run `cat ~/git-tools/Responder/logs/SMB*` in the meantime.
 
 I’ve captured some static hashes below that can be stand-ins (though not perfect) if you couldn’t get this Lab to work. Put these in a file called `responder.hashes` in your home directory for use later.
 
@@ -181,11 +201,11 @@ eddard.stark::NORTH:1122334455667788:76E26250ABF96A09E68ADC5A9B1A4C29:0101000000
 ```
 
 ???+ warning
-    Keep these for when we get to Hashcat.
+    Keep these for when we get to the Hashcat Lab.
 
 ### Relaying with Impacket
 
-???+ warning
+???+ warning "Two Target VMs Required"
     You’ll need BOTH `GOAD-DC02` and `GOAD-SRV02` targets running in order to relay successfully.
 
 Next up, we're gonna do some relaying with Impacket. To do this, we have to make some more configuration changes to responders configuration file.
@@ -213,7 +233,7 @@ Services are Off
 ///
 
 ???+ warning
-    Keep responder running in one terminal window and open a second terminal window to execute the impact it commands below.
+    Keep responder running in one terminal window and open a second terminal window to execute the impacket commands below.
 
 Before we start Impacket’s ntlmrelayx, we want to create a new directory where we can dump the results of our relaying. Create that directory with the command below.
 
@@ -235,7 +255,7 @@ Protocol Used To Capture Hashes
 
 So, we know SMB authentication via hashes is happening on the subnet and we’re going to use ntlmrelayx to relay those hashes to targets. BUT in order for this to be successful, our targets cannot ***require*** SMB signing.
 
-???+ note
+???- note "SMB Signing Explained"
     SMB signing adds a cryptographic signature to each SMB message. This signature verifies the integrity and authenticity of the message, ensuring it has not been tampered with during transmission. This includes verifying the hash is coming from its true originating machine and not an attacker’s.
 
 Remember how we did this manually with Nmap during the NetExec Lab and then used NetExec’s own `--gen-relay-list` to create a list of targets? That target file helps direct Impacket’s efforts for relaying. It will *only* relay to systems within that `smb_relay.txt` file.
@@ -243,21 +263,23 @@ Remember how we did this manually with Nmap during the NetExec Lab and then used
 The command below invokes **`impacket-ntlmrelayx`**, a tool from the Impacket suite designed for NTLM relay attacks. These attacks exploit the NTLM authentication protocol to relay credential authentication requests to other network services. The tool is highly configurable, allowing for various attack scenarios. 
 
 ```bash
-sudo impacket-ntlmrelayx -tf ~/smb_relay.txt --delegate-access -ts -of /opt/work/relays --dump-laps -l /opt/work/loot -smb2support -c whoami -socks | tee -a smb-relay.log
+sudo /home/telchar/.local/bin/ntlmrelayx.py -tf ~/smb_relay.txt --delegate-access -ts -of /opt/work/relays --dump-laps -l /opt/work/loot -smb2support -c whoami -socks | tee -a smb-relay.log
 ```
 
-There's a lot packed into that one command so lets breakdown its components:
 
-- **`-tf ~/smb_relay.txt`**: Specifies a targets file (**`tf`**) that contains a list of IP addresses to relay the NTLM authentication attempts to. **`~/**smb_relay.txt` should be a file path to the list of target IP addresses, presumably those running SMB services.
-- **`--delegate-access`**: Enables delegation of access, allowing the attacker to request any service ticket on behalf of the user, expanding the scope of the attack.
-- **`-ts`**: Adds timestamp to every logging output
-- **`-of /opt/work/relays`**: Specifies the output file for dumping captured hashes or other relevant data. **`/opt/work/relays`** is the path where this information will be saved.
-- **`--dump-laps`**: Attempts to dump the Local Administrator Password Solution (LAPS) passwords, which are dynamically managed administrator passwords for Windows computers.
-- **`-l /opt/work/loot`**: Sets the base logging folder (**`l`**) where various logs and loot grabbed during the attack will be stored. **`/opt/work/loot`** is the specified directory for this purpose.
-- **`-smb2support`**: Enables support for SMB2, allowing the tool to relay to services using SMB version 2.
-- **`-c whoami`**: Executes a command (**`c`**) on the relayed connections. **`whoami`** is the command specified here, which is typically used to confirm the identity the attacker is operating under on the remote system.
-- **`-socks`**: Starts a SOCKS server for proxying traffic through relayed connections, enabling direct interaction with the network through the credentials of relayed authentication sessions.
-- **`| tee -a smb-relay.log`**: Pipes the output of the entire command into **`tee`**, which is instructed to append (**`a`**) the output to **`smb-relay.log`**. This file will log the output of the command for later review.
+???- note "Command Options Explained"
+    There's a lot packed into that one command so lets breakdown its components:
+
+    - **`-tf ~/smb_relay.txt`**: Specifies a targets file (**`tf`**) that contains a list of IP addresses to relay the NTLM authentication attempts to. **`~/**smb_relay.txt` should be a file path to the list of target IP addresses, presumably those running SMB services.
+    - **`--delegate-access`**: Enables delegation of access, allowing the attacker to request any service ticket on behalf of the user, expanding the scope of the attack.
+    - **`-ts`**: Adds timestamp to every logging output
+    - **`-of /opt/work/relays`**: Specifies the output file for dumping captured hashes or other relevant data. **`/opt/work/relays`** is the path where this information will be saved.
+    - **`--dump-laps`**: Attempts to dump the Local Administrator Password Solution (LAPS) passwords, which are dynamically managed administrator passwords for Windows computers.
+    - **`-l /opt/work/loot`**: Sets the base logging folder (**`l`**) where various logs and loot grabbed during the attack will be stored. **`/opt/work/loot`** is the specified directory for this purpose.
+    - **`-smb2support`**: Enables support for SMB2, allowing the tool to relay to services using SMB version 2.
+    - **`-c whoami`**: Executes a command (**`c`**) on the relayed connections. **`whoami`** is the command specified here, which is typically used to confirm the identity the attacker is operating under on the remote system.
+    - **`-socks`**: Starts a SOCKS server for proxying traffic through relayed connections, enabling direct interaction with the network through the credentials of relayed authentication sessions.
+    - **`| tee -a smb-relay.log`**: Pipes the output of the entire command into **`tee`**, which is instructed to append (**`a`**) the output to **`smb-relay.log`**. This file will log the output of the command for later review.
 
 The output from this command is shown below, which highlights the SMB authentication success after relaying a hash. The `whoami` command being executed on a target machine. Lastly, a SOCKS proxy being added after the successful connection. This SOCKS proxy could then be used to pivot to new targets.
 
@@ -275,39 +297,39 @@ You can type `socks` in the terminal while ntlmrelayx is running to see a list o
 
 Eventually, you will get two SOCKS proxy connections setup. Both will be for the 192.168.56.22 (GOAD-SRV02) VM. One for the user `robb.stark` which will not have admin access on the target system. The other will be for the user `eddard.stark` which will have admin access.
 
-With an established SOCKS proxy on a target system, you gain significant flexibility in how you can continue your engagement. Here are some key actions you can take:
+???- note "How SOCKS Proxies Help Attackers"
+    With an established SOCKS proxy on a target system, you gain significant flexibility in how you can continue your engagement. Here are some key actions you can take:
 
-1. Network Pivoting
-    1. **Extend your attack surface**: By setting up a SOCKS proxy, you can pivot through the internal network, essentially routing traffic through the compromised host to access other internal systems that may not be directly reachable from your attacking machine.
-2. Tunneling Other Protocols
-    1. You can route a variety of protocols over the SOCKS proxy:
-        1. **HTTP/HTTPS traffic** for web application assessments.
-        2. **SMB traffic** for lateral movement and further exploitation attempts.
-        3. **SSH and RDP** for remote access to internal machines.
-3. Bypass Network Segmentation
-    1. If the network is segmented (e.g., DMZ or internal subnet), you can use the SOCKS proxy to bypass these segmentation controls and explore otherwise unreachable areas.
-4. Port Scanning
-    1. Use tools like `nmap` with a SOCKS proxy (`proxychains`) to perform internal network port scans from your external machine. This gives insight into what services are running within the internal network.
-5. Exploiting Internal Services
-    1. Exploit vulnerabilities on internal services (e.g., SMB exploits, RCE vulnerabilities in web applications) by routing your exploitation tools (Metasploit, CrackMapExec, etc.) through the SOCKS proxy.
-6. Credential Harvesting
-    1. Intercept and analyze traffic using tools like `mitmproxy` or `Wireshark` routed through the SOCKS proxy to capture credentials or session tokens.
-7. Maintaining Persistence
-    1. Keep a hidden foothold by maintaining the proxy as a backdoor, allowing for later reconnection to the internal network.
+    1. Network Pivoting
+        1. **Extend your attack surface**: By setting up a SOCKS proxy, you can pivot through the internal network, essentially routing traffic through the compromised host to access other internal systems that may not be directly reachable from your attacking machine.
+    2. Tunneling Other Protocols
+        1. You can route a variety of protocols over the SOCKS proxy:
+            1. **HTTP/HTTPS traffic** for web application assessments.
+            2. **SMB traffic** for lateral movement and further exploitation attempts.
+            3. **SSH and RDP** for remote access to internal machines.
+    3. Bypass Network Segmentation
+        1. If the network is segmented (e.g., DMZ or internal subnet), you can use the SOCKS proxy to bypass these segmentation controls and explore otherwise unreachable areas.
+    4. Port Scanning
+        1. Use tools like `nmap` with a SOCKS proxy (`proxychains`) to perform internal network port scans from your external machine. This gives insight into what services are running within the internal network.
+    5. Exploiting Internal Services
+        1. Exploit vulnerabilities on internal services (e.g., SMB exploits, RCE vulnerabilities in web applications) by routing your exploitation tools (Metasploit, CrackMapExec, etc.) through the SOCKS proxy.
+    6. Credential Harvesting
+        1. Intercept and analyze traffic using tools like `mitmproxy` or `Wireshark` routed through the SOCKS proxy to capture credentials or session tokens.
+    7. Maintaining Persistence
+        1. Keep a hidden foothold by maintaining the proxy as a backdoor, allowing for later reconnection to the internal network.
 
-A number of tools can help you take advantage of a SOCKS proxy. Including…
+    A number of tools can help you take advantage of a SOCKS proxy. Including…
 
-- Proxychains: Wrap your tools to use the SOCKS proxy.
-- Metasploit: Can be configured to use SOCKS proxies for pivoting and exploitation.
+    - Proxychains: Wrap your tools to use the SOCKS proxy.
+    - Metasploit: Can be configured to use SOCKS proxies for pivoting and exploitation.
 
-Each of these techniques extends your ability to explore and exploit the target environment further, once a SOCKS proxy is in place.
+    Each of these techniques extends your ability to explore and exploit the target environment further, once a SOCKS proxy is in place.
 
 You can now stop both ntlmrelayx and Responder with `Ctrl`+`c` in their respective terminals.
 
 We can always go back and reread this output with the below command.
 
 ```bash
-# Follow it up with...
 less smb-relay.log
 ```
 
@@ -317,7 +339,6 @@ Responder logs and execution history can be found in `~/git-tools/Responder/`.
 You can run the below commands to clear out Responder’s history to re-run the Lab from scratch.
 
 ```bash
-# To reset Responder...
 sudo rm ~/git-tools/Responder/logs/*.log
 sudo rm ~/git-tools/Responder/*.db
 ```

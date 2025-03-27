@@ -33,7 +33,7 @@ rm packages-microsoft-prod.deb
 # APT method
 sudo apt update
 sudo apt install pipx -y
-sudo apt install nmap locate python3-pip python3-venv aircrack-ng burpsuite eaphammer gophish bettercap hashcat tcpdump wireshark juice-shop powershell seclists jq john python3-impacket=0.11.0-2 impacket-scripts=1.7+parrot1 -y
+sudo apt install nmap locate python3-pip python3-venv aircrack-ng burpsuite eaphammer gophish bettercap hashcat tcpdump wireshark juice-shop powershell seclists jq john -y
 # sudo apt install kismet -y
 
 # BloodHound GUI
@@ -46,7 +46,7 @@ unzip BloodHound-linux-x64.zip -d .
 # pipx method
 pipx install git+https://github.com/ridgebackinfosec/Coercer
 pipx install git+https://github.com/ridgebackinfosec/kerbrute
-# pipx install git+https://github.com/ridgebackinfosec/impacket
+pipx install git+https://github.com/ridgebackinfosec/impacket
 pipx install git+https://github.com/ridgebackinfosec/NetExec
 pipx install git+https://github.com/ridgebackinfosec/BloodHound.py
 pipx install git+https://github.com/ridgebackinfosec/Certipy
