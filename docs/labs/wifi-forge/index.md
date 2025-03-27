@@ -25,6 +25,9 @@ sudo python3 WifiForge.py
 Select **Bettercap Recon** from the menu. Allow up to 30 seconds to initialize the network.
 
 ![Bettercap Recon](img/main-menu.png){ width="70%" }
+///caption
+Menu
+///
 
 !!! note
     Normally, when using Bettercap with physical network cards, it is necessary to use `airmon-ng check kill` to terminate processes that may interfere. However, running this command in the mininet-wifi network is unnecessary and may cause failures.

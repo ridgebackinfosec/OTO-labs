@@ -35,11 +35,12 @@ Now that we have our hashes in a file that we can reach, run the command below t
 hashcat -m 5600 --force -a 0 ~/responder.hashes /usr/share/eaphammer/wordlists/rockyou.txt
 ```
 
-- **`-m 5600`**: Specifies the hash type that Hashcat will attempt to crack. In this case, **`5600`** refers to NetNTLMv2 hashes, a type of hash used by Microsoft for password storage and network authentication in the NTLM (New Technology LAN Manager) protocol.
-- **`--force`**: This option forces Hashcat to start despite any warnings that might suggest it's not a good idea to proceed. It's important to use this option with caution, as it can bypass safety mechanisms designed to protect your hardware or data.
-- **`-a 0`**: Specifies the attack mode. **`0`** is for a straight attack, which means Hashcat will use a wordlist as-is, trying each entry as a potential password against the provided hashes.
-- **`responder.hashes`**: This is the file containing the hashes that you're attempting to crack. The name suggests these hashes were obtained using Responder, a tool commonly used for network security testing, specifically for capturing hashes by responding to different types of network requests.
-- **`/usr/share/eaphammer/wordlists/rockyou.txt`**: Specifies the path to the wordlist that Hashcat will use for the attack. The **`rockyou.txt`** wordlist is famous in password cracking and cybersecurity tests for its extensive collection of leaked passwords, making it a valuable resource for attempting to crack common or weak passwords.
+???- note "Command Options/Arguments Explained"
+    - **`-m 5600`**: Specifies the hash type that Hashcat will attempt to crack. In this case, **`5600`** refers to NetNTLMv2 hashes, a type of hash used by Microsoft for password storage and network authentication in the NTLM (New Technology LAN Manager) protocol.
+    - **`--force`**: This option forces Hashcat to start despite any warnings that might suggest it's not a good idea to proceed. It's important to use this option with caution, as it can bypass safety mechanisms designed to protect your hardware or data.
+    - **`-a 0`**: Specifies the attack mode. **`0`** is for a straight attack, which means Hashcat will use a wordlist as-is, trying each entry as a potential password against the provided hashes.
+    - **`responder.hashes`**: This is the file containing the hashes that you're attempting to crack. The name suggests these hashes were obtained using Responder, a tool commonly used for network security testing, specifically for capturing hashes by responding to different types of network requests.
+    - **`/usr/share/eaphammer/wordlists/rockyou.txt`**: Specifies the path to the wordlist that Hashcat will use for the attack. The **`rockyou.txt`** wordlist is famous in password cracking and cybersecurity tests for its extensive collection of leaked passwords, making it a valuable resource for attempting to crack common or weak passwords.
 
 ???+ warning
     This process might take a while depending on your setup so get comfortable and watch for the output below. You should be able to crack Robb's password but not Eddard's.
@@ -112,6 +113,9 @@ netexec smb 192.168.56.22 -u ~/last-names.txt -p 'sexywolfy'
 ```
 
 ![Untitled](img\Untitled%202.png){ width="70%" }
+///caption
+Password Spraying
+///
 
 Wait we weren’t targeting the user “SMITH”. What happened??
 

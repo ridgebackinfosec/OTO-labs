@@ -33,15 +33,16 @@ cd nmap
 sudo nmap -p- -A -Pn -oA nmap_lab $GOAD
 ```
 
-We’re doing a few things with this scan…
+???- note "Command Options/Arguments Explained"
+    We’re doing a few things with this scan…
 
-- Running as root with the elevated `sudo` This gives nmap additional abilities.
-- The option `-p-` directs nmap to conduct a “full port scan” of all 65,535 TCP ports.
-- Nmap is doing an “aggressive” scan by using the `-A`
-    - Enables OS detection, version detection, script scanning, and traceroute
-- The `-Pn` option treats all hosts as online -- skip host discovery.
-- Creating output file(s) by using the `-oA nmap_lab` for other tools to consume
-    - **We might use this output in later Labs!**
+    - Running as root with the elevated `sudo` This gives nmap additional abilities.
+    - The option `-p-` directs nmap to conduct a “full port scan” of all 65,535 TCP ports.
+    - Nmap is doing an “aggressive” scan by using the `-A`
+        - Enables OS detection, version detection, script scanning, and traceroute
+    - The `-Pn` option treats all hosts as online -- skip host discovery.
+    - Creating output file(s) by using the `-oA nmap_lab` for other tools to consume
+        - **We might use this output in later Labs!**
 
 Review the results…
 
@@ -87,15 +88,16 @@ We can start this process by executing the below Nmap command.
 sudo nmap -n --script="ldap* and not brute" -p 389 $GOAD
 ```
 
-Here's the breakdown of the above Nmap command:
+???- note "Command Options/Arguments Explained"
+    Here's the breakdown of the above Nmap command:
 
-- **`sudo`** is used to execute **`nmap`** with root privileges, which may be required for certain network interfaces or to send raw packets, thereby granting **`nmap`** enhanced capabilities.
-- The `-n` option prevents **`nmap`** from performing DNS resolution. This means that **`nmap`** won't try to resolve hostnames to IP addresses, speeding up the scan when the resolution isn't necessary for the scan's purpose.
-- **`--script="ldap* and not brute"`** specifies which Nmap Scripting Engine (NSE) scripts to run. In this case:
-    - **`ldap*`** means run all scripts whose names start with **`ldap`**.
-    - **`and not brute`** excludes any scripts that perform brute-force attacks.
-    - This combination targets all LDAP-related scripts except those designed for brute-forcing credentials.
-- **`-p 389`** specifies the port number for the scan, where **`389`** is the default port for LDAP (Lightweight Directory Access Protocol), a protocol used for accessing and maintaining distributed directory information services over an IP network.
+    - **`sudo`** is used to execute **`nmap`** with root privileges, which may be required for certain network interfaces or to send raw packets, thereby granting **`nmap`** enhanced capabilities.
+    - The `-n` option prevents **`nmap`** from performing DNS resolution. This means that **`nmap`** won't try to resolve hostnames to IP addresses, speeding up the scan when the resolution isn't necessary for the scan's purpose.
+    - **`--script="ldap* and not brute"`** specifies which Nmap Scripting Engine (NSE) scripts to run. In this case:
+        - **`ldap*`** means run all scripts whose names start with **`ldap`**.
+        - **`and not brute`** excludes any scripts that perform brute-force attacks.
+        - This combination targets all LDAP-related scripts except those designed for brute-forcing credentials.
+    - **`-p 389`** specifies the port number for the scan, where **`389`** is the default port for LDAP (Lightweight Directory Access Protocol), a protocol used for accessing and maintaining distributed directory information services over an IP network.
 
 ![Untitled](img\Untitled%203.png){ width="70%" }
 
@@ -110,11 +112,12 @@ Here's the breakdown of the above Nmap command:
 sudo nmap -p 88 --script=krb5-enum-users --script-args="krb5-enum-users.realm='north.sevenkingdoms.local',userdb=/usr/share/seclists/Usernames/top-usernames-shortlist.txt" $GOAD
 ```
 
-- **`-p 88`**: Specifies the port to scan, in this case, port 88, which is the default port for the Kerberos Key Distribution Center (KDC) service.
-- **`--script=krb5-enum-users`**: Utilizes the **`krb5-enum-users`** Nmap script. This script attempts to enumerate valid usernames from a Kerberos Key Distribution Center by exploiting the Kerberos protocol's behavior of differentiating between valid and invalid usernames at login attempts.
-- **`--script-args="krb5-enum-users.realm='north.sevenkingdoms.local',userdb=/usr/share/seclists/Usernames/top-usernames-shortlist.txt"`**: Passes arguments to the **`krb5-enum-users`** script with two parameters:
-    - **`krb5-enum-users.realm='north.sevenkingdoms.local'`**: Specifies the realm for the Kerberos service. In this case, it's set to 'north.sevenkingdoms.local'.
-    - **`userdb=/usr/share/seclists/Usernames/top-usernames-shortlist.txt`**: Specifies the path to the database of usernames to attempt enumeration with. This path points to a file containing a list of popular usernames that the script will try to validate against the Kerberos service.
+???- note "Command Options/Arguments Explained"
+    - **`-p 88`**: Specifies the port to scan, in this case, port 88, which is the default port for the Kerberos Key Distribution Center (KDC) service.
+    - **`--script=krb5-enum-users`**: Utilizes the **`krb5-enum-users`** Nmap script. This script attempts to enumerate valid usernames from a Kerberos Key Distribution Center by exploiting the Kerberos protocol's behavior of differentiating between valid and invalid usernames at login attempts.
+    - **`--script-args="krb5-enum-users.realm='north.sevenkingdoms.local',userdb=/usr/share/seclists/Usernames/top-usernames-shortlist.txt"`**: Passes arguments to the **`krb5-enum-users`** script with two parameters:
+        - **`krb5-enum-users.realm='north.sevenkingdoms.local'`**: Specifies the realm for the Kerberos service. In this case, it's set to 'north.sevenkingdoms.local'.
+        - **`userdb=/usr/share/seclists/Usernames/top-usernames-shortlist.txt`**: Specifies the path to the database of usernames to attempt enumeration with. This path points to a file containing a list of popular usernames that the script will try to validate against the Kerberos service.
 
 ???+ warning
     Try the longer `/usr/share/seclists/Usernames/xato-net-10-million-usernames.txt` list too.
@@ -156,9 +159,10 @@ Try scanning for SMB vulnerabilities too. This won’t return any results for ou
 sudo nmap -Pn --script=smb-vuln* -p 139,445 $GOAD
 ```
 
-- **`-Pn`**: This option skips the discovery phase, treating all specified hosts as online and proceeding directly to port scanning. This can be useful if the target is using methods to ignore or block ping probes, which are used by Nmap by default to check if hosts are online.
-- **`--script=smb-vuln*`**: Tells Nmap to use the scripting engine with a specific set of scripts. Here, it's targeting scripts that start with **`smb-vuln`**, which are designed to detect vulnerabilities in SMB services. Nmap's scripting engine (NSE) is a powerful feature that extends Nmap's capabilities to include vulnerability detection, exploitation, and more. The **`smb-vuln*`** pattern matches all scripts designed to find common SMB vulnerabilities, potentially identifying issues like those exploited by famous malware like WannaCry or NotPetya.
-- **`-p 139,445`**: Specifies the ports to scan. Ports 139 and 445 are the traditional ports associated with SMB services. Port 139 is used for SMB over NetBIOS, whereas port 445 is for SMB directly over TCP/IP without the NetBIOS layer.
+???- note "Command Options/Arguments Explained"
+    - **`-Pn`**: This option skips the discovery phase, treating all specified hosts as online and proceeding directly to port scanning. This can be useful if the target is using methods to ignore or block ping probes, which are used by Nmap by default to check if hosts are online.
+    - **`--script=smb-vuln*`**: Tells Nmap to use the scripting engine with a specific set of scripts. Here, it's targeting scripts that start with **`smb-vuln`**, which are designed to detect vulnerabilities in SMB services. Nmap's scripting engine (NSE) is a powerful feature that extends Nmap's capabilities to include vulnerability detection, exploitation, and more. The **`smb-vuln*`** pattern matches all scripts designed to find common SMB vulnerabilities, potentially identifying issues like those exploited by famous malware like WannaCry or NotPetya.
+    - **`-p 139,445`**: Specifies the ports to scan. Ports 139 and 445 are the traditional ports associated with SMB services. Port 139 is used for SMB over NetBIOS, whereas port 445 is for SMB directly over TCP/IP without the NetBIOS layer.
 
 ![image.png](img\image%202.png){ width="70%" }
 
@@ -170,8 +174,9 @@ Let’s try the vulners NSE script now and see what comes back.
 sudo nmap -sV --script=vulners $GOAD
 ```
 
-- **`-sV`**: This option enables version detection, allowing Nmap to determine the version of the services running on open ports. Knowing the version is crucial for identifying specific vulnerabilities associated with those versions.
-- **`--script=vulners`**: Specifies the use of the **`vulners`** NSE (Nmap Scripting Engine) script. The **`vulners`** script is a script that queries the Vulners vulnerability database to find known vulnerabilities of the detected service versions. It's a powerful way to quickly assess the potential vulnerabilities present on the scanned host(s) based on the service versions detected during the scan.
+???- note "Command Options/Arguments Explained"
+    - **`-sV`**: This option enables version detection, allowing Nmap to determine the version of the services running on open ports. Knowing the version is crucial for identifying specific vulnerabilities associated with those versions.
+    - **`--script=vulners`**: Specifies the use of the **`vulners`** NSE (Nmap Scripting Engine) script. The **`vulners`** script is a script that queries the Vulners vulnerability database to find known vulnerabilities of the detected service versions. It's a powerful way to quickly assess the potential vulnerabilities present on the scanned host(s) based on the service versions detected during the scan.
 
 ![image.png](img\image%203.png){ width="70%" }
 ///caption

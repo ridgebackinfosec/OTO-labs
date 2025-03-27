@@ -267,7 +267,7 @@ sudo /home/telchar/.local/bin/ntlmrelayx.py -tf ~/smb_relay.txt --delegate-acces
 ```
 
 
-???- note "Command Options Explained"
+???- note "Command Options/Arguments Explained"
     There's a lot packed into that one command so lets breakdown its components:
 
     - **`-tf ~/smb_relay.txt`**: Specifies a targets file (**`tf`**) that contains a list of IP addresses to relay the NTLM authentication attempts to. **`~/**smb_relay.txt` should be a file path to the list of target IP addresses, presumably those running SMB services.

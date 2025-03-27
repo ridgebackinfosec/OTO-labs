@@ -39,6 +39,9 @@ This launches the Bettercap interactive session. From here, you can execute comm
 ```
 
 ![Untitled](img\Untitled%201.png){ width="70%" }
+///caption
+Help Dialog
+///
 
 When bettercap starts up it, similarly to Responder, lists out the various services it has enabled. A list of the default start up services is shown below.
 
@@ -165,6 +168,9 @@ arp.spoof on
 ```
 
 ![Untitled](img\Untitled%209.png){ width="70%" }
+///caption
+Spoofing
+///
 
 Specify the target(s) you want to intercept traffic from. This command tricks the target devices into sending their traffic through your machine, allowing you to capture and manipulate it.
 
@@ -183,9 +189,15 @@ https.proxy on
 ```
 
 ![Untitled](img\Untitled%2010.png){ width="70%" }
+///caption
+Proxying
+///
 
 ```bash
 include hstshijack/hstshijack
 ```
 
 ![Untitled](img\Untitled%2011.png){ width="70%" }
+///caption
+HSTS Hijack
+///

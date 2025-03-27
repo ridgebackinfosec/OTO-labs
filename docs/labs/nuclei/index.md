@@ -25,6 +25,9 @@ nuclei -h
 ```
 
 ![image.png](img\image.png){ width="70%" }
+///caption
+Help Dialog
+///
 
 There’s a LOT in that `help` output, but first and foremost it gives us some options around targeting and templates.
 
@@ -51,6 +54,9 @@ As we can see from the image above, the template provides helpful references and
 Further down in the template we see the actual HTTP request and matching rules used to fingerprint the existence of this RCE vuln on a target.
 
 ![image.png](img\image%202.png){ width="70%" }
+///caption
+...More Template
+///
 
 ### HTTP
 
@@ -73,7 +79,8 @@ Since we have a local vulnerable web application already running on The Forge VM
 nuclei -target http://127.0.0.1:42000
 ```
 
-- `-target http://127.0.0.1:42000`: [using -u also works for specifying a target] Specifies the **target** for scanning, which in this case is the local machine (`127.0.0.1`) on port `42000`. That’s where OWASP juice shop is running.
+???- note "Command Options/Arguments Explained"
+  - `-target http://127.0.0.1:42000`: [using -u also works for specifying a target] Specifies the **target** for scanning, which in this case is the local machine (`127.0.0.1`) on port `42000`. That’s where OWASP juice shop is running.
 
 ![Command Output](img\image%204.png){ width="70%" }
 ///caption

@@ -1,6 +1,6 @@
 # Lab - Burp Suite
 
-???+ warning "First Time Steps"
+???- warning "First Time Opening Burp?"
     You can launch Burp using the below command…
 
     ```bash
@@ -262,7 +262,7 @@ You can open Inspector from the collapsed right pane next to any request/respons
 
 ![Untitled](img\Untitled%2024.png){ width="70%" }
 ///caption
-Inspctor
+Inspector
 ///
 
 This will show the below dialog which “inspects” the request/response headers and various details.

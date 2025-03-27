@@ -92,13 +92,14 @@ bloodhound-python --zip -c all -d north.sevenkingdoms.local -u brandon.stark -p 
 Data Collection
 ///
 
-Breaking it down:  
-- `-c all` → Grabs everything: users, groups, ACLs, sessions—you name it.  
-- `-d north.sevenkingdoms.local` → That’s our target AD domain.  
-- `-u brandon.stark -p iseedeadpeople` → Our credentials (hopefully, Bran has domain admin access 😉).  
-- `-dc winterfell.north.sevenkingdoms.local` → The specific domain controller we’re hitting.  
-- `-ns 127.0.0.1` → Using our local machine for DNS resolution.  
-- `--dns-timeout 60 --dns-tcp` → Tweaks DNS settings for better reliability.  
+???- note "Command Options/Arguments Explained"
+    Breaking it down:  
+    - `-c all` → Grabs everything: users, groups, ACLs, sessions—you name it.  
+    - `-d north.sevenkingdoms.local` → That’s our target AD domain.  
+    - `-u brandon.stark -p iseedeadpeople` → Our credentials (hopefully, Bran has domain admin access 😉).  
+    - `-dc winterfell.north.sevenkingdoms.local` → The specific domain controller we’re hitting.  
+    - `-ns 127.0.0.1` → Using our local machine for DNS resolution.  
+    - `--dns-timeout 60 --dns-tcp` → Tweaks DNS settings for better reliability.  
 
 Looks like we found some data alright!
 

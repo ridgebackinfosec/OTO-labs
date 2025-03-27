@@ -61,8 +61,9 @@ We can also use the below NetExec command to accomplish the same check that Nmap
 netexec smb 192.168.56.10-23
 ```
 
-- **`smb`**: Specifies that the SMB module of CrackMapExec is to be used. This module focuses on actions and enumeration tasks that can be performed over the SMB protocol.
-- **`192.168.56.10-23`**: This defines the target range for the command. It tells CME to operate on a range of IP addresses starting from 192.168.56.10 through 192.168.56.23. The tool will attempt to connect to each IP address in this range and perform its SMB protocol-based operations.
+???- note "Command Options/Arguments Explained"
+    - **`smb`**: Specifies that the SMB module of CrackMapExec is to be used. This module focuses on actions and enumeration tasks that can be performed over the SMB protocol.
+    - **`192.168.56.10-23`**: This defines the target range for the command. It tells CME to operate on a range of IP addresses starting from 192.168.56.10 through 192.168.56.23. The tool will attempt to connect to each IP address in this range and perform its SMB protocol-based operations.
 
 ![SMB Signing is not required](img\Untitled%203.png){ width="70%" }
 ///caption
@@ -100,7 +101,8 @@ In some cases, it’s possible to list out the users of a system via SMB. Let’
 netexec smb 192.168.56.10-23 --users
 ```
 
-**`--users`**: This flag is attempting to list or retrieve information about domain users on the target systems or SMB shares. If a user is specified, then only its information is queried.
+???- note "Command Options/Arguments Explained"
+    **`--users`**: This flag is attempting to list or retrieve information about domain users on the target systems or SMB shares. If a user is specified, then only its information is queried.
 
 ![User Enumeration](img\image%201.png){ width="70%" }
 ///caption
