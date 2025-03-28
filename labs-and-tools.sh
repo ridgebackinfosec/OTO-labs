@@ -10,7 +10,6 @@ set -x
 cd
 
 # Pull down latest Lab walkthroughs
-git clone https://github.com/ridgebackinfosec/OTO-labs ~/OTO-labs
 cd ~/OTO-labs
 python3 -m venv venv
 source venv/bin/activate

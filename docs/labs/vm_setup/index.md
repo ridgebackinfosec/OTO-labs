@@ -112,7 +112,8 @@ Fusion GUI
 
 This will be the primary VM and will be used as the “attacker’s” machine.
 
-### Lab Guide & Tool Install Script
+<!-- Moved this step to the repo's README -->
+<!-- ### Lab Guide & Tool Install Script
 
 Once imported into VMware, turn The Forge VM on, login, open a terminal and run the below commands to download and setup the Lab Guide and tools for the class. 
 
@@ -126,7 +127,7 @@ chmod 744 ~/labs-and-tools.sh
 ```
 
 ???+ warning
-    You will be prompted for the password when running the `labs-and-tools.sh` script.
+    You will be prompted for the password when running the `labs-and-tools.sh` script. -->
 
 ### Static IP Address Assignment
 

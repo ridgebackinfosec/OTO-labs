@@ -3,9 +3,9 @@ Welcome to Offensive Tooling for Operators!
 
 ## Pre-class VM Setup
 
-You should have received the VM download link via email of Discord. If you have not already done so, download the VMs **now**.
+You should have received the VM download link via email or Discord. If you have not already done so, download the VMs **now**.
 
-Please read through and complete the instructions below regarding supported virtualization software, extracting the VMs, and importing the VMs before class. 
+Please read through and complete the instructions below regarding supported virtualization software, extracting the VMs, importing the VMs, and installing the tools ***before*** class. 
 
 Additional setup details for each VM (credentials, network config, etc.) will be covered during class.
 
@@ -65,6 +65,39 @@ Give the VM a name and click **Import**.
 ![Untitled1](https://github.com/user-attachments/assets/40bbc892-7788-40ee-ac0b-ebfea0d961c8)
 
 You may get a consistency error. If you do, do not worry. Just select **Retry** or **Try Again**. It should work.
+
+</details>
+
+<details>
+
+<summary>VM Snapshots</summary>
+
+At this point, it's always a good idea to create a snapshot of your VMs' initial state using VMware.
+
+This enables us to quickly revert back if you run into any issues during class or if you want to start over completely.
+
+</details>
+
+<details>
+
+<summary>Lab Guide & Tool Installation</summary>
+
+Turn The Forge VM on, login using the creds `telchar:ridgeback`, open a terminal, and run the below commands. 
+
+```bash
+git clone https://github.com/ridgebackinfosec/OTO-labs ~/OTO-labs
+cd ~/OTO-labs
+chmod 744 labs-and-tools.sh
+./labs-and-tools.sh
+```
+
+This will download and setup the Lab Guide and tools for the class.
+
+This is intended to reduce initial VM download size, make it easy for students to hit the ground running, control tool versions, and permit dynamic updating of the course material.
+
+That's it!
+
+Now shutdown the VMs and wait for class to begin.
 
 </details>
 
