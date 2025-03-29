@@ -49,6 +49,7 @@ pipx install git+https://github.com/ridgebackinfosec/impacket
 pipx install git+https://github.com/ridgebackinfosec/NetExec
 pipx install git+https://github.com/ridgebackinfosec/BloodHound.py
 pipx install git+https://github.com/ridgebackinfosec/Certipy
+pipx install git+https://github.com/ridgebackinfosec/o365spray
 # sudo pipx install mitm6
 
 pipx ensurepath
@@ -107,15 +108,6 @@ nuclei -version
 # CredMaster
 git clone https://github.com/ridgebackinfosec/CredMaster ~/git-tools/CredMaster
 cd ~/git-tools/CredMaster
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-deactivate
-cd
-
-# o365spray
-git clone https://github.com/ridgebackinfosec/o365spray ~/git-tools/o365spray
-cd ~/git-tools/o365spray
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
