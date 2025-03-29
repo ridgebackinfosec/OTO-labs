@@ -345,7 +345,7 @@ You can use Burp extensions to change Burp Suite's behavior in many ways, includ
 
 ### Identify Authentication Tokens
 
-In this part of the lab, you will use the **Request Minimizer** extension in Burp Suite to strip unnecessary parts of HTTP requests and analyze their impact on server responses.
+In this part of the lab, you will use first use "the **Request Minimizer** extension in Burp Suite to strip unnecessary parts of HTTP requests and analyze their impact on server responses.
 
 This extension performs HTTP request minimization. It deletes parameters that are not relevant such as: random ad cookies, cachebusting nonces, etc.
 
@@ -356,18 +356,98 @@ As each parameter is removed, the extension repeats the request to ensure the re
 !!! warning
     Burp has decided to restrict the "send to [ extension ]" from a captured request feature to the "Pro" (paid) version only.
 
-#### Install Request Minimizer
+#### Finding & Decoding JWTs
+
+The JSON Web Tokens (JWT4B) extension lets you decode and manipulate JSON web tokens on the fly, check their validity and automate common attacks.
 
 1. Open **Burp Suite**.
-2. Navigate to **Extender** → **BApp Store**.
-3. Search for **Request Minimizer**.
+2. Navigate to **Extensions** → **BApp Store**.
+3. Search for the **JSON Web Tokens** extension
+
+![JWTs](img\Untitled%2028.png){ width="70%" }
+///caption
+JWTs
+///
+
+4. Click "Install"
+
+![JSON Web Tokens](img/JWTs_ext.png){ width="70%" }
+///caption
+Install JSON Web Tokens
+///
+
+Many web applications use JWTs. Including OWASP Juice Shop included with your VM. Explore how this extension can make identifying and decoding JWTs easier.
+
+#### Configure Burp to Capture Requests
+
+1. Open **Proxy** → **Intercept**.
+2. Use the built in Burp browser
+
+![Browser](img/browser.png){ width=70%" }
+///caption
+Burp Browser
+///
+
+!!! warning "Make sure that "Intercept" toggle is off."
+
+3. With OWASP Juice Shop running, navigate to [http://127.0.0.1:42000/#/login](http://127.0.0.1:42000/#/login) from Burp's browser.
+4. Enter the user "admin@juice-sh.op" and password "admin123" to login.
+
+#### Identify an authenticated HTTP request
+
+Now go to Burp **HTTP history** sub-tab under **Proxy** tab and see all the highlighted JWTs. It's that easy to make your life easier using Extenstions!
+
+![JWTs Found](img/find-jwts.png){ width="70%" }
+///caption
+JWTs Discovered
+///
+
+Now that we've found JWTs, let's go one step further by decoding them. Click on any of the blue highlighted rows in the HTTP history tab. This wil bring up the request and response for that row. 
+
+![Inspect The Request](img/request-inspection.png){ width="70%" }
+///caption
+Inspect The Request
+///
+
+See the highlighted JWT value in the "Authorization" header of the request? Good. Use your left click to select that ***entire*** value.
+
+Then, with the JWT selected, right click on it to get additional menu options.
+
+![Request Menu Options](img/request-menu.png){ width="70%" }
+///caption
+Request Menu Options
+///
+
+Select **Extensions** > **JSON Web Tokens** > **Send selected text to JSON Web Tokens Tab to decode**.
+
+You'll be automatically switched to the JSON Web Tokens tab. And there we have it. Your captured JWT is now decoded for you.
+
+![Decoded JWT](img/jwt-decoded.png){ width="70%" }
+///caption
+Decoded JWT
+///
+
+#### Minimizing Requests
+
+Once we have an authenticated request, it's often helpful to reduce the request to the minimum viable request. This helps narrow down ***exactly*** which values are managing a user's session within a web application.
+
+Enter the "Request Minimizer" Burp extension!
+
+This extension performs HTTP request minimization. It deletes parameters that are not relevant such as: random ad cookies, cachebusting nonces, etc.
+
+Two actions are added to the context menu in Repeater: Minimize in current tab and Minimize in new tab.
+
+As each parameter is removed, the extension repeats the request to ensure the response matches. Only parameters that do not affect the response are removed.
+
+1. Navigate back to **Extensions** → **BApp Store**.
+2. Search for **Request Minimizer**.
 
 ![Minimizer](img/request-minimizer.png){ width="70%" }
 ///caption
 Extension Info
 ///
 
-4. Looks like we need to install Jython before the extension.
+3. Looks like we need to install Jython before the extension.
 
   - Click the **Download Jython** button and download the **Jython Standalone JAR** file
 
@@ -376,56 +456,64 @@ Extension Info
   Jython
   ///
 
-  - Open Settings -> search for "Jython" -> select the file
+4. Now back in Burp, Open Settings -> search for "Jython" -> select the Jython file you just downloaded
 
   ![Setting Jython](img/jython-setting.png){ width="70%" }
   ///caption
   Select Jython File
   ///
 
-5. Now go back to the Extensions tab and click **Install** for Request Minimizer and confirm it appears under **Installed Extensions**.
+5. Now go back to the Extensions tab and click **Install** for Request Minimizer 
 
-#### Configure Burp to Capture Requests
-
-1. Open **Proxy** → **Intercept**.
-3. Use the built in Burp browser
-
-![Browser](img/browser.png){ width=70%" }
+![Request Minimizer Install](img/minimizer_install.png){ width="70%" }
 ///caption
-Burp Browser
+Request Minimizer Install
 ///
 
-4. Visit any site where you have an account and authenticate to it
-5. Identify any authenticated HTTP request in **HTTP history**
+6. Confirm it appears under the **Installed** sub tab with the "Loaded" column checked
 
-#### Minimize a Request
+#### Finding the Minimum Viable Request (MVP)
 
-1. Right-click a captured request.
-2. Select **Extensions** → **Request Minimizer** → **Minimize request**.
-3. Observe changes:
+1. Right-click that same captured request we used to decode the JWT, but this time don't have the JWT value selected.
+
+![Send To Repeater](img/send-to-repeater.png){ width=70%" }
+///caption
+Send To Repeater
+///
+
+2. Select the **Send to Repeater** option; Burp's Repeater tab will turn orange
+
+3. Go to the Repeater tab and click the "Send" button to get a baseline of the request and response.
+
+![Repeater](img/repeater.png){ width=70%" }
+///caption
+Repeater
+///
+
+4. From within the Repeater tab, right click on the request and select **Extensions** → **Request Minimizer** → **Minimize in a new tab**.
+
+![Minimize It!](img/minimize-it.png){ width=70%" }
+///caption
+Minimize It!
+///
+
+After a short while, a new Repeater tab will open with the minimum viable request displayed. 
+
+![Minimum Viable Request](img/mvr.png){ width=70%" }
+///caption
+Minimum Viable Request
+///
+
+Observe changes:
    - Headers or parameters removed.
-   - Unnecessary fields (e.g., `User-Agent`) stripped.
+   - Unnecessary fields (e.g., `User-Agent`) stripped out.
+
+Now imagine a web application that uses numerouse cookie values and request headers. This extension will sort through all the cruft and help you focus on session tokens for investigations and attacks.
+
+This is the most direct and no nonsense request that can be sent to the server and get an expected complete response. Pointing you in the direction of only the most crucial decision driving values for the web server. Like whether a request is part of a valid/active session or not.
 
 !!! note
     You have done nothing malicious to the target site here. All you've done is strip out unnecessary request values (like tracking cookies, etc.) to determine what manages a session for that web application.
-
-### Explore JWTs
-
-Now that you know how to install an extension, add the “JSON Web Tokens” extension to Burp on your own. Many web applit explore how it can make identifying and decoding JWTs easier.
-
-![JWTs](img\Untitled%2028.png){ width="70%" }
-///caption
-JWTs
-///
-
-With OWASP Juice Shop running, navigate to [http://127.0.0.1:42000/#/login](http://127.0.0.1:42000/#/login) from Burp's browser. Enter the user "admin@juice-sh.op" and password "admin123" to login.
-
-Now go to the "Proxy" tab and see all the highlighted JWTs. It's that easy to make your life easier using Extenstions!
-
-![JWTs Found](img/find-jwts.png){ width="70%" }
-///caption
-JWTs Discovered
-///
 
 ### Build an Extension
 
