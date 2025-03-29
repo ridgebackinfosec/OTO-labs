@@ -505,8 +505,10 @@ Minimum Viable Request
 ///
 
 Observe changes:
-   - Headers or parameters removed.
-   - Unnecessary fields (e.g., `User-Agent`) stripped out.
+  
+  - Headers or parameters removed.
+  
+  - Unnecessary fields (e.g., `User-Agent`) stripped out.
 
 Now imagine a web application that uses numerouse cookie values and request headers. This extension will sort through all the cruft and help you focus on session tokens for investigations and attacks.
 
