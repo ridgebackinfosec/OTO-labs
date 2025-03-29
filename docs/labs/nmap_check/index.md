@@ -165,10 +165,23 @@ sudo nmap -Pn --script=smb-vuln* -p 139,445 $GOAD
     - **`-p 139,445`**: Specifies the ports to scan. Ports 139 and 445 are the traditional ports associated with SMB services. Port 139 is used for SMB over NetBIOS, whereas port 445 is for SMB directly over TCP/IP without the NetBIOS layer.
 
 ![image.png](img\image%202.png){ width="70%" }
+///caption
+smb-vuln*
+///
 
-## Vulners NSE
+<!-- 
+Port 1433 is coming back filtered in the new GOAD update.
+This needs to be resoleved before readding in the below section
+-->
+
+<!-- ## Vulners NSE
 
 Let’s try the vulners NSE script now and see what comes back.
+
+> **vulners NSE script:**
+*”For each available CPE the script prints out known vulns (links to the correspondent info) and correspondent CVSS scores.”*
+~[https://nmap.org/nsedoc/scripts/vulners.html](https://nmap.org/nsedoc/scripts/vulners.html)
+> 
 
 ```bash
 sudo nmap -sV --script=vulners $GOAD
@@ -183,4 +196,4 @@ sudo nmap -sV --script=vulners $GOAD
 Looks like there’s potential here.
 ///
 
-Do some research on your own of the CVEs listed. Do any of them have public exploits?
+Do some research on your own of the CVEs listed. Do any of them have public exploits? -->
