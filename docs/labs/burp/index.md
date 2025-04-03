@@ -353,9 +353,6 @@ Two actions are added to the context menu in Repeater: Minimize in current tab a
 
 As each parameter is removed, the extension repeats the request to ensure the response matches. Only parameters that do not affect the response are removed.
 
-!!! warning
-    Burp has decided to restrict the "send to [ extension ]" from a captured request feature to the "Pro" (paid) version only.
-
 #### Finding & Decoding JWTs
 
 The JSON Web Tokens (JWT4B) extension lets you decode and manipulate JSON web tokens on the fly, check their validity and automate common attacks.
