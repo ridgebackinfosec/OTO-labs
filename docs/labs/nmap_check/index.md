@@ -109,7 +109,7 @@ sudo nmap -n --script="ldap* and not brute" -p 389 $GOAD
 > 
 
 ```bash
-sudo nmap -p 88 --script=krb5-enum-users --script-args="krb5-enum-users.realm='north.sevenkingdoms.local',userdb=/usr/share/seclists/Usernames/top-usernames-shortlist.txt" $GOAD
+sudo nmap -p 88 --script=krb5-enum-users --script-args="krb5-enum-users.realm='north.sevenkingdoms.local',userdb=~/OTO-labs/supp/lab_files/nmap_check/top-usernames-shortlist.txt" $GOAD
 ```
 
 ???- note "Command Options/Arguments Explained"
