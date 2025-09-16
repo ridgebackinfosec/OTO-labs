@@ -103,8 +103,7 @@ git checkout tags/v1.0.1 # <-- Replace this version number with the correspondin
 Now, continue on with these final commands...
 
 ```bash
-chmod 744 tools.sh
-./tools.sh
+get-tools
 ```
 
 This will install all the tools needed for the class.
