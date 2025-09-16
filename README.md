@@ -88,6 +88,8 @@ get-labs OTO
 cd ~/OTO-labs
 ```
 
+This will download and setup the Lab Guides.
+
 **NOTE: If you're taking the _On-Demand_ version of this class, please check the version number of the recordings then perform the below extra command. This will ensure you're using the corresponding release of the labs.**
 
 ```bash
@@ -105,9 +107,9 @@ chmod 744 tools.sh
 ./tools.sh
 ```
 
-This will download and setup the Lab Guide and tools for the class.
+This will install all the tools needed for the class.
 
-This is intended to reduce initial VM download size, make it easy for students to hit the ground running, control tool versions, and permit dynamic updating of the course material.
+This process is intended to reduce initial VM download size, make it easy for students to hit the ground running, control tool versions, and permit dynamic updating of the course material.
 
 That's it!
 
