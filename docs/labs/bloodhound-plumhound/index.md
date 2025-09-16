@@ -164,7 +164,7 @@ Now we can execute the PlumHound commands below.
 python PlumHound.py -p ridgeback --easy
 ```
 
-This first command (`--easy`) does a quick, out-of-the-box analysis to make sure the DB connection works. Note that we specicif "ridgeback" as the Neo4j DB password in the above command.
+This first command (`--easy`) does a quick, out-of-the-box analysis to make sure the DB connection works. Note that we specicified "ridgeback" as the Neo4j DB password in the above command.
 
 The output shows us a simple list of Domain users.
 

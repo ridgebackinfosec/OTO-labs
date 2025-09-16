@@ -91,6 +91,7 @@ cd ~/git-tools/nuclei/cmd/nuclei
 go build
 sudo mv nuclei /usr/local/bin/
 nuclei -version
+nuclei -tl
 
 # CredMaster
 git clone https://github.com/ridgebackinfosec/CredMaster ~/git-tools/CredMaster
