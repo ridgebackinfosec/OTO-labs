@@ -9,19 +9,6 @@ set -x
 # This script will install all the necessary tools for the class
 cd
 
-# Pull down latest Lab walkthroughs
-cd ~/OTO-labs
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-deactivate
-cd
-
-# Update ParrotOS package management keys
-# Blog post -> https://parrotsec.org/blog/2025-01-11-parrot-gpg-keys/
-# wget https://deb.parrot.sh/parrot/pool/main/p/parrot-archive-keyring/parrot-archive-keyring_2024.12_all.deb
-# sudo dpkg -i parrot-archive-keyring_2024.12_all.deb
-
 # Required Powershell Steps from https://learn.microsoft.com/en-us/powershell/scripting/install/install-debian?view=powershell-7.4
 # Download the Microsoft repository GPG keys
 wget -q https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb

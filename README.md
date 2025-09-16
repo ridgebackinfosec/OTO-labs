@@ -84,7 +84,7 @@ This enables us to quickly revert back if you run into any issues during class o
 Turn The Forge VM on, login using the creds `telchar:ridgeback`, open a terminal, and run the below commands. 
 
 ```bash
-git clone https://github.com/ridgebackinfosec/OTO-labs ~/OTO-labs
+get-labs OTO
 cd ~/OTO-labs
 ```
 
@@ -101,8 +101,8 @@ git checkout tags/v1.0.1 # <-- Replace this version number with the correspondin
 Now, continue on with these final commands...
 
 ```bash
-chmod 744 labs-and-tools.sh
-./labs-and-tools.sh
+chmod 744 tools.sh
+./tools.sh
 ```
 
 This will download and setup the Lab Guide and tools for the class.
