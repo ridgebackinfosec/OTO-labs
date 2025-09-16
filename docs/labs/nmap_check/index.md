@@ -109,7 +109,7 @@ sudo nmap -n --script="ldap* and not brute" -p 389 $GOAD
 > 
 
 ```bash
-sudo nmap -p 88 --script=krb5-enum-users --script-args="krb5-enum-users.realm='north.sevenkingdoms.local',userdb=~/OTO-labs/supp/lab_files/nmap_check/top-usernames-shortlist.txt" $GOAD
+sudo nmap -p 88 --script=krb5-enum-users --script-args="krb5-enum-users.realm='north.sevenkingdoms.local',userdb=/home/telchar/OTO-labs/supp/lab_files/nmap_check/top-usernames-shortlist.txt" $GOAD
 ```
 
 ???- note "Command Options/Arguments Explained"
@@ -120,7 +120,7 @@ sudo nmap -p 88 --script=krb5-enum-users --script-args="krb5-enum-users.realm='n
         - **`userdb=/usr/share/seclists/Usernames/top-usernames-shortlist.txt`**: Specifies the path to the database of usernames to attempt enumeration with. This path points to a file containing a list of popular usernames that the script will try to validate against the Kerberos service.
 
 ???+ warning
-    Try the longer `/usr/share/seclists/Usernames/xato-net-10-million-usernames.txt` list too.
+    Try the longer `/home/telchar/OTO-labs/supp/lab_files/nmap_check/xato-net-10-million-usernames.txt` list too.
 
 
 
