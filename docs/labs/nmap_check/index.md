@@ -99,7 +99,10 @@ sudo nmap -n --script="ldap* and not brute" -p 389 $GOAD
         - This combination targets all LDAP-related scripts except those designed for brute-forcing credentials.
     - **`-p 389`** specifies the port number for the scan, where **`389`** is the default port for LDAP (Lightweight Directory Access Protocol), a protocol used for accessing and maintaining distributed directory information services over an IP network.
 
-![Untitled](img\Untitled%203.png){ width="70%" }
+![LDAP Enumeration](img\Untitled%203.png){ width="70%" }
+///caption
+LDAP Enumeration
+///
 
 ## Find Users
 
@@ -115,12 +118,12 @@ sudo nmap -p 88 --script=krb5-enum-users --script-args="krb5-enum-users.realm='n
 ???- note "Command Options/Arguments Explained"
     - **`-p 88`**: Specifies the port to scan, in this case, port 88, which is the default port for the Kerberos Key Distribution Center (KDC) service.
     - **`--script=krb5-enum-users`**: Utilizes the **`krb5-enum-users`** Nmap script. This script attempts to enumerate valid usernames from a Kerberos Key Distribution Center by exploiting the Kerberos protocol's behavior of differentiating between valid and invalid usernames at login attempts.
-    - **`--script-args="krb5-enum-users.realm='north.sevenkingdoms.local',userdb=/usr/share/seclists/Usernames/top-usernames-shortlist.txt"`**: Passes arguments to the **`krb5-enum-users`** script with two parameters:
+    - **`--script-args="krb5-enum-users.realm='north.sevenkingdoms.local',userdb=/home/telchar/OTO-labs/supp/lab_files/nmap_check/top-usernames-shortlist.txt"`**: Passes arguments to the **`krb5-enum-users`** script with two parameters:
         - **`krb5-enum-users.realm='north.sevenkingdoms.local'`**: Specifies the realm for the Kerberos service. In this case, it's set to 'north.sevenkingdoms.local'.
-        - **`userdb=/usr/share/seclists/Usernames/top-usernames-shortlist.txt`**: Specifies the path to the database of usernames to attempt enumeration with. This path points to a file containing a list of popular usernames that the script will try to validate against the Kerberos service.
+        - **`userdb=/home/telchar/OTO-labs/supp/lab_files/nmap_check/top-usernames-shortlist.txt`**: Specifies the path to the database of usernames to attempt enumeration with. This path points to a file containing a list of popular usernames that the script will try to validate against the Kerberos service.
 
 ???+ warning
-    Try the longer `/home/telchar/OTO-labs/supp/lab_files/nmap_check/xato-net-10-million-usernames.txt` list too.
+    You can optionally try the longer `/home/telchar/OTO-labs/supp/lab_files/nmap_check/xato-net-10-million-usernames.txt` list too. This may timeout though.
 
 
 
