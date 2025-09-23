@@ -1,7 +1,5 @@
 # Setup
 
-## Virtual Machines (VMs)
-
 ???+ warning
     These VMs are BIG! The initial zip file is ~**27GB**. You will need ~**85-100GB** of free disk space once everything is imported into VMware and setup is complete.
 
@@ -10,19 +8,46 @@
 
 **Complete the below checklist:**
 
-- [x]  Download the VMs
-- [x]  Ensure you have the supported virtualization software (VMware) on your host machine
-- [x]  Extract/Unzip the VMs
-- [x]  Import the VMs into VMware
+- [X]  VM Overview
 - [x]  Network Configuration
     - [x]  Setup a custom (Host-only) virtual network in VMware
     - [x]  Add the above custom network to each VM’s config
-- [x]  Power on VMs
-    - [x]  Complete any other specific actions in the VM’s section
 - [x]  Static IP Address Assignment
-- [x]  Check connectivity
+- [x]  Verify Lab Environment
 
 ---
+
+## VM Overview
+
+### “The Forge” VM
+
+The Forge VM is a customized Debian-based ParrotOS Linux system. This will be the primary VM you operate from and will be used as the “attacker’s” machine.
+
+???+ note "Credentials"
+    Username `telchar` and password `ridgeback`.
+
+???+ warning
+    ***Never expose The Forge to an untrusted network, always use NAT or Host-only mode!***
+
+### “GOAD” VMs
+
+The diagram below depicts two GOAD VMs (GOAD-DC02, and GOAD-SRV02). We will be targeting these for our class.
+
+???+ note "Credentials"
+    You shouldn’t *need* to login to these, but the username in `vagrant` and password is `vagrant` if you are curious or need to troubleshoot a machine.
+
+    Game of Active Directory (GOAD) is a pentest Active Directory LAB project. The purpose of this lab is to give pentesters a vulnerable Active directory environment ready to use to practice usual attack techniques.
+
+???+ warning
+    *This lab is extremely vulnerable, do not reuse recipe to build your [Production] environment and do not deploy this environment on internet without isolation (this is a recommendation, use it as your own risk).*
+
+    *This lab use free windows VM only (180 days). After that timeframe enter a license on each server or rebuild all the lab (may be it's time for an update ;))
+    ~* [https://github.com/Orange-Cyberdefense/GOAD](https://github.com/Orange-Cyberdefense/GOAD)
+
+![Untitled](img/class-goad-target.png){ width="70%" }
+///caption
+GOAD Environment
+///
 
 ## Network Configuration
 
@@ -101,45 +126,13 @@ Fusion Add Network
 Fusion GUI
 ///
 
-## “The Forge” VM
-
-???+ warning
-    ***Never expose The Forge to an untrusted network, always use NAT or Host-only mode!***
-
-???+ warning
-    👤 **Credentials:**
-    The Forge VM is built on top of ParrotOS and will have the username `telchar` and password `ridgeback`.
-
-This will be the primary VM and will be used as the “attacker’s” machine.
-
-<!-- Moved this step to the repo's README -->
-<!-- ### Lab Guide & Tool Install Script
-
-Once imported into VMware, turn The Forge VM on, login, open a terminal and run the below commands to download and setup the Lab Guide and tools for the class. 
-
-This is intended to reduce initial download size, make it easy for students to hit the ground running, control tool versions, and permit dynamic updating of the course material.
-
-```bash linenums="1"
-cd ~
-curl -sSfL https://raw.githubusercontent.com/ridgebackinfosec/OTO-labs/refs/heads/main/labs-and-tools.sh -o ~/labs-and-tools.sh
-chmod 744 ~/labs-and-tools.sh
-./labs-and-tools.sh
-```
-
-???+ warning
-    You will be prompted for the password when running the `labs-and-tools.sh` script. -->
-
-### Static IP Address Assignment
+## Static IP Address Assignment
 
 Since we've added a new network interface and that network doesn't have DHCP enabled, we need to manually set a static IP for The Forge VM.
 
-![Network Interfaces](img\image%201.png){ width="70%" }
-/// caption
-Network Interfaces
-///
-
-1. **Open a terminal.**
-2. **Run the below commands to run a script that automates the static IP address assignment.**
+1. Log into The Forge VM using the creds mentioned above.
+2. Open a terminal.
+3. Run the below commands to run a script that automates the static IP address assignment.
     
     ```bash
     cd ~/OTO-labs
@@ -166,6 +159,33 @@ Network Interfaces
     !!! warning
         The gateway is NOT specified by design due to the way VMware virtual networks handle traffic.
    
+## Verify Lab Environment
+
+Once all of the steps above have been completed...
+
+1. Turn on the VMs
+2. Log in to The Forge
+3. Run the commands below to verify everything has been configured correctly.
+
+!!! note
+    You don’t *have* to turn on *both* GOAD VMs at once if your host machine has lower resources. You can start/stop them as necessary.
+
+```bash
+cd ~/OTO-labs
+chmod +x verify-lab-env.sh
+./verify-lab-env.sh
+cd ~
+```
+
+If everything is setup correctly, you should see `0% packet loss` following each ping command.
+
+![Lab Environment Verification Passed!](img/verify-lab-env.png){ width="70%" }
+/// caption
+Lab Environment Verification Passed!
+///
+
+## Extras
+
 ### OWASP Juice Shop
 
 The Forge VM will have the `juice-shop` APT package to deploy a local instance of the Open Worldwide Application Security Project (OWASP) Juice Shop for you to play with before, during, or after the class.
@@ -202,52 +222,11 @@ sudo juice-shop-stop -h
 Stopping Juice Shop
 ///
 
-## “GOAD” VMs
+### Additional GOAD Targets
 
-???+ warning "Credentials"
-    You shouldn’t *need* to login to these, but the username in `vagrant` and password is `vagrant` if you are curious or need to troubleshoot a machine.
+The full GOAD target environment is comprised of 5 systems. This class only utilizes 2 of those target systems.
 
-    Game of Active Directory (GOAD) is a pentest Active Directory LAB project. The purpose of this lab is to give pentesters a vulnerable Active directory environment ready to use to practice usual attack techniques.
-
-???+ warning
-    *This lab is extremely vulnerable, do not reuse recipe to build your [Production] environment and do not deploy this environment on internet without isolation (this is a recommendation, use it as your own risk).*
-
-    *This lab use free windows VM only (180 days). After that timeframe enter a license on each server or rebuild all the lab (may be it's time for an update ;))
-    ~* [https://github.com/Orange-Cyberdefense/GOAD](https://github.com/Orange-Cyberdefense/GOAD)
-
-The diagram below depicts two GOAD VMs (GOAD-DC02, and GOAD-SRV02). We will be targeting these for our class.
-
-![Untitled](img/class-goad-target.png){ width="70%" }
-///caption
-GOAD Environment
-///
+You can download the extra 3 pre-built and configured target systems from [this link](https://oto.sfo2.cdn.digitaloceanspaces.com/live/extra_vms.zip). The VM setup steps are the same as your class VMs.
 
 !!! note
-    The full GOAD target environment is comprised of 5 systems. 
-
-    You can download the pre-built and configured extra 3 target systems at the link below. The VM setup steps are the same as your class VMs.
-
     ***This are not required for the class but are offered to help extend what you have learned here.***
-
-    [https://oto.sfo2.cdn.digitaloceanspaces.com/live/extra_vms.zip](https://oto.sfo2.cdn.digitaloceanspaces.com/live/extra_vms.zip)
-
-## Check Connectivity
-
-Once all of the steps above have been completed, turn on each VM, log in to The Forge, and run the below commands to verify network connectivity.
-
-!!! note
-    You don’t *have* to turn on *all* the VMs at once if your host machine has lower resources. You can start/stop them as necessary.
-
-```bash
-cd ~/OTO-labs
-chmod +x verify-lab-env.sh
-./verify-lab-env.sh
-cd ~
-```
-
-If everything is setup correctly, you should see `0% packet loss` following each ping command.
-
-![Lab Environment Verification Passed!](img/verify-lab-env.png){ width="70%" }
-/// caption
-Lab Environment Verification Passed!
-///
