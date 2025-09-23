@@ -131,43 +131,31 @@ chmod 744 ~/labs-and-tools.sh
 
 ### Static IP Address Assignment
 
-Make sure you have set a static IP for The Forge VM.
+Since we've added a new network interface and that network doesn't have DHCP enabled, we need to manually set a static IP for The Forge VM.
+
+![Network Interfaces](img\image%201.png){ width="70%" }
+/// caption
+Network Interfaces
+///
 
 1. **Open a terminal.**
-2. **View your current interfaces and note the name of the one that does NOT have an IP address assigned.** In the image below, this will be “ens36”.
+2. **Run the below commands to run a script that automates the static IP address assignment.**
     
     ```bash
-    ip a
+    cd ~/OTO-labs
+    sudo ./set-static-ip.sh
+    cd ~
     ```
-    
-    ![Network Interfaces](img\image%201.png){ width="70%" }
-    /// caption
-    Network Interfaces
-    ///
 
-3. **Edit the network interfaces file:**
-    
-    ```bash
-    sudo nano /etc/network/interfaces
-    ```
-    
-4. **Add or modify the configuration for** `[your_interface_name]` **as follows:**
-    
+    ![Script Execution Example](img/static_ip_script.png){ width="70%" }
+    /// caption
+    Script Execution Example
+    ///
+ 
     ???+ warning
-        Your interface name may differ. Run `ip addr` on The Forge VM and look for the one that has no IPv4 address. The replace the `[your_interface_name]` with yours (i.e. - `ens36`)
-        
-    ```bash
-    auto [your_interface_name]
-    iface [your_interface_name] inet static
-        address 192.168.56.100
-        netmask 255.255.255.0
-    ```
+        Your network interface name may differ from the screen shots.
     
-    Replace the `address` and `netmask` values with your desired configuration.
-    
-5. **Save and close the file.** In `nano`, you can do this by pressing `Ctrl+x`, `y`, `Enter` to save.
-    
-    The file should look something like this afterwards.
+    The `/etc/network/interfaces` file should look something like this after the script executes.
     
     ![Updated Interface Config File](img\network_config.png){ width="70%" }
     /// caption
@@ -175,20 +163,8 @@ Make sure you have set a static IP for The Forge VM.
     ///
 
     !!! warning
-        Do NOT specify a gateway in this config file or your traffic may get interrupted.
-
-6. **Restart the networking service or reboot your computer to apply the changes:**
-    
-    ```bash
-    sudo systemctl restart networking
-    ```
-    
-    If you see any errors with the above command, you may just have to reboot to apply the changes.
-    
-    ```bash
-    sudo reboot
-    ```
-    
+        The gateway is NOT specified by design due to the way VMware virtual networks handle traffic.
+   
 ### OWASP Juice Shop
 
 The Forge VM will have the `juice-shop` APT package to deploy a local instance of the Open Worldwide Application Security Project (OWASP) Juice Shop for you to play with before, during, or after the class.
