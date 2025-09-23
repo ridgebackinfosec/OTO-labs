@@ -239,19 +239,15 @@ Once all of the steps above have been completed, turn on each VM, log in to The 
     You don’t *have* to turn on *all* the VMs at once if your host machine has lower resources. You can start/stop them as necessary.
 
 ```bash
-# Verify internet access
-ping -c 4 8.8.8.8
-
-# Verify DC02
-ping -c 4 192.168.56.11
-
-# Verify SRV02
-ping -c 4 192.168.56.22
+cd ~/OTO-labs
+chmod +x verify-lab-env.sh
+./verify-lab-env.sh
+cd ~
 ```
 
 If everything is setup correctly, you should see `0% packet loss` following each ping command.
 
-![Successful Pings!](img\image%203.png){ width="70%" }
+![Lab Environment Verification Passed!](img/verify-lab-env.png){ width="70%" }
 /// caption
-Successful Pings!
+Lab Environment Verification Passed!
 ///

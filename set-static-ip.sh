@@ -1,24 +1,9 @@
 #!/usr/bin/env bash
 # ParrotOS Static IP Auto-Configurator (Host-only NIC)
 # ---------------------------------------------------
-# This script automates the "Static IP Address Assignment" step for the Forge VM
-# (Debian-based ParrotOS) as described in the course setup docs. It writes a
-# managed block to /etc/network/interfaces to configure a host-only adapter with
-# a static IPv4 address and no gateway.
-#
-# Default network: 192.168.56.0/24 (VMware Host-only)
-# Default IP:      192.168.56.100
-# Default netmask: 255.255.255.0
-#
-# Usage:
-#   sudo ./set-static-ip.sh [--iface IFACE] [--addr 192.168.56.100] [--mask 255.255.255.0]
-#   sudo ./set-static-ip.sh --revert [--iface IFACE]
-#   sudo ./set-static-ip.sh --detect-only
-#
-# Notes:
-# - Do NOT set a gateway on the host-only adapter (by design).
-# - The script attempts to auto-detect the host-only NIC as the interface with no IPv4 address.
-# - Idempotent: re-running updates the managed block; --revert removes it.
+# Automates the "Static IP Address Assignment" step for The Forge (ParrotOS).
+# Writes a managed block to /etc/network/interfaces to configure a host-only NIC
+# with a static IPv4 and no gateway.
 
 set -euo pipefail
 
@@ -33,6 +18,18 @@ _mask="${DEFAULT_MASK}"
 _detect_only=false
 _revert=false
 _no_restart=false
+
+# ---------- Color helpers ----------
+if [[ -t 1 ]]; then
+  RED="\e[1;31m"; GREEN="\e[1;32m"; YELLOW="\e[1;33m"; CYAN="\e[1;36m"; RESET="\e[0m"
+else
+  RED=""; GREEN=""; YELLOW=""; CYAN=""; RESET=""
+fi
+
+ok()   { echo -e "${GREEN}✅ $*${RESET}"; }
+info() { echo -e "${CYAN}➜  $*${RESET}"; }
+warn() { echo -e "${YELLOW}⚠️  $*${RESET}"; }
+err()  { echo -e "${RED}❌ $*${RESET}"; }
 
 usage() {
   cat <<EOF
@@ -58,7 +55,7 @@ EOF
 
 require_root() {
   if [[ $EUID -ne 0 ]]; then
-    echo "[!] Please run as root (use sudo)." >&2
+    err "Please run as root (use sudo)."
     exit 1
   fi
 }
@@ -67,7 +64,7 @@ backup_interfaces() {
   local ts
   ts=$(date +%F-%H%M%S)
   cp -a "${INTERFACES_FILE}" "${INTERFACES_FILE}.bak.${ts}"
-  echo "[+] Backup saved to ${INTERFACES_FILE}.bak.${ts}"
+  ok "Backup saved to ${INTERFACES_FILE}.bak.${ts}"
 }
 
 # Remove our managed block (if present) for the given interface
@@ -103,10 +100,10 @@ BLOCK
 
 restart_networking() {
   if ${_no_restart}; then
-    echo "[i] Skipping networking restart due to --no-restart"
+    warn "Skipping networking restart due to --no-restart"
     return 0
   fi
-  echo "[+] Restarting networking..."
+  info "Restarting networking..."
   if systemctl list-unit-files | grep -q '^networking.service'; then
     systemctl restart networking || true
   else
@@ -116,12 +113,12 @@ restart_networking() {
 
 validate_applied() {
   local iface="$1" addr="$2"
-  echo "[+] Verifying ${iface} has ${addr} assigned..."
+  info "Verifying ${iface} has ${addr} assigned..."
   if ip -4 addr show dev "${iface}" | grep -q "${addr}/"; then
-    echo "[✓] ${iface} is configured with ${addr}"
+    ok "${iface} is configured with ${addr}"
   else
-    echo "[!] ${iface} does not show ${addr} yet. A reboot may be required."
-    echo "    You can reboot with: sudo reboot"
+    err "${iface} does not show ${addr} yet. A reboot may be required."
+    echo    "    You can reboot with: sudo reboot"
   fi
 }
 
@@ -130,11 +127,9 @@ is_candidate_iface() {
   [[ "${iface}" == "lo" ]] && return 1
   # Consider interfaces that currently have no IPv4 address as host-only candidates
   if ! ip -4 addr show dev "${iface}" | grep -q "inet "; then
-    echo true
-    return 0
+    echo true; return 0
   fi
-  echo false
-  return 1
+  echo false; return 1
 }
 
 auto_detect_iface() {
@@ -161,7 +156,7 @@ while (( "$#" )); do
     --revert) _revert=true; shift ;;
     --no-restart) _no_restart=true; shift ;;
     -h|--help) usage; exit 0 ;;
-    *) echo "[!] Unknown option: $1"; usage; exit 1 ;;
+    *) err "Unknown option: $1"; usage; exit 1 ;;
   esac
 done
 
@@ -172,12 +167,14 @@ require_root
 
 if [[ -z "${_iface}" ]]; then
   if ! _iface=$(auto_detect_iface); then
-    echo "[!] Could not auto-detect a host-only interface. Please specify with --iface." >&2
+    err "Could not auto-detect a host-only interface. Please specify with --iface."
     echo "    Available interfaces:" >&2
     ls -1 /sys/class/net | grep -v '^lo$' >&2
     exit 1
   fi
-  echo "[+] Auto-detected host-only candidate interface: ${_iface}"
+  ok "Auto-detected host-only candidate interface: ${_iface}"
+else
+  info "Using specified interface: ${_iface}"
 fi
 
 if ${_detect_only}; then
@@ -186,17 +183,17 @@ if ${_detect_only}; then
 fi
 
 if ${_revert}; then
-  echo "[+] Reverting managed static-IP block for ${_iface}"
+  info "Reverting managed static-IP block for ${_iface}..."
   backup_interfaces
   remove_managed_block "${_iface}"
   restart_networking
-  echo "[✓] Reverted configuration for ${_iface}"
+  ok "Reverted configuration for ${_iface}"
   exit 0
 fi
 
 # Sanity checks
 if ! ip link show "${_iface}" >/dev/null 2>&1; then
-  echo "[!] Interface ${_iface} does not exist." >&2
+  err "Interface ${_iface} does not exist."
   exit 1
 fi
 
@@ -205,10 +202,9 @@ backup_interfaces
 remove_managed_block "${_iface}"
 append_managed_block "${_iface}" "${_addr}" "${_mask}"
 
-echo "[+] Wrote static configuration for ${_iface}: ${_addr} / ${_mask}"
+ok "Wrote static configuration for ${_iface}: ${_addr} / ${_mask}"
 
 restart_networking
 validate_applied "${_iface}" "${_addr}"
 
-echo "[✓] Done. You can verify with: ip -4 addr show dev ${_iface} | grep inet
-"
+ok "Done. You can verify with: ip -4 addr show dev ${_iface} | grep inet"
