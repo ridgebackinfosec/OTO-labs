@@ -143,6 +143,7 @@ Network Interfaces
     
     ```bash
     cd ~/OTO-labs
+    chmod +x set-static-ip.sh
     sudo ./set-static-ip.sh
     cd ~
     ```
