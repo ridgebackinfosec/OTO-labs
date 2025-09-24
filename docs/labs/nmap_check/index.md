@@ -8,7 +8,7 @@
     export GOAD="192.168.56.10-25"
     ```
 
-    ![Terminal Output](img\image.png){ width="70%" }
+    ![Terminal Output](img/image.png){ width="70%" }
     ///caption
     Terminal Output
     ///
@@ -48,21 +48,21 @@ Review the results…
 
 Looks like LDAP is open.
 
-![LDAP](img\Untitled.png){ width="70%" }
+![LDAP](img/Untitled.png){ width="70%" }
 ///caption
 LDAP
 ///
 
 HTTP (web service) is also accessible.
 
-![HTTP](img\Untitled%201.png){ width="70%" }
+![HTTP](img/Untitled%201.png){ width="70%" }
 ///caption
 HTTP
 ///
 
 A database also appears to be running on the target.
 
-![Database](img\Untitled%202.png){ width="70%" }
+![Database](img/Untitled%202.png){ width="70%" }
 ///caption
 Database
 ///
@@ -99,7 +99,7 @@ sudo nmap -n --script="ldap* and not brute" -p 389 $GOAD
         - This combination targets all LDAP-related scripts except those designed for brute-forcing credentials.
     - **`-p 389`** specifies the port number for the scan, where **`389`** is the default port for LDAP (Lightweight Directory Access Protocol), a protocol used for accessing and maintaining distributed directory information services over an IP network.
 
-![LDAP Enumeration](img\Untitled%203.png){ width="70%" }
+![LDAP Enumeration](img/Untitled%203.png){ width="70%" }
 ///caption
 LDAP Enumeration
 ///
@@ -127,7 +127,7 @@ sudo nmap -p 88 --script=krb5-enum-users --script-args="krb5-enum-users.realm='n
 
 
 
-![User Enumeration](img\image%201.png){ width="70%" }
+![User Enumeration](img/image%201.png){ width="70%" }
 ///caption
 User Enumeration
 ///
@@ -167,7 +167,7 @@ sudo nmap -Pn --script=smb-vuln* -p 139,445 $GOAD
     - **`--script=smb-vuln*`**: Tells Nmap to use the scripting engine with a specific set of scripts. Here, it's targeting scripts that start with **`smb-vuln`**, which are designed to detect vulnerabilities in SMB services. Nmap's scripting engine (NSE) is a powerful feature that extends Nmap's capabilities to include vulnerability detection, exploitation, and more. The **`smb-vuln*`** pattern matches all scripts designed to find common SMB vulnerabilities, potentially identifying issues like those exploited by famous malware like WannaCry or NotPetya.
     - **`-p 139,445`**: Specifies the ports to scan. Ports 139 and 445 are the traditional ports associated with SMB services. Port 139 is used for SMB over NetBIOS, whereas port 445 is for SMB directly over TCP/IP without the NetBIOS layer.
 
-![image.png](img\image%202.png){ width="70%" }
+![image.png](img/image%202.png){ width="70%" }
 ///caption
 smb-vuln*
 ///
@@ -194,7 +194,7 @@ sudo nmap -sV --script=vulners $GOAD
     - **`-sV`**: This option enables version detection, allowing Nmap to determine the version of the services running on open ports. Knowing the version is crucial for identifying specific vulnerabilities associated with those versions.
     - **`--script=vulners`**: Specifies the use of the **`vulners`** NSE (Nmap Scripting Engine) script. The **`vulners`** script is a script that queries the Vulners vulnerability database to find known vulnerabilities of the detected service versions. It's a powerful way to quickly assess the potential vulnerabilities present on the scanned host(s) based on the service versions detected during the scan.
 
-![image.png](img\image%203.png){ width="70%" }
+![image.png](img/image%203.png){ width="70%" }
 ///caption
 Looks like there’s potential here.
 ///

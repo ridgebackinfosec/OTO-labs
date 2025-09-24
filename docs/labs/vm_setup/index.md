@@ -67,7 +67,7 @@ You will **ALSO** need to create a new custom network for the environment to wor
     
     Create a new “Host-only” type virtual network that matches the image below.
     
-    ![Untitled](img\Untitled%202.png){ width="70%" }
+    ![Untitled](img/Untitled%202.png){ width="70%" }
     ///caption
     Host Only Network
     ///
@@ -87,21 +87,21 @@ Once the VMs are imported, click “VM” → “Settings” in VMware for each 
 
 Click “Add”.
 
-![Add Virtual Hardware](img\Untitled%203.png){ width="70%" }
+![Add Virtual Hardware](img/Untitled%203.png){ width="70%" }
 ///caption
 Add Virtual Hardware
 ///
 
 Select “Network Adapter” and click “Finish”.
 
-![Add Network Adapter](img\Untitled%204.png){ width="70%" }
+![Add Network Adapter](img/Untitled%204.png){ width="70%" }
 ///caption
 Add Network Adapter
 ///
 
 You should now have a new “Network Adapter 2” (or similar) for the VM. Select it and choose the “Custom: Specific virtual network” radio button. From there, use the dropdown to select the name of the Host-only virtual network you created in a previous step.
 
-![Untitled](img\Untitled%205.png){ width="70%" }
+![Untitled](img/Untitled%205.png){ width="70%" }
 ///caption
 Select Network
 ///
@@ -116,12 +116,12 @@ Select Network
 
 This is how it looks in Fusion…
 
-![Untitled](img\Untitled%206.png){ width="70%" }
+![Untitled](img/Untitled%206.png){ width="70%" }
 ///caption
 Fusion Add Network
 ///
 
-![Fusion GUI](img\Untitled%207.png){ width="70%" }
+![Fusion GUI](img/Untitled%207.png){ width="70%" }
 /// caption
 Fusion GUI
 ///
@@ -151,7 +151,7 @@ Since we've added a new network interface and that network doesn't have DHCP ena
     
     The `/etc/network/interfaces` file should look something like this after the script executes.
     
-    ![Updated Interface Config File](img\network_config.png){ width="70%" }
+    ![Updated Interface Config File](img/network_config.png){ width="70%" }
     /// caption
     Updated Interface Config File
     ///
@@ -204,7 +204,7 @@ The Forge VM will have the `juice-shop` APT package to deploy a local instance o
 sudo juice-shop -h
 ```
 
-![Starting Juice Shop](img\Untitled%208.png){ width="70%" }
+![Starting Juice Shop](img/Untitled%208.png){ width="70%" }
 /// caption
 Starting Juice Shop
 ///
@@ -217,7 +217,7 @@ The command below will stop the local instance of OWASP Juice Shop.
 sudo juice-shop-stop -h
 ```
 
-![Stopping Juice Shop](img\Untitled%209.png){ width="70%" }
+![Stopping Juice Shop](img/Untitled%209.png){ width="70%" }
 /// caption
 Stopping Juice Shop
 ///

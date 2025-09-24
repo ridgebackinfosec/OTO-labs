@@ -9,19 +9,19 @@
 
     …or through the VM’s menu…
 
-    ![Untitled](img\Untitled.png){ width="70%" }
+    ![Untitled](img/Untitled.png){ width="70%" }
     ///caption
     Menu
     ///
 
     If this is your first time opening Burp, there are some extra clicks for you to do…
 
-    ![Untitled](img\Untitled%201.png){ width="70%" }
+    ![Untitled](img/Untitled%201.png){ width="70%" }
     ///caption
     JRE Warning
     ///
 
-    ![Untitled](img\Untitled%202.png){ width="70%" }
+    ![Untitled](img/Untitled%202.png){ width="70%" }
     ///caption
     T&C
     ///
@@ -51,12 +51,12 @@ Burp Suite is a powerful web testing tool that functions as an interception prox
 
 First things first. Let’s create a new temporary Burp project by following the screenshots below.
 
-![Untitled](img\Untitled%203.png){ width="70%" }
+![Untitled](img/Untitled%203.png){ width="70%" }
 ///caption
 Temporary Project
 ///
 
-![Untitled](img\Untitled%204.png){ width="70%" }
+![Untitled](img/Untitled%204.png){ width="70%" }
 ///caption
 Burp Defaults
 ///
@@ -65,7 +65,7 @@ Burp Defaults
     
     Click on the “Proxy” tab → “Intercept” sub-tab → “Open Browser” button
     
-    ![Untitled](img\Untitled%205.png){ width="70%" }
+    ![Untitled](img/Untitled%205.png){ width="70%" }
     ///caption
     Open Browser
     ///
@@ -73,7 +73,7 @@ Burp Defaults
 2. Open `http://127.0.0.1:42000` in the browser window.
 3. Make sure “Intercept” is off
     
-    ![Untitled](img\Untitled%206.png){ width="70%" }
+    ![Untitled](img/Untitled%206.png){ width="70%" }
     ///caption
     Disable Intercept
     ///
@@ -82,7 +82,7 @@ Burp Defaults
 
 Let’s explore some of the functionality within Burp’s tabs.
 
-![Untitled](img\Untitled%207.png){ width="70%" }
+![Untitled](img/Untitled%207.png){ width="70%" }
 ///caption
 Feature Tabs
 ///
@@ -91,39 +91,39 @@ Feature Tabs
 
 You can access most of Burp Suite's settings via the **Settings** dialog. To access this dialog, click **Settings** on the top menu.
 
-![Untitled](img\Untitled%208.png){ width="70%" }
+![Untitled](img/Untitled%208.png){ width="70%" }
 ///caption
 Settings
 ///
 
 There are two categories of settings “User” and “Project” level.
 
-![Expanded Settings Pane](img\Untitled%209.png){ width="70%" }
+![Expanded Settings Pane](img/Untitled%209.png){ width="70%" }
 ///caption
 Expanded Settings Pane
 ///
 
 There are WAY too many settings to discuss in the class but some of the key ones are shown below. Starting with the Proxy settings.
 
-![Untitled](img\Untitled%2010.png){ width="70%" }
+![Untitled](img/Untitled%2010.png){ width="70%" }
 
 Everything from Proxy listeners, Interception, and Match & Replace rules can be set here.
 
 Find the “Default Proxy Interception State” setting to get rid of the pesky auto-intercept when you first start Burp.
 
-![Stop the auto-intercepting](img\Untitled%2011.png){ width="70%" }
+![Stop the auto-intercepting](img/Untitled%2011.png){ width="70%" }
 ///caption
 Stop the auto-intercepting
 ///
 
 Also explore the different options available on the proxy listeners.
 
-![Listener Editing](img\Untitled%2012.png){ width="70%" }
+![Listener Editing](img/Untitled%2012.png){ width="70%" }
 ///caption
 Listener Editing
 ///
 
-![Interface Binding](img\Untitled%2013.png){ width="70%" }
+![Interface Binding](img/Untitled%2013.png){ width="70%" }
 ///caption
 Interface Binding
 ///
@@ -136,14 +136,14 @@ Burp Proxy operates as a web proxy server between the browser and target applica
 
 This is where you can see all the traffic flowing through Burp.
 
-![Proxy Traffic](img\Untitled%2014.png){ width="70%" }
+![Proxy Traffic](img/Untitled%2014.png){ width="70%" }
 ///caption
 Proxy Traffic
 ///
 
 It can become overwhelming at first, but don’t worry. It has robust filter settings to help focus your attention. Like the “Show only in-scope items” option.
 
-![Filtering In-Scope Only](img\Untitled%2015.png){ width="70%" }
+![Filtering In-Scope Only](img/Untitled%2015.png){ width="70%" }
 ///caption
 Filtering In-Scope Only
 ///
@@ -164,14 +164,14 @@ You can use Repeater for all kinds of purposes, for example to:
 
 You can send any request from the Proxy tab to the Repeater by right clicking on that request and selecting “Send to Repeater”.
 
-![Untitled](img\Untitled%2016.png){ width="70%" }
+![Untitled](img/Untitled%2016.png){ width="70%" }
 ///caption
 Send To Repeater
 ///
 
 Then select the “Repeater” tab in the GUI. From there you can replay requests by clicking the “Send” button
 
-![Untitled](img\Untitled%2017.png){ width="70%" }
+![Untitled](img/Untitled%2017.png){ width="70%" }
 ///caption
 Repeat Request
 ///
@@ -186,14 +186,14 @@ This is where the fun begins…
 
 Wherever there’s a request in Burp, you can also right click and select “Send to Intruder”.
 
-![Untitled](img\Untitled%2018.png){ width="70%" }
+![Untitled](img/Untitled%2018.png){ width="70%" }
 ///caption
 Send To Intruder
 ///
 
 From the Intruder tab, you can define injection points or “payload markers”, as well as the “Attack Type”.
 
-![Untitled](img\Untitled%2019.png){ width="70%" }
+![Untitled](img/Untitled%2019.png){ width="70%" }
 ///caption
 Sniper
 ///
@@ -202,7 +202,7 @@ Choose a request from the Proxy tab, send it to Intruder and click the “Auto�
 
 This will select all available payload positions for you.
 
-![Untitled](img\Untitled%2020.png){ width="70%" }
+![Untitled](img/Untitled%2020.png){ width="70%" }
 ///caption
 Payload Positions
 ///
@@ -218,14 +218,14 @@ Some explanations for these various settings are listed below.
 
 Your choice of “Attack Type” will have the biggest impact on you target. There are four to choose from.
 
-![Untitled](img\Untitled%2021.png){ width="70%" }
+![Untitled](img/Untitled%2021.png){ width="70%" }
 ///caption
 Attack Types
 ///
 
 Once your finished defining your payload positions and selected an attack type, it’s time to choose you specific payloads.
 
-![Untitled](img\Untitled%2022.png){ width="70%" }
+![Untitled](img/Untitled%2022.png){ width="70%" }
 ///caption
 Payloads
 ///
@@ -241,7 +241,7 @@ The Target tool enables you to define which targets are in scope for your curren
 
 You can do a lot from the but the most important is to set your scope. You can do this by right clicking on a “target” and selecting “Add to scope”.
 
-![Untitled](img\Untitled%2023.png){ width="70%" }
+![Untitled](img/Untitled%2023.png){ width="70%" }
 ///caption
 Add To Scope
 ///
@@ -260,14 +260,14 @@ The Inspector enables you to quickly view and edit interesting features of HTTP 
 
 You can open Inspector from the collapsed right pane next to any request/response pane.
 
-![Untitled](img\Untitled%2024.png){ width="70%" }
+![Untitled](img/Untitled%2024.png){ width="70%" }
 ///caption
 Inspector
 ///
 
 This will show the below dialog which “inspects” the request/response headers and various details.
 
-![Untitled](img\Untitled%2025.png){ width="70%" }
+![Untitled](img/Untitled%2025.png){ width="70%" }
 ///caption
 Contents
 ///
@@ -297,7 +297,7 @@ Burp Sequencer enables you to analyze the quality of randomness in a sample of t
 
 Burp Clickbandit makes it quicker and easier to test for clickjacking vulnerabilities. This is when an attack overlays a frame on a decoy website to trick a user into clicking on actionable content. Clickbandit enables you to create an attack to confirm that this vulnerability can be successfully exploited. You use your browser to perform actions on a website, then Clickbandit creates an HTML file with a clickjacking overlay.
 
-![Untitled](img\Untitled%2026.png){ width="70%" }
+![Untitled](img/Untitled%2026.png){ width="70%" }
 ///caption
 Clickbanbit
 ///
@@ -318,7 +318,7 @@ Burp Comparer enables you to compare any two items of data. You can use Comparer
   - To compare similar requests that give rise to different application behavior.
   - To compare responses when testing for blind SQL injection bugs using Boolean condition injection, to see whether injecting different conditions results in a relevant difference in responses.
 
-![Untitled](img\Untitled%2027.png){ width="70%" }
+![Untitled](img/Untitled%2027.png){ width="70%" }
 ///caption
 Comparer
 ///
@@ -361,7 +361,7 @@ The JSON Web Tokens (JWT4B) extension lets you decode and manipulate JSON web to
 2. Navigate to **Extensions** → **BApp Store**.
 3. Search for the **JSON Web Tokens** extension
 
-![JWTs](img\Untitled%2028.png){ width="70%" }
+![JWTs](img/Untitled%2028.png){ width="70%" }
 ///caption
 JWTs
 ///
