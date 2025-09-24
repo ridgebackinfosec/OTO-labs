@@ -100,7 +100,7 @@ git checkout tags/v1.0.1 # <-- Replace this version number with the correspondin
 # end of extra command
 ```
 
-Now, continue on with these final commands...
+Now finish up with this final command...
 
 ```bash
 get-tools

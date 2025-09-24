@@ -1,4 +1,4 @@
-# Setup
+# VM Setup
 
 ???+ warning
     These VMs are BIG! The initial zip file is ~**27GB**. You will need ~**85-100GB** of free disk space once everything is imported into VMware and setup is complete.
