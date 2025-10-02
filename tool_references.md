@@ -91,6 +91,7 @@
   - [YouTube — NetExec remote-exec & lateral demo][yt-netexec]
   - [BHIS — Getting Started with NetExec (guide)][bhis-netexec-guide]
   - [BHIS — Attack Tactics V (Slides)][bhis-att5-slides]
+  - [Automating Network Exploits with NetExec][bhis-netexec-exploit]
 
 - Nmap
   - [BHIS — Nmap Cheatsheet][bhis-nmap]
@@ -131,6 +132,7 @@
 [bhis-fireprox-slides]: https://www.blackhillsinfosec.com/wp-content/uploads/2020/09/SLIDES_WeaponizingCorporateIntel.pdf
 [yt-gophish]: https://www.youtube.com/watch?v=VglCgoIjztE&t=1100s
 [bhis-att5-slides]: https://www.blackhillsinfosec.com/wp-content/uploads/2020/09/SLIDES_AttackTactics5ZerotoHeroAttacks.pdf
+[bhis-netexec-exploit]: https://www.youtube.com/watch?v=DXlFNYnS_1Q
 [bhis-att5-webcast]: https://www.blackhillsinfosec.com/webcast-attack-tactics-5-zero-to-hero-attack/
 [bhis-att6-slides]: https://www.blackhillsinfosec.com/wp-content/uploads/2020/09/SLIDES_AttackTactics6ReturnofBlueTeam.pdf
 [bhis-hashcat]: https://www.blackhillsinfosec.com/hashcat-cheatsheet/

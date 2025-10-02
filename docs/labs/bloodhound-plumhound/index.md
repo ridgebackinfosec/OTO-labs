@@ -246,3 +246,14 @@ This removes old reports but keeps the tools installed for future use.
 
 ### ✅ Lab Cleaned Up!
 Everything is now shut down, and your system is back to normal. If you plan to run the lab again, simply start from **Step 1**.
+
+## OPTIONAL: NetExec Tie-In
+
+???+ warning "No Steps Provided"
+    This is an **optional** part of the lab to explore on your own. No guidance will be provided.
+
+Did you know that NetExec is capable of tying in to BloodHound? Well, it can!
+
+Here's the [first step](https://www.netexec.wiki/getting-started/bloodhound-integration) of getting it integrated.
+
+Have fun exploring!

@@ -24,8 +24,9 @@ Before diving into the hands-on portion, lets discuss the following questions to
    - How can defenders mitigate the risk of this type of phishing campaign?
    - What logging and monitoring tools would be helpful in identifying phishing attempts?
 
-## Campaign Walkthrough
-(Written from the perspective of a Pentest report.)
+## Campaign Walkthrough 
+
+**(Written from the perspective of a Pentest report.)**
 
 Ridgeback InfoSec performed one phishing ruse against for up to 25 Dog Fish Clothing employees.
 

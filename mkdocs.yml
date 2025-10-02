@@ -36,6 +36,7 @@ nav:
   - Lab - Bloodhound & Plumbhound: labs/bloodhound-plumhound/index.md
   - Lab - Responder & Impacket: labs/responder-impacket/index.md
   - Lab - Hashcat: labs/hashcat/index.md
+  - Lab - NetExec w/ Creds: labs/netexec_w_creds/index.md
   - Optional - Bonus VMs: labs/bonus_vms/index.md
 
 theme:

@@ -109,7 +109,7 @@ echo "robb.stark" >> ~/last-names.txt
 If you had collected a user list in your travels (like we just created above), a Password Spraying attack with NetExec can be accomplished via the below command syntax.
 
 ```bash
-netexec smb 192.168.56.22 -u ~/last-names.txt -p 'sexywolfy'
+nxc smb 192.168.56.22 -u ~/last-names.txt -p 'sexywolfy'
 ```
 
 ![Untitled](img/Untitled%202.png){ width="70%" }
@@ -123,7 +123,7 @@ Let’s create a file of just `robb.stark` and rerun that command.
 
 ```bash
 echo "robb.stark" > ~/kinginthenorth
-netexec smb 192.168.56.22 -u ~/kinginthenorth -p 'sexywolfy'
+nxc smb 192.168.56.22 -u ~/kinginthenorth -p 'sexywolfy'
 ```
 
 ![Shared Passwords](img/image.png){ width="70%" }
@@ -132,28 +132,3 @@ Shared Passwords
 ///
 
 It looks like we *might* have stumbled across another valid user with the same password.
-
-### More NetExec Fun w/ Creds…
-
-```bash
-# enumerate local groups, if a group is specified then its members are enumerated
-netexec smb 192.168.56.10-23 -u robb.stark -p sexywolfy --local-groups
-```
-
-???+ warning
-    You’ll need the GOAD-DC02 VM running to see these results.
-
-![Local Groups](img/image%201.png){ width="70%" }
-///caption
-Local Groups
-///
-
-```bash
-# enumerate network interfaces
-netexec smb 192.168.56.10-23 -u robb.stark -p sexywolfy --interfaces
-```
-
-![Network Interfaces](img/image%202.png){ width="70%" }
-///caption
-Network Interfaces
-///
