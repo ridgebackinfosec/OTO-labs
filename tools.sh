@@ -11,10 +11,14 @@ cd
 
 # Required Powershell Steps from https://learn.microsoft.com/en-us/powershell/scripting/install/install-debian?view=powershell-7.4
 # Download the Microsoft repository GPG keys
-wget -q https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb
-# Register & remove the Microsoft repository GPG keys
-sudo dpkg -i packages-microsoft-prod.deb
-rm packages-microsoft-prod.deb
+if [ ! -f /etc/apt/sources.list.d/microsoft-prod.list ]; then
+    wget -q https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb
+    # Register & remove the Microsoft repository GPG keys
+    sudo dpkg -i packages-microsoft-prod.deb
+    rm packages-microsoft-prod.deb
+else
+    echo "Microsoft repository already configured, skipping..."
+fi
 
 # APT method
 sudo apt update
@@ -26,140 +30,174 @@ sudo apt install nmap locate python3-pip python3-venv aircrack-ng burpsuite eaph
 # https://bloodhound.readthedocs.io/en/latest/installation/linux.html
 sudo apt install openjdk-11-jdk neo4j -y
 cd
-wget https://github.com/SpecterOps/BloodHound-Legacy/releases/download/v4.3.1/BloodHound-linux-x64.zip
-unzip BloodHound-linux-x64.zip -d .
+if [ ! -d "$HOME/BloodHound-linux-x64" ]; then
+    wget https://github.com/SpecterOps/BloodHound-Legacy/releases/download/v4.3.1/BloodHound-linux-x64.zip
+    unzip BloodHound-linux-x64.zip -d .
+    rm BloodHound-linux-x64.zip
+else
+    echo "BloodHound already installed, skipping..."
+fi
 
 # pipx method
-pipx install git+https://github.com/ridgebackinfosec/Coercer
-pipx install git+https://github.com/ridgebackinfosec/kerbrute
-pipx install git+https://github.com/ridgebackinfosec/impacket
-pipx install git+https://github.com/ridgebackinfosec/NetExec
-pipx install git+https://github.com/ridgebackinfosec/BloodHound.py
-pipx install git+https://github.com/ridgebackinfosec/Certipy
-pipx install git+https://github.com/ridgebackinfosec/o365spray
+pipx install git+https://github.com/ridgebackinfosec/Coercer || pipx upgrade git+https://github.com/ridgebackinfosec/Coercer
+pipx install git+https://github.com/ridgebackinfosec/kerbrute || pipx upgrade git+https://github.com/ridgebackinfosec/kerbrute
+pipx install git+https://github.com/ridgebackinfosec/impacket || pipx upgrade git+https://github.com/ridgebackinfosec/impacket
+pipx install git+https://github.com/ridgebackinfosec/NetExec || pipx upgrade git+https://github.com/ridgebackinfosec/NetExec
+pipx install git+https://github.com/ridgebackinfosec/BloodHound.py || pipx upgrade git+https://github.com/ridgebackinfosec/BloodHound.py
+pipx install git+https://github.com/ridgebackinfosec/Certipy || pipx upgrade git+https://github.com/ridgebackinfosec/Certipy
+pipx install git+https://github.com/ridgebackinfosec/o365spray || pipx upgrade git+https://github.com/ridgebackinfosec/o365spray
 # sudo pipx install mitm6
 
 pipx ensurepath
 sudo pipx ensurepath
 
 # GitHub method
-mkdir ~/git-tools
+mkdir -p ~/git-tools
 
 # Responder
-git clone https://github.com/ridgebackinfosec/Responder ~/git-tools/Responder 
-cd ~/git-tools/Responder 
-python3 -m venv venv
-source venv/bin/activate
-sudo -E -H $VIRTUAL_ENV/bin/pip install --upgrade pip
-sudo -E -H $VIRTUAL_ENV/bin/python -m pip install -r requirements.txt
-deactivate
-cd
+if [ ! -d "$HOME/git-tools/Responder" ]; then
+    git clone https://github.com/ridgebackinfosec/Responder ~/git-tools/Responder 
+    cd ~/git-tools/Responder 
+    python3 -m venv venv
+    source venv/bin/activate
+    sudo -E -H $VIRTUAL_ENV/bin/pip install --upgrade pip
+    sudo -E -H $VIRTUAL_ENV/bin/python -m pip install -r requirements.txt
+    deactivate
+    cd
+else
+    echo "Responder already cloned, skipping..."
+fi
+
+# auxiliary
+if [ ! -d "$HOME/git-tools/auxiliary" ]; then
+    git clone https://github.com/ridgebackinfosec/auxiliary ~/git-tools/auxiliary
+    cd ~/git-tools/auxiliary
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    deactivate
+    cd
+else
+    echo "auxiliary already cloned, skipping..."
+fi
 
 # fireprox
-git clone https://github.com/ridgebackinfosec/fireprox ~/git-tools/fireprox
-cd ~/git-tools/fireprox
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-deactivate
-cd
+if [ ! -d "$HOME/git-tools/fireprox" ]; then
+    git clone https://github.com/ridgebackinfosec/fireprox ~/git-tools/fireprox
+    cd ~/git-tools/fireprox
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    deactivate
+    cd
+else
+    echo "fireprox already cloned, skipping..."
+fi
 
 # jwt_tool
-git clone https://github.com/ridgebackinfosec/jwt_tool ~/git-tools/jwt_tool
-cd ~/git-tools/jwt_tool
-python3 -m venv venv
-source venv/bin/activate
-pip install termcolor cprint pycryptodomex requests
-deactivate
-cd
+if [ ! -d "$HOME/git-tools/jwt_tool" ]; then
+    git clone https://github.com/ridgebackinfosec/jwt_tool ~/git-tools/jwt_tool
+    cd ~/git-tools/jwt_tool
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install termcolor cprint pycryptodomex requests
+    deactivate
+    cd
+else
+    echo "jwt_tool already cloned, skipping..."
+fi
 
 # PetitPotam
-git clone https://github.com/ridgebackinfosec/PetitPotam ~/git-tools/PetitPotam
+if [ ! -d "$HOME/git-tools/PetitPotam" ]; then
+    git clone https://github.com/ridgebackinfosec/PetitPotam ~/git-tools/PetitPotam
+else
+    echo "PetitPotam already cloned, skipping..."
+fi
 
 # MailSniper
-git clone https://github.com/ridgebackinfosec/MailSniper ~/git-tools/MailSniper
+if [ ! -d "$HOME/git-tools/MailSniper" ]; then
+    git clone https://github.com/ridgebackinfosec/MailSniper ~/git-tools/MailSniper
+else
+    echo "MailSniper already cloned, skipping..."
+fi
 
 # MSOLSpray
-git clone https://github.com/ridgebackinfosec/MSOLSpray ~/git-tools/MSOLSpray
+if [ ! -d "$HOME/git-tools/MSOLSpray" ]; then
+    git clone https://github.com/ridgebackinfosec/MSOLSpray ~/git-tools/MSOLSpray
+else
+    echo "MSOLSpray already cloned, skipping..."
+fi
 
 # MFASweep
-git clone https://github.com/ridgebackinfosec/MFASweep ~/git-tools/MFASweep
+if [ ! -d "$HOME/git-tools/MFASweep" ]; then
+    git clone https://github.com/ridgebackinfosec/MFASweep ~/git-tools/MFASweep
+else
+    echo "MFASweep already cloned, skipping..."
+fi
 
 # Nuclei
-git clone https://github.com/ridgebackinfosec/nuclei.git ~/git-tools/nuclei
-cd ~/git-tools/nuclei/cmd/nuclei
-go build
-sudo mv nuclei /usr/local/bin/
-nuclei -version
-nuclei -tl
+if [ ! -f "/usr/local/bin/nuclei" ]; then
+    git clone https://github.com/ridgebackinfosec/nuclei.git ~/git-tools/nuclei
+    cd ~/git-tools/nuclei/cmd/nuclei
+    go build
+    sudo mv nuclei /usr/local/bin/
+    nuclei -version
+    nuclei -tl
+    cd
+else
+    echo "Nuclei already installed, skipping..."
+fi
 
 # CredMaster
-git clone https://github.com/ridgebackinfosec/CredMaster ~/git-tools/CredMaster
-cd ~/git-tools/CredMaster
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-deactivate
-cd
+if [ ! -d "$HOME/git-tools/CredMaster" ]; then
+    git clone https://github.com/ridgebackinfosec/CredMaster ~/git-tools/CredMaster
+    cd ~/git-tools/CredMaster
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    deactivate
+    cd
+else
+    echo "CredMaster already cloned, skipping..."
+fi
 
 # FindMeAccess
-git clone https://github.com/ridgebackinfosec/FindMeAccess ~/git-tools/FindMeAccess
-cd ~/git-tools/FindMeAccess
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-deactivate
-cd
+if [ ! -d "$HOME/git-tools/FindMeAccess" ]; then
+    git clone https://github.com/ridgebackinfosec/FindMeAccess ~/git-tools/FindMeAccess
+    cd ~/git-tools/FindMeAccess
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    deactivate
+    cd
+else
+    echo "FindMeAccess already cloned, skipping..."
+fi
 
 # PlumHound
-git clone https://github.com/ridgebackinfosec/PlumHound ~/git-tools/PlumHound
-cd ~/git-tools/PlumHound
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-deactivate
-cd
-
-# Wifi-Forge (not ready for auto-installation yet)
-# git clone https://github.com/her3ticAVI/Wifi-Forge
-# cd Wifi-Forge/Framework/materials
-# sudo ./setup.sh
-# cd
-# sudo apt install wifiphisher
-# sudo apt install wifite
-# sudo apt install aircrack-ng
-# sudo apt install iperf
-# sudo apt install bettercap
-# sudo apt install john
-# git clone --depth 1 https://github.com/v1s1t0r1sh3r3/airgeddon.git
-
-# ARCHIVED
-# PyMeta
-# git clone https://github.com/ridgebackinfosec/pymeta ~/git-tools/pymeta
-# cd ~/git-tools/pymeta
-# python3 -m venv venv
-# source venv/bin/activate
-# pip install -r requirements.txt
-# python setup.py install
-# deactivate
-# cd
-
-# bl-bfg
-# sudo apt install docker-compose=1.29.2-3 -y
-# git clone https://github.com/cstraynor/bl-bfg ~/git-tools/bl-bfg
-# mkdir ~/git-tools/bl-bfg/bfg_output
-# cd
-
-# trufflehog
-# curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sudo sh -s -- -b /usr/local/bin
+if [ ! -d "$HOME/git-tools/PlumHound" ]; then
+    git clone https://github.com/ridgebackinfosec/PlumHound ~/git-tools/PlumHound
+    cd ~/git-tools/PlumHound
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    deactivate
+    cd
+else
+    echo "PlumHound already cloned, skipping..."
+fi
 
 # Updated hosts for the GOAD target env
-sudo bash -c 'echo -e "\
+if ! grep -q "kingslanding.sevenkingdoms.local" /etc/hosts; then
+    sudo bash -c 'echo -e "\
 192.168.56.10   kingslanding.sevenkingdoms.local\n\
 192.168.56.11   winterfell.north.sevenkingdoms.local\n\
 192.168.56.22   castelblack.north.sevenkingdoms.local\n\
 192.168.56.12   meereen.essos.local\n\
 192.168.56.23   braavos.essos.local" >> /etc/hosts'
+else
+    echo "GOAD hosts already configured, skipping..."
+fi
 
 sudo apt autoremove -y
 sudo updatedb

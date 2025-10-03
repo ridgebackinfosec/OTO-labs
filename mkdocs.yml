@@ -27,6 +27,7 @@ nav:
   - Home: index.md
   - Lab - VM Setup: labs/vm_setup/index.md
   - Lab - Nmap Check: labs/nmap_check/index.md
+  - Lab - Mundane: labs/mundane/index.md
   - Lab - GoPhish: labs/gophish/index.md
   - Lab - Burp: labs/burp/index.md
   - Lab - Nuclei: labs/nuclei/index.md
