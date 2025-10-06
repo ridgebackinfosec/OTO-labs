@@ -28,6 +28,11 @@ Start by discovering what the tool can do.
 python ~/git-tools/auxiliary/nessus/mundane.py --help
 ```
 
+![Help Dialog](img/mundane_help.png){ width="70%" }
+///caption
+Help Dialog
+///
+
 You’ll see the top-level description and subcommands. Here’s what each does (you’ll use them all in this lab):
 
 * **wizard** — Seeds exported plugin host files from a `.nessus` scan using the helper repo (NessusPluginHosts). Optionally drops you right into interactive review.
@@ -36,9 +41,9 @@ You’ll see the top-level description and subcommands. Here’s what each does 
 * **compare** — Compares multiple plugin files, grouping identical host:port sets.
 * **summary** — Overview of a scan directory: counts, unique hosts/ports, top ports, and identical host:port clusters.
 
-**Exercise:**
+<!-- **Exercise:**
 
-* Run the `--help` flag. List the subcommands you see. In one sentence each, describe when you’d use them.
+* Run the `--help` flag. List the subcommands you see. In one sentence each, describe when you’d use them. -->
 
 ---
 
@@ -49,20 +54,38 @@ Use the **wizard** to turn the `.nessus` file into per-plugin host lists under `
 ```bash
 python ~/git-tools/auxiliary/nessus/mundane.py wizard \
   ~/OTO-labs/supp/nessus/class_goad/OTO-class_GOAD.nessus \
-  --out-dir ~/nessus_plugin_hosts \
-  --review
+  --out-dir ~/nessus_plugin_hosts
 ```
+
+![Parsing .nessus Into Plugin Files](img/mundane_file_parsing.png){ width="70%" }
+///caption
+Parsing .nessus Into Plugin Files
+///
 
 What happens:
 
 * The helper repo is cloned if needed.
 * Plugin host files are created under `~/nessus_plugin_hosts/…`.
-* Because `--review` is set, the interactive reviewer launches automatically when export finishes.
+<!-- * Because `--review` is set, the interactive reviewer launches automatically when export finishes. -->
 
-**Exercise:**
+The script will tell you when it is done, reiterate back to you where it put the newly created files, and even give you an idea of what your next command should be.
 
-* After export completes, in the reviewer’s first “Select a scan” menu, note the scan directory name(s) shown. Write one down—you’ll use it later with `summary`.
-* Outside the tool, quickly list `~/nessus_plugin_hosts` in your shell. How many severity folders (Critical/High/Medium/Low/Info) are present under your chosen scan?
+![Next Step](img/mundane_next_step.png){ width="70%" }
+///caption
+Next Step
+///
+
+Note the directory `/home/telchar/nessus_plugin_hosts/OTO-class_GOAD`. Quickly list that directory's contents with `ll ~/nessus_plugin_hosts/OTO-class_GOAD` in your terminal. How many severity folders (Critical/High/Medium/Low/Info) are present under your chosen scan?
+
+![Listing Contents](img/directory_listing.png){ width="70%" }
+///caption
+Listing Contents
+///
+
+No High or Critical issues found, right? Remember, this is an **INTENTIONALLY** vulnerable target environment we're looking at. So why don't we see more impactful findings off the bat?
+
+???+ note "Remember for later..."
+    After export completes, note the scan's name shown ("OTO-class_GOAD"). Write that down—you’ll use it later with `summary` command.
 
 ---
 
@@ -75,17 +98,80 @@ python ~/git-tools/auxiliary/nessus/mundane.py review \
   --export-root ~/nessus_plugin_hosts
 ```
 
+![Scan Review & Summary](img/mundane_scan_review.png){ width="70%" }
+///caption
+Scan Review & Summary
+///
+
 What you’ll do in the reviewer:
 
 * Choose a **scan** (created by the wizard).
 * Choose a **severity** (Critical/High/Medium/Low/Info, plus a special “Metasploit Module” virtual group if present).
 * Pick a **plugin file** to review.
 
+![Choose Severity & File](img/mundane_sev_file_selection.png){ width="70%" }
+///caption
+Choose Severity & File
+///
+
 When previewing a file:
 
-* **Raw** view shows the file as-is.
-* **Grouped** view shows `host:port1,port2,…` (great for quick targeting).
-* **Hosts-only** shows just the hosts (one per line).
+* **Raw** view shows the file as-is (same host could be repeated on multiple lines w/ one port per line).
+* **Grouped** view shows `host:port1,port2,…` (great for copy/paste into report).
+* **Hosts-only** shows just the hosts (no ports).
+
+![Finding File Details](img/mundane_file_details.png){ width="70%" }
+///caption
+Finding File Details
+///
+
+**Exercise:**
+
+* Enter the **Medium** severity folder. Preview one file in **grouped** mode and then in **hosts-only** mode.
+
+---
+
+### Step 3 — Run Tools from Inside `review`
+
+Back in the interactive reviewer, open any plugin file and choose **Run a tool now?** to see:
+
+![Tool Selection](img/mundane_tool_selection.png){ width="70%" }
+///caption
+Tool Selection
+///
+
+* **Nmap**
+    * TCP or UDP.
+    * Optional NSE profiles: *Crypto*, *SSH*, *SMB*, *SNMP*, *IPMI*.
+    * You can add extra NSE scripts by name (comma-separated, no spaces).
+* **NetExec**
+    * Multi-protocol (e.g., `smb`, `rdp`, `ldap`, `ftp`, `ssh`, etc.).
+    * SMB run produces a “relay list” (signing-not-required targets) alongside logs.
+* **Custom Command**
+    * Build any command using placeholders:
+        * `{TCP_IPS}` → path to a file of hosts (one per line)
+        * `{UDP_IPS}` → same for UDP context
+        * `{TCP_HOST_PORTS}` → path to `host:port,port,…` lines
+        * `{PORTS}` → a comma-separated ports string if the file had ports
+        * `{WORKDIR}` → ephemeral workspace dir containing the generated lists
+        * `{OABASE}` → a base path for tool output files (organized under `~/scan_artifacts/...`)
+
+Every command is shown in a **review menu** first so you can **Run**, **Copy**, or **Cancel**.
+
+**Exercise:**
+
+* Pick a file with multiple hosts under *SMB-relevant* ports. Run **Nmap** TCP with the **SMB** NSE profile. After it completes, note where the results were written (the tool prints the artifact paths).
+<!-- * Choose **Custom Command** and run a harmless test such as:
+  `cat {TCP_IPS} | xargs -I{} sh -c 'echo {}'`
+  Confirm you see each host echoed. -->
+
+???+ warning "Target VM Required"
+    You will need to have the `GOAD-SRV02` VM running for the above exercise to get results.
+
+![Run Tool](img/mundane_run_tool.png){ width="70%" }
+///caption
+Run Tool
+///
 
 You can:
 
@@ -93,94 +179,27 @@ You can:
 * Mark files as `REVIEW_COMPLETE` (the tool will rename them with a `REVIEW_COMPLETE-` prefix).
 * Launch a **tool** (Nmap, NetExec, or a custom command) against parsed hosts, with a review/confirm step before execution.
 
-**Exercise:**
-
-* Enter a **High** severity folder. Preview one file in **grouped** mode and then in **hosts-only** mode.
-* Mark that file **REVIEW_COMPLETE** and confirm the rename in the list.
-
 ---
 
-### Step 3 — One-Off Analysis with `view`, `compare`, and `summary`
+### Step 4 — Wrap-Up and Session Summary
 
-You don’t always need the interactive UI—use these for quick checks.
+As you finish files, keep marking them **REVIEW_COMPLETE**.
 
-#### A) View
+![Mark File Review Complete](img/mundane_review_complete.png){ width="70%" }
+///caption
+Mark File Review Complete
+///
 
-```bash
-python ~/git-tools/auxiliary/nessus/mundane.py view \
-  ~/nessus_plugin_hosts/<YourScanName>/4_Critical/<SomePluginFile>.txt \
-  --grouped
-```
-
-* Shows a single plugin file, grouped by host:port.
-
-#### B) Compare
-
-```bash
-python ~/git-tools/auxiliary/nessus/mundane.py compare \
-  ~/nessus_plugin_hosts/<YourScanName>/4_Critical/*.txt
-```
-
-* Finds **identical host:port sets** across multiple plugin files to spot overlap.
-
-#### C) Summary
-
-```bash
-python ~/git-tools/auxiliary/nessus/mundane.py summary \
-  ~/nessus_plugin_hosts/<YourScanName>
-```
-
-* Prints scan stats: total files, reviewed vs unreviewed, **unique hosts**, **unique ports**, top ports, and counts of identical host:port clusters.
-
-**Exercise:**
-
-* Run `summary` on your scan directory. Record: total files, reviewed count, unique hosts, unique ports, and top 5 ports.
-* Run `compare` on Critical plugin files. Do any files share **identical** host:port sets? If yes, name one pair.
-
----
-
-### Step 4 — Run Tools from Inside `review`
-
-Back in the interactive reviewer, open any plugin file and choose **Run a tool now?** to see:
-
-* **Nmap**
-
-  * TCP or UDP.
-  * Optional NSE profiles: *Crypto*, *SSH*, *SMB*, *SNMP*, *IPMI*.
-  * You can add extra NSE scripts by name (comma-separated, no spaces).
-* **NetExec**
-
-  * Multi-protocol (e.g., `smb`, `rdp`, `ldap`, `ftp`, `ssh`, etc.).
-  * SMB run produces a “relay list” (signing-not-required targets) alongside logs.
-* **Custom Command**
-
-  * Build any command using placeholders:
-
-    * `{TCP_IPS}` → path to a file of hosts (one per line)
-    * `{UDP_IPS}` → same for UDP context
-    * `{TCP_HOST_PORTS}` → path to `host:port,port,…` lines
-    * `{PORTS}` → a comma-separated ports string if the file had ports
-    * `{WORKDIR}` → ephemeral workspace dir containing the generated lists
-    * `{OABASE}` → a base path for tool output files (organized under `~/scan_artifacts/...`)
-
-Every command is shown in a **review menu** first so you can **Run**, **Copy**, or **Cancel**.
-
-**Exercise:**
-
-* Pick a file with multiple hosts under *SMB-relevant* ports. Run **Nmap** TCP with the **SMB** NSE profile. After it completes, note where the results were written (the tool prints the artifact paths).
-* Choose **Custom Command** and run a harmless test such as:
-  `cat {TCP_IPS} | xargs -I{} sh -c 'echo {}'`
-  Confirm you see each host echoed.
-
----
-
-### Step 5 — Wrap-Up and Session Summary
-
-As you finish files, keep marking them **REVIEW_COMPLETE**. When you exit the reviewer, you’ll see a session summary showing:
+When you exit the reviewer, you’ll see a session summary showing:
 
 * Files **reviewed** (but not renamed),
 * Files **marked complete** (renamed),
 * Files **skipped** (e.g., empty).
+
+![Session Summary](img/mundane_session_summary.png){ width="70%" }
+///caption
+Session Summary
+///
 
 **Exercise:**
 
@@ -189,11 +208,59 @@ As you finish files, keep marking them **REVIEW_COMPLETE**. When you exit the re
 
 ---
 
+### Step 5 — One-Off Analysis with `view` and `summary`
+
+You don’t always need the interactive UI—use these for quick checks.
+
+#### A) View
+
+```bash
+python ~/git-tools/auxiliary/nessus/mundane.py view \
+  ~/nessus_plugin_hosts/OTO-class_GOAD/2_Medium/85582_Web_Application_Potentially_Vulnerable_to_Clickjacking.txt \
+  --grouped
+```
+
+![File Quick View](img/mundane_view.png){ width="70%" }
+///caption
+File Quick View
+///
+
+* Shows a single plugin file, grouped by host:port.
+
+#### B) Compare
+<!-- 
+```bash
+python ~/git-tools/auxiliary/nessus/mundane.py compare \
+  ~/nessus_plugin_hosts/OTO-class_GOAD/2_Medium/85582_Web_Application_Potentially_Vulnerable_to_Clickjacking.txt
+```
+
+* Finds **identical host:port sets** across multiple plugin files to spot overlap.
+
+#### C) Summary -->
+
+```bash
+python ~/git-tools/auxiliary/nessus/mundane.py summary \
+  ~/nessus_plugin_hosts/OTO-class_GOAD
+```
+
+![Scan Quick Summary](img/mundane_quick_summary.png){ width="70%" }
+///caption
+Scan Quick Summary
+///
+
+* Prints scan stats: total files, reviewed vs unreviewed, **unique hosts**, **unique ports**, top ports, and counts of identical host:port clusters.
+
+**Exercise:**
+
+* Run `summary` on your scan directory. Record: total files, reviewed count, unique hosts, unique ports, and top 5 ports.
+
+---
+
 ## Key Takeaways
 
 * `wizard` → turns the `.nessus` export into organized plugin host files in `~/nessus_plugin_hosts`.
 * `review` → your main, interactive workspace for previewing, marking complete, and launching tools.
-* `view`, `compare`, `summary` → fast, focused analysis outside the reviewer.
+* `view` & `summary` → fast, focused analysis outside the reviewer.
 * Tool integration (Nmap/NetExec/Custom) → immediate pivot from data to action with controlled, reviewable command execution.
 
 You’re now set to move Nessus findings straight into an operator-friendly flow.
