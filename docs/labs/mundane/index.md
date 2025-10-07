@@ -97,7 +97,7 @@ No High or Critical issues found, right? Remember, this is an **INTENTIONALLY** 
 
 ### Step 2 — Interactive Review with `review`
 
-If you didn’t pass `--review`, you can start the interactive reviewer anytime:
+If you didn’t pass the `--review` flage while using the `wizard` sub-command, you can start the interactive reviewer anytime using:
 
 ```bash
 python ~/git-tools/auxiliary/nessus/mundane.py review \
