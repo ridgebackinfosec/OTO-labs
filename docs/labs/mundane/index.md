@@ -64,7 +64,7 @@ Parsing .nessus Into Plugin Files
 
 What happens:
 
-* The helper repo is cloned if needed.
+* The [helper repo](https://github.com/DefensiveOrigins/NessusPluginHosts) from [Defensive Origins](https://defensiveorigins.com/) is cloned if needed.
 * Plugin host files are created under `~/nessus_plugin_hosts/…`.
 <!-- * Because `--review` is set, the interactive reviewer launches automatically when export finishes. -->
 
@@ -75,7 +75,13 @@ The script will tell you when it is done, reiterate back to you where it put the
 Next Step
 ///
 
-Note the directory `/home/telchar/nessus_plugin_hosts/OTO-class_GOAD`. Quickly list that directory's contents with `ll ~/nessus_plugin_hosts/OTO-class_GOAD` in your terminal. How many severity folders (Critical/High/Medium/Low/Info) are present under your chosen scan?
+Note the directory `/home/telchar/nessus_plugin_hosts/OTO-class_GOAD`. Quickly list that directory's contents with the command below.
+
+```bash
+ll ~/nessus_plugin_hosts/OTO-class_GOAD
+```
+
+How many severity folders (Critical/High/Medium/Low/Info) are present under your chosen scan?
 
 ![Listing Contents](img/directory_listing.png){ width="70%" }
 ///caption
@@ -133,7 +139,7 @@ Finding File Details
 
 ### Step 3 — Run Tools from Inside `review`
 
-Back in the interactive reviewer, open any plugin file and choose **Run a tool now?** to see:
+While still in the interactive reviewer flow and a plugin file is selected, choose **Run a tool now?** to see:
 
 ![Tool Selection](img/mundane_tool_selection.png){ width="70%" }
 ///caption
@@ -160,7 +166,7 @@ Every command is shown in a **review menu** first so you can **Run**, **Copy**, 
 
 **Exercise:**
 
-* Pick a file with multiple hosts under *SMB-relevant* ports. Run **Nmap** TCP with the **SMB** NSE profile. After it completes, note where the results were written (the tool prints the artifact paths).
+* Pick a file with *SMB-relevant* issues. Run **Nmap** TCP with the **SMB** NSE profile. After it completes, note where the results were written (the tool prints the artifact paths).
 <!-- * Choose **Custom Command** and run a harmless test such as:
   `cat {TCP_IPS} | xargs -I{} sh -c 'echo {}'`
   Confirm you see each host echoed. -->
