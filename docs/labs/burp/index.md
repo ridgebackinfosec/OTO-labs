@@ -388,7 +388,7 @@ Burp Browser
 !!! warning "Make sure that "Intercept" toggle is off."
 
 3. With OWASP Juice Shop running, navigate to [http://127.0.0.1:42000/#/login](http://127.0.0.1:42000/#/login) from Burp's browser.
-4. Enter the user "admin@juice-sh.op" and password "admin123" to login.
+4. Enter the user `admin@juice-sh.op` and password `admin123` to login.
 
 #### Identify an authenticated HTTP request
 

@@ -2,7 +2,7 @@
 
 ## Tabletop Exercise: Planning a Phishing Campaign
 
-Before diving into the hands-on portion, lets discuss the following questions to understand the planning aspects of a phishing campaign:
+First, lets discuss the following questions to understand the planning aspects of a phishing campaign:
 
 1. **Target Selection**
    - Who is the target audience for this phishing campaign?
