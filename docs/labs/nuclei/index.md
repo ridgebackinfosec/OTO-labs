@@ -166,38 +166,48 @@ Create a custom Nuclei template to check if the **Swagger API** documentation is
    nano ~/nuclei-templates/custom/juiceshop-swagger.yaml
    ```
 2. Add the following YAML content:
-   ```yaml
-   id: juiceshop-swagger
+  ```yaml
+  id: juiceshop-swagger
 
-   info:
-     name: OWASP Juice Shop Swagger API Exposure
-     author: YourName
-     severity: low
-     description: "Detects the exposed Swagger API documentation for Juice Shop."
-     tags: owasp,juice-shop,swagger
+  info:
+    name: OWASP Juice Shop Swagger API Exposure
+    author: YourName
+    severity: low
+    description: Detects the exposed Swagger/OpenAPI docs for Juice Shop.
+    tags: owasp,juice-shop,swagger,openapi
 
-   requests:
-     - method: GET
-       path:
-         - "{{BaseURL}}/api-docs"
+  http:
+    - method: GET
+      # follow possible /api-docs -> /api-docs/ redirect
+      redirects: true
+      max-redirects: 2
 
-       matchers:
-         - type: status
-           status:
-             - 200
+      path:
+        - "{{BaseURL}}/api-docs"
+        - "{{BaseURL}}/api-docs/"
+        - "{{BaseURL}}/api-docs/swagger.json"
 
-         - type: word
-           words:
-             - "swagger"
-             - "openapi"
-           condition: or
-   ```
+      matchers-condition: and
+      matchers:
+        - type: status
+          status: [200]
+
+        # Match either the UI page or the JSON spec
+        - type: word
+          part: body
+          condition: or
+          words:
+            - "Swagger UI"
+            - "swagger-ui"
+            - '"openapi"'
+            - '"swagger"'
+  ```
 3. Run the template:
    ```sh
-   nuclei -t ~/nuclei-templates/custom/juiceshop-swagger.yaml -u http://localhost:3000
+   nuclei -t ~/nuclei-templates/custom/juiceshop-swagger.yaml -u http://localhost:42000
    ```
 
-### Detect Sensitive Information in Responses
+<!-- ### Detect Sensitive Information in Responses
 Now, let’s create a Nuclei template to check if sensitive information, such as admin emails or API keys, is leaked.
 
 1. Create a new file:  
@@ -229,8 +239,8 @@ Now, let’s create a Nuclei template to check if sensitive information, such as
    ```
 3. Run the template:
    ```sh
-   nuclei -t ~/nuclei-templates/custom/juiceshop-sensitive-info.yaml -u http://localhost:3000
-   ```
+   nuclei -t ~/nuclei-templates/custom/juiceshop-sensitive-info.yaml -u http://localhost:42000
+   ``` -->
 
 ### Detect a Vulnerable Admin Panel
 Many vulnerable web apps have an accessible admin panel. Let’s check if Juice Shop has one.
@@ -268,7 +278,7 @@ Many vulnerable web apps have an accessible admin panel. Let’s check if Juice 
    ```
 3. Run the template:
    ```sh
-   nuclei -t ~/nuclei-templates/custom/juiceshop-admin-panel.yaml -u http://localhost:3000
+   nuclei -t ~/nuclei-templates/custom/juiceshop-admin-panel.yaml -u http://localhost:42000
    ```
 
 ### Chain Multiple Nuclei Templates Together
@@ -276,7 +286,7 @@ Instead of running templates one by one, let’s scan Juice Shop using **multipl
 
 1. Run all custom templates at once:
    ```sh
-   nuclei -t ~/nuclei-templates/custom/ -u http://localhost:3000
+   nuclei -t ~/nuclei-templates/custom/ -u http://localhost:42000
    ```
 2. The output should show multiple detections if vulnerabilities are present.
 
