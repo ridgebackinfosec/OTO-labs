@@ -46,6 +46,8 @@ pipx install git+https://github.com/ridgebackinfosec/NetExec || pipx upgrade git
 pipx install git+https://github.com/ridgebackinfosec/BloodHound.py || pipx upgrade git+https://github.com/ridgebackinfosec/BloodHound.py
 pipx install git+https://github.com/ridgebackinfosec/Certipy || pipx upgrade git+https://github.com/ridgebackinfosec/Certipy
 pipx install git+https://github.com/ridgebackinfosec/o365spray || pipx upgrade git+https://github.com/ridgebackinfosec/o365spray
+pipx install git+https://github.com/ridgebackinfosec/auxiliary || pipx upgrade git+https://github.com/ridgebackinfosec/auxiliary
+pipx install git+https://github.com/ridgebackinfosec/mundane || pipx upgrade git+https://github.com/ridgebackinfosec/mundane
 # sudo pipx install mitm6
 
 pipx ensurepath
@@ -66,19 +68,6 @@ if [ ! -d "$HOME/git-tools/Responder" ]; then
     cd
 else
     echo "Responder already cloned, skipping..."
-fi
-
-# auxiliary
-if [ ! -d "$HOME/git-tools/auxiliary" ]; then
-    git clone https://github.com/ridgebackinfosec/auxiliary ~/git-tools/auxiliary
-    cd ~/git-tools/auxiliary
-    python3 -m venv venv
-    source venv/bin/activate
-    pip install -r requirements.txt
-    deactivate
-    cd
-else
-    echo "auxiliary already cloned, skipping..."
 fi
 
 # fireprox
