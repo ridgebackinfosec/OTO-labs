@@ -166,7 +166,7 @@ Once all of the steps above have been completed...
 2. Log in to The Forge
 3. Run the commands below to verify everything has been configured correctly.
 
-!!! note
+???+ note
     You don’t *have* to turn on *both* GOAD VMs at once if your host machine has lower resources. You can start/stop them as necessary.
 
 ```bash
@@ -229,5 +229,5 @@ There are 3 additional “bonus” VMs (2 Domain Controllers and 1 Server) avail
 
 You can download the extra 3 pre-built and configured target systems from [this link](https://oto.sfo2.cdn.digitaloceanspaces.com/live/extra_vms.zip). The VM setup steps are the same as your class VMs.
 
-!!! note
+???+ note
     ***There are no specific class Lab walkthroughs covering these extra VMs. They are meant for you to explore/attack on your own if you wish. These are not required for the class but are offered to help extend what you have learned here.***

@@ -30,7 +30,7 @@ First, lets discuss the following questions to understand the planning aspects o
 
 Ridgeback InfoSec performed one phishing ruse against for up to 25 Dog Fish Clothing employees.
 
-!!! note
+???+ note
     The POC requested Ridgeback InfoSec send a sample of the phishing email prior to engaging with the target list. This was done to receive approval from Dog Fish Clothing for the ruse, as well as ensure the phishing message would successfully navigate any defensive measures in place.
 
 ### Organizational Reconnaissance
@@ -81,7 +81,7 @@ Mailgun Configuration
 
 The sending email address of support@dog-phish.com was also used for testing purposes.
 
-!!! note
+???+ note
     Setting an email address from the sending domain of "dog-phish.com" helps to bypass SPF-checks.
 
 Next, the tester confirmed that SMTP settings were configured correctly by sending a test "It works!" email, which was successfully received in the tester's inbox.

@@ -7,7 +7,7 @@ There are 3 additional “bonus” VMs (2 Domain Controllers and 1 Server) avail
 
 You can download the extra 3 pre-built and configured target systems from [this link](https://oto.sfo2.cdn.digitaloceanspaces.com/live/extra_vms.zip). The VM setup steps are the same as your class VMs.
 
-!!! note
+???+ note
     ***There are no specific class Lab walkthroughs covering these extra VMs. They are meant for you to explore/attack on your own if you wish. These are not required for the class but are offered to help extend what you have learned here.***
 
 ![Network diagram showing complete GOAD lab environment with 5 systems including 3 domain controllers and 2 servers](img/bonus-vms-full-goad-diagram.png){ width="70%" }

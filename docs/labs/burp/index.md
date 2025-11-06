@@ -388,7 +388,7 @@ Many web applications use JWTs. Including OWASP Juice Shop included with your VM
 Burp Browser
 ///
 
-!!! warning "Make sure that "Intercept" toggle is off."
+???+ warning "Make sure that "Intercept" toggle is off."
 
 3. With OWASP Juice Shop running, navigate to [http://127.0.0.1:42000/#/login](http://127.0.0.1:42000/#/login) from Burp's browser.
 4. Enter the user `admin@juice-sh.op` and password `admin123` to login.
@@ -514,7 +514,7 @@ Now imagine a web application that uses numerouse cookie values and request head
 
 This is the most direct and no nonsense request that can be sent to the server and get an expected complete response. Pointing you in the direction of only the most crucial decision driving values for the web server. Like whether a request is part of a valid/active session or not.
 
-!!! note
+???+ note
     You have done nothing malicious to the target site here. All you've done is strip out unnecessary request values (like tracking cookies, etc.) to determine what manages a session for that web application.
 
 ### Build an Extension

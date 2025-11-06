@@ -68,9 +68,18 @@ nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --lsa
 
 Finally, you can try retrieving the NTDS file. The **NTDS file** (often called `ntds.dit`) is basically the heart of **Active Directory** on a Windows domain controller.
 
+```bash
+nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --ntds
+```
+
+![NTDS](img/nxc_ntds.png){ width="70%" }
+///caption
+NTDS
+///
+
 Here’s the simple breakdown:
 
-* Think of it as **a giant database file**.
+* Think of NTDS as **a giant database file**.
 * It stores all the important information about your network domain:
 
     * **User accounts** (names, passwords — in hashed/encrypted form)
@@ -83,15 +92,6 @@ In other words, if Active Directory is like the phonebook and security guard for
 That’s why attackers, penetration testers, and defenders pay close attention to it — if someone gets hold of the NTDS file, they essentially get the **keys to the kingdom** (because it contains all the domain’s accounts and password hashes).
 
 Once you have more hashes, you can try cracking them to get even more accounts.
-
-```bash
-nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --ntds
-```
-
-![NTDS](img/nxc_ntds.png){ width="70%" }
-///caption
-NTDS
-///
 
 ???+ note "Comparisons"
     👉 In simple terms:

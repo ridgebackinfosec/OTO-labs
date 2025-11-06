@@ -139,7 +139,7 @@ We can get a nice visualization of the Domain Admins by selecting the "Find all 
 Domain Admins
 ///
 
-!!! note
+???+ note
     This is just one of many pre-built queries. Feel free to continue exploring other on your own.
 
 ### Step 6: Running PlumHound for Automated Analysis  

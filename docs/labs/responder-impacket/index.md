@@ -23,7 +23,7 @@ Together, Responder and Impacket create a formidable combination for carrying ou
 
 Temporarily disabling the below services and protocols is necessary within our testing environment to ensure the Lab run smoothly. Normally, you wouldn't have all these things running at the same time on an engagement.
 
-!!! note
+???+ note
     These changes will only persist until the next reboot of The Forge VM.
 
 **GoPhish:**

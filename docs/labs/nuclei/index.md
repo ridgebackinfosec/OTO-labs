@@ -301,5 +301,5 @@ Instead of running templates one by one, let’s scan Juice Shop using **multipl
 ## Further Learning
 Watch the incomparable BB King’s [Nuclei webcast](https://www.youtube.com/watch?v=oajbdFOnVEY&t=2522s) and attempt to create your own Nuclei template for Apache’s server status.
 
-!!! note
+???+ note
     If web apps are your thing, then I highly recommend [BB’s classes](https://www.antisyphontraining.com/instructor/bb-king/).
