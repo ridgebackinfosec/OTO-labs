@@ -1,5 +1,8 @@
 # Lab - Burp Suite
 
+???+ warning "Prerequisites"
+    You will need OWASP Juice Shop running for this lab. See the Juice Shop note in the Walkthrough section for startup instructions.
+
 ???- warning "First Time Opening Burp?"
     You can launch Burp using the below command…
 
@@ -380,7 +383,7 @@ Many web applications use JWTs. Including OWASP Juice Shop included with your VM
 1. Open **Proxy** → **Intercept**.
 2. Use the built in Burp browser
 
-![Browser](img/browser.png){ width=70%" }
+![Browser](img/browser.png){ width="70%" }
 ///caption
 Burp Browser
 ///
@@ -473,7 +476,7 @@ Request Minimizer Install
 
 1. Right-click that same captured request we used to decode the JWT, but this time don't have the JWT value selected.
 
-![Send To Repeater](img/send-to-repeater.png){ width=70%" }
+![Send To Repeater](img/send-to-repeater.png){ width="70%" }
 ///caption
 Send To Repeater
 ///
@@ -482,21 +485,21 @@ Send To Repeater
 
 3. Go to the Repeater tab and click the "Send" button to get a baseline of the request and response.
 
-![Repeater](img/repeater.png){ width=70%" }
+![Repeater](img/repeater.png){ width="70%" }
 ///caption
 Repeater
 ///
 
 4. From within the Repeater tab, right click on the request and select **Extensions** → **Request Minimizer** → **Minimize in a new tab**.
 
-![Minimize It!](img/minimize-it.png){ width=70%" }
+![Minimize It!](img/minimize-it.png){ width="70%" }
 ///caption
 Minimize It!
 ///
 
 After a short while, a new Repeater tab will open with the minimum viable request displayed. 
 
-![Minimum Viable Request](img/mvr.png){ width=70%" }
+![Minimum Viable Request](img/mvr.png){ width="70%" }
 ///caption
 Minimum Viable Request
 ///

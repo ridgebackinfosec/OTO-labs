@@ -1,6 +1,6 @@
 # Lab - Responder & Impacket
 
-???+ warning "Setup" 
+???+ warning "Prerequisites" 
     Don’t forget to use `sudo` with Responder AND ntlmrelayx.
 
     In addition to The Forge VM, you will need the `GOAD-DC02` VM powered on to capture the hashes with Responder. 

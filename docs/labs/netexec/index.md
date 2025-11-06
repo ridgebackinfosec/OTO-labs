@@ -1,6 +1,6 @@
 # Lab - NETEXEC
 
-???+ warning "Setup" 
+???+ warning "Prerequisites" 
     You will need at least the `GOAD-SRV02` (`192.168.56.22`) target VM and The Forge VM up and running for this Lab.
 
 ## Intro

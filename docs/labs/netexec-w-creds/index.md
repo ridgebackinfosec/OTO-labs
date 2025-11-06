@@ -1,7 +1,7 @@
 # Lab - NetExec w/ Creds
 
-???+ warning
-    You’ll need the GOAD-DC02 VM running to see these results.
+???+ warning "Prerequisites"
+    You'll need the GOAD-DC02 VM running to see these results.
 
 ## Intro
 
@@ -102,7 +102,7 @@ NTDS
 
 ## Optional: LDAP Exploration
 
-???+ warning "No Steps Provided"
+???+ info "Optional"
     This is an **optional** part of the lab to explore on your own. No guidance will be provided.
 
 LDAP (Lightweight Directory Access Protocol) is just a way for computers to talk to a directory service like Active Directory.

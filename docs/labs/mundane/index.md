@@ -1,6 +1,6 @@
 # Lab - MUNDANE
 
-???+ warning "Setup" 
+???+ warning "Prerequisites" 
     A Nessus output file has been provided for this lab located at `~/OTO-labs/supp/nessus/class_goad/OTO-class_GOAD.nessus`.
 
 ## Intro

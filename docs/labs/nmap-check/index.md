@@ -1,6 +1,6 @@
 # Nmap Check
 
-???+ warning "Setup"
+???+ warning "Prerequisites"
     - Have at least one GOAD VM running. GOAD-DC02 will respond best for the LDAP script steps. GOAD-SRV02 will give better results in the vulners portion of this Lab.
     - Run the below command to setup an environment variable on The Forge VM.
 

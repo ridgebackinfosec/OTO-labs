@@ -1,5 +1,5 @@
 # Bonus Target VMs
-!!! warning "THIS PART IS OPTIONAL"
+???+ info "Optional"
 
 The full GOAD target environment is comprised of 5 systems. This class only utilizes 2 of those target systems.
 

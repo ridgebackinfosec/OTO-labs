@@ -25,8 +25,8 @@ plugins:
 
 nav:
   - Home: index.md
-  - Lab - VM Setup: labs/vm_setup/index.md
-  - Lab - Nmap Check: labs/nmap_check/index.md
+  - Lab - VM Setup: labs/vm-setup/index.md
+  - Lab - Nmap Check: labs/nmap-check/index.md
   - Lab - Mundane: labs/mundane/index.md
   - Lab - GoPhish: labs/gophish/index.md
   - Lab - Burp: labs/burp/index.md
@@ -37,8 +37,8 @@ nav:
   - Lab - Bloodhound & Plumbhound: labs/bloodhound-plumhound/index.md
   - Lab - Responder & Impacket: labs/responder-impacket/index.md
   - Lab - Hashcat: labs/hashcat/index.md
-  - Lab - NetExec w/ Creds: labs/netexec_w_creds/index.md
-  - Optional - Bonus VMs: labs/bonus_vms/index.md
+  - Lab - NetExec w/ Creds: labs/netexec-w-creds/index.md
+  - Optional - Bonus VMs: labs/bonus-vms/index.md
 
 theme:
   font:

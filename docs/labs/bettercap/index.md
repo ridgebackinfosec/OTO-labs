@@ -1,10 +1,10 @@
 # Lab - BETTERCAP
 
-???+ note
-    You can stop bettercap by entering `exit` in the terminal when you’re done.
-
-???+ warning
+???+ warning "Prerequisites"
     You will need The Forge VM and at least one of the GOAD VMs turned on for this Lab.
+
+???+ note
+    You can stop bettercap by entering `exit` in the terminal when you're done.
 
 ## Intro
 

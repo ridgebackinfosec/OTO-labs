@@ -1,6 +1,6 @@
 # Lab - HASHCAT
 
-???+ warning
+???+ warning "Prerequisites"
     You need the hashes from the Responder demo/lab.
 
 ## Intro

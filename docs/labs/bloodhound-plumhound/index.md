@@ -1,6 +1,6 @@
 # Lab - BloodHound & PlumHound
 
-???+ warning "Setup" 
+???+ warning "Prerequisites" 
     You will need at least the `GOAD-DC02` (`192.168.56.11`) target VM and The Forge VM up and running for this Lab. If you can have **both** GOAD VMs on, that would yeild even better results since we are trying to map out a whole Domain.
 
 ## Intro
@@ -60,7 +60,7 @@ cd ~/BloodHound-linux-x64
 ./BloodHound --no-sandbox
 ```
 
-![alt text](img/start-bloodhound.png)
+![alt text](img/start-bloodhound.png){ width="70%" }
 ///caption
 Start BloodHound
 ///
@@ -249,7 +249,7 @@ Everything is now shut down, and your system is back to normal. If you plan to r
 
 ## OPTIONAL: NetExec Tie-In
 
-???+ warning "No Steps Provided"
+???+ info "Optional"
     This is an **optional** part of the lab to explore on your own. No guidance will be provided.
 
 Did you know that NetExec is capable of tying in to BloodHound? Well, it can!

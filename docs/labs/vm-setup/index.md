@@ -1,10 +1,9 @@
 # VM Setup
 
-???+ warning
+???+ warning "Prerequisites"
     These VMs are BIG! The initial zip file is ~**27GB**. You will need ~**85-100GB** of free disk space once everything is imported into VMware and setup is complete.
 
-???+ warning
-    You will NOT need to be running all the VMs at one time during the class. So, don’t unless you have plenty of resources on your host machine.
+    You will NOT need to be running all the VMs at one time during the class. So, don't unless you have plenty of resources on your host machine.
 
 **Complete the below checklist:**
 

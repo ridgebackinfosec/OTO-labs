@@ -1,6 +1,6 @@
 # Lab - Nuclei
 
-???+ warning "Start Juice Shop First"
+???+ warning "Prerequisites"
     Start up a the OWASP Juice Shop vulnerable web application. It will be available at `http://127.0.0.1:42000`.
 
     ```bash
@@ -291,9 +291,12 @@ Instead of running templates one by one, let’s scan Juice Shop using **multipl
 2. The output should show multiple detections if vulnerabilities are present.
 
 ## Bonus Challenges
-- Modify the **sensitive information** template to check for **JWT tokens**.
-- Create a template to detect **insecure HTTP headers**.
-- Automate the scan by running it as a scheduled **cron job**.
+
+???+ info "Optional"
+    <!-- - Modify the **sensitive information** template to check for **JWT tokens**. -->
+    
+    - Create a template to detect **insecure HTTP headers**.
+    - Automate the scan by running it as a scheduled **cron job**.
 
 ## Further Learning
 Watch the incomparable BB King’s [Nuclei webcast](https://www.youtube.com/watch?v=oajbdFOnVEY&t=2522s) and attempt to create your own Nuclei template for Apache’s server status.
