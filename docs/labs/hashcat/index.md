@@ -45,7 +45,7 @@ hashcat -m 5600 --force -a 0 ~/responder.hashes /usr/share/eaphammer/wordlists/r
 ???+ warning
     This process might take a while depending on your setup so get comfortable and watch for the output below. You should be able to crack Robb's password but not Eddard's.
 
-![The King in the North!](img/Untitled.png){ width="70%" }
+![Hashcat output showing successfully cracked NTLM hash with recovered cleartext password](img/hashcat-password-cracked.png){ width="70%" }
 ///caption
 The King in the North!
 ///
@@ -90,7 +90,7 @@ hashcat -m 16500 hashes.txt /opt/wordlists/<file>.txt \
 
 [https://hashcat.net/wiki/doku.php?id=example_hashes](https://hashcat.net/wiki/doku.php?id=example_hashes)
 
-![Sample Set](img/Untitled%201.png){ width="70%" }
+![Hashcat example hashes reference table displaying hash types and corresponding mode numbers](img/hashcat-example-hashes.png){ width="70%" }
 ///caption
 Sample Set
 ///
@@ -112,7 +112,7 @@ If you had collected a user list in your travels (like we just created above), a
 nxc smb 192.168.56.22 -u ~/last-names.txt -p 'sexywolfy'
 ```
 
-![Untitled](img/Untitled%202.png){ width="70%" }
+![Hashcat running password spray attack against multiple NTLM hashes with rockyou.txt wordlist](img/hashcat-password-spray.png){ width="70%" }
 ///caption
 Password Spraying
 ///
@@ -126,7 +126,7 @@ echo "robb.stark" > ~/kinginthenorth
 nxc smb 192.168.56.22 -u ~/kinginthenorth -p 'sexywolfy'
 ```
 
-![Shared Passwords](img/image.png){ width="70%" }
+![Hashcat results revealing multiple domain accounts sharing identical weak passwords](img/hashcat-shared-passwords.png){ width="70%" }
 ///caption
 Shared Passwords
 ///

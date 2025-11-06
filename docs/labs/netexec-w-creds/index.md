@@ -27,7 +27,7 @@ Enumerate local groups, if a group is specified then its members are enumerated.
 nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --local-groups
 ```
 
-![Local Groups](img/image%201.png){ width="70%" }
+![NetExec output showing enumerated local security groups including Administrators and Remote Desktop Users](img/netexec-creds-local-groups.png){ width="70%" }
 ///caption
 Local Groups
 ///
@@ -40,7 +40,7 @@ Enumerate network interfaces of targets...
 nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --interfaces
 ```
 
-![Network Interfaces](img/image%202.png){ width="70%" }
+![NetExec interface enumeration displaying network adapter details including IP addresses and subnet masks](img/netexec-creds-interfaces.png){ width="70%" }
 ///caption
 Network Interfaces
 ///

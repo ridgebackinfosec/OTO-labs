@@ -66,7 +66,7 @@ You will **ALSO** need to create a new custom network for the environment to wor
     
     Create a new “Host-only” type virtual network that matches the image below.
     
-    ![Untitled](img/Untitled%202.png){ width="70%" }
+    ![VMware Virtual Network Editor showing host-only network configuration for 192.168.56.0 subnet](img/vm-setup-hostonly-network.png){ width="70%" }
     ///caption
     Host Only Network
     ///
@@ -86,21 +86,21 @@ Once the VMs are imported, click “VM” → “Settings” in VMware for each 
 
 Click “Add”.
 
-![Add Virtual Hardware](img/Untitled%203.png){ width="70%" }
+![VMware VM settings dialog with Add button highlighted to add new virtual hardware](img/vm-setup-add-hardware.png){ width="70%" }
 ///caption
 Add Virtual Hardware
 ///
 
 Select “Network Adapter” and click “Finish”.
 
-![Add Network Adapter](img/Untitled%204.png){ width="70%" }
+![Hardware selection dialog showing Network Adapter option selected for adding to VM](img/vm-setup-add-network-adapter.png){ width="70%" }
 ///caption
 Add Network Adapter
 ///
 
 You should now have a new “Network Adapter 2” (or similar) for the VM. Select it and choose the “Custom: Specific virtual network” radio button. From there, use the dropdown to select the name of the Host-only virtual network you created in a previous step.
 
-![Untitled](img/Untitled%205.png){ width="70%" }
+![VMware network adapter settings showing Custom specific virtual network dropdown menu](img/vm-setup-select-custom-network.png){ width="70%" }
 ///caption
 Select Network
 ///
@@ -115,12 +115,12 @@ Select Network
 
 This is how it looks in Fusion…
 
-![Untitled](img/Untitled%206.png){ width="70%" }
+![VMware Fusion network adapter configuration showing two network interfaces](img/vm-setup-fusion-add-network.png){ width="70%" }
 ///caption
 Fusion Add Network
 ///
 
-![Fusion GUI](img/Untitled%207.png){ width="70%" }
+![VMware Fusion main interface showing network adapter selection dropdown menu](img/vm-setup-fusion-gui.png){ width="70%" }
 /// caption
 Fusion GUI
 ///
@@ -203,7 +203,7 @@ The Forge VM will have the `juice-shop` APT package to deploy a local instance o
 sudo juice-shop -h
 ```
 
-![Starting Juice Shop](img/Untitled%208.png){ width="70%" }
+![Terminal output showing OWASP Juice Shop starting on localhost port 42000](img/vm-setup-start-juiceshop.png){ width="70%" }
 /// caption
 Starting Juice Shop
 ///
@@ -216,7 +216,7 @@ The command below will stop the local instance of OWASP Juice Shop.
 sudo juice-shop-stop -h
 ```
 
-![Stopping Juice Shop](img/Untitled%209.png){ width="70%" }
+![Terminal output confirming OWASP Juice Shop service has been stopped](img/vm-setup-stop-juiceshop.png){ width="70%" }
 /// caption
 Stopping Juice Shop
 ///

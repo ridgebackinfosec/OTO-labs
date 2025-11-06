@@ -10,7 +10,7 @@ You can download the extra 3 pre-built and configured target systems from [this 
 !!! note
     ***There are no specific class Lab walkthroughs covering these extra VMs. They are meant for you to explore/attack on your own if you wish. These are not required for the class but are offered to help extend what you have learned here.***
 
-![Full GOAD Environment](img/image%204.png){ width="70%" }
+![Network diagram showing complete GOAD lab environment with 5 systems including 3 domain controllers and 2 servers](img/bonus-vms-full-goad-diagram.png){ width="70%" }
 /// caption
 Full GOAD Environment
 ///

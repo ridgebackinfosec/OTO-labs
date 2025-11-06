@@ -16,7 +16,7 @@ Bettercap is a powerful, flexible, and portable tool designed for network attack
 sudo bettercap --help
 ```
 
-![Help Dialog](img/Untitled.png){ width="70%" }
+![Bettercap help command output showing available modules including net.recon, net.probe, arp.spoof, and http.proxy](img/bettercap-help-dialog.png){ width="70%" }
 ///caption
 Help Dialog
 ///
@@ -38,14 +38,14 @@ This launches the Bettercap interactive session. From here, you can execute comm
 ?
 ```
 
-![Untitled](img/Untitled%201.png){ width="70%" }
+![Bettercap interactive prompt help displaying module-specific commands and parameters](img/bettercap-interactive-help.png){ width="70%" }
 ///caption
 Help Dialog
 ///
 
 When bettercap starts up it, similarly to Responder, lists out the various services it has enabled. A list of the default start up services is shown below.
 
-![Untitled](img/Untitled%202.png){ width="70%" }
+![Bettercap startup screen showing automatically enabled modules including net.recon and api.rest](img/bettercap-startup-modules.png){ width="70%" }
 ///caption
 Modules
 ///
@@ -58,7 +58,7 @@ One of the first steps in using Bettercap is to perform network discovery. This 
 net.probe on
 ```
 
-![Untitled](img/Untitled%203.png){ width="70%" }
+![Bettercap output after activating net.probe module for active host discovery](img/bettercap-net-probe-on.png){ width="70%" }
 ///caption
 net.probe
 ///
@@ -69,7 +69,7 @@ This command scans the network for active hosts. Use `net.show` to list the disc
 net.show
 ```
 
-![Untitled](img/Untitled%204.png){ width="70%" }
+![Bettercap net.show command listing all discovered network hosts with IP and MAC addresses](img/bettercap-net-show-output.png){ width="70%" }
 ///caption
 net.show
 ///
@@ -82,7 +82,7 @@ To start sniffing network traffic, you can enable the `net.sniff` module:
 net.sniff on
 ```
 
-![Untitled](img/Untitled%205.png){ width="70%" }
+![Bettercap net.sniff module activated showing real-time network traffic monitoring](img/bettercap-net-sniff-on.png){ width="70%" }
 ///caption
 net.sniff
 ///
@@ -97,7 +97,7 @@ It's also possible from within bettercap to start up your own HTTP server on the
 https.server on
 ```
 
-![Untitled](img/Untitled%206.png){ width="70%" }
+![Bettercap HTTPS server started for SSL stripping attacks against encrypted traffic](img/bettercap-https-server-on.png){ width="70%" }
 ///caption
 https.server
 ///
@@ -112,7 +112,7 @@ A "caplet" is a script or automation file used by Bettercap to execute a series 
 caplets.update
 ```
 
-![Untitled](img/Untitled%207.png){ width="70%" }
+![Bettercap caplets.update command downloading latest attack automation scripts from repository](img/bettercap-caplets-update.png){ width="70%" }
 ///caption
 caplets.update
 ///
@@ -123,7 +123,7 @@ The caplets will be installed at `/usr/local/share/bettercap/caplets` on your at
 cat /usr/local/share/bettercap/caplets/mitm6.cap
 ```
 
-![Caplet Format](img/image.png){ width="70%" }
+![Text editor displaying bettercap caplet script format with module commands and parameter settings](img/bettercap-caplet-format.png){ width="70%" }
 ///caption
 Caplet Format
 ///
@@ -136,7 +136,7 @@ We can also simply list all the installed capelets from within Bettercap using t
 caplets.show
 ```
 
-![Caplet List](img/Untitled%208.png){ width="70%" }
+![Bettercap caplets.show command displaying list of available automation scripts including beef-inject and dns-spoof](img/bettercap-caplets-list.png){ width="70%" }
 ///caption
 Caplet List
 ///
@@ -153,9 +153,9 @@ After which you can run the below command to see what the caplet activated via i
 active
 ```
 
-![Checking What’s Active](img/image%201.png){ width="70%" }
+![Bettercap status display showing currently active modules including arp.spoof and http.proxy](img/bettercap-active-modules.png){ width="70%" }
 ///caption
-Checking What’s Active
+Checking What's Active
 ///
 
 #### Man-In-The-Middle (MITM) Attacks
@@ -167,7 +167,7 @@ set arp.spoof.targets [target IP address(es)]
 arp.spoof on
 ```
 
-![Untitled](img/Untitled%209.png){ width="70%" }
+![Bettercap ARP spoofing attack activated with target configuration for man-in-the-middle positioning](img/bettercap-arp-spoof-on.png){ width="70%" }
 ///caption
 Spoofing
 ///
@@ -188,7 +188,7 @@ set https.proxy.sslstrip true
 https.proxy on
 ```
 
-![Untitled](img/Untitled%2010.png){ width="70%" }
+![Bettercap HTTPS proxy module running to intercept and manipulate SSL/TLS encrypted traffic](img/bettercap-https-proxy-on.png){ width="70%" }
 ///caption
 Proxying
 ///
@@ -197,7 +197,7 @@ Proxying
 include hstshijack/hstshijack
 ```
 
-![Untitled](img/Untitled%2011.png){ width="70%" }
+![Bettercap HSTS hijacking module bypassing HTTP Strict Transport Security protections for SSL stripping](img/bettercap-hsts-hijack.png){ width="70%" }
 ///caption
 HSTS Hijack
 ///

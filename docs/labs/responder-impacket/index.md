@@ -84,12 +84,12 @@ We need to add the IPv4 address assigned to the VMWare virtual network we setup 
 
 The image below shows the `192.168.56.1` IP added to the out-of-scope list of our config file. This is so we avoid poisoning our gateway or else the tool will error out and break the Lab.
 
-![`DontRespondTo` Config Setting](img/image.png){ width="70%" }
+![Responder configuration file showing DontRespondTo parameter for excluding specific hosts from poisoning attacks](img/responder-dontrespondto-config.png){ width="70%" }
 ///caption
 `DontRespondTo` Config Setting
 ///
 
-The IPv4 address of “192.168.56.1” **should** stay the same for you if you followed the setup instructions at the beginning of class.
+The IPv4 address of "192.168.56.1" **should** stay the same for you if you followed the setup instructions at the beginning of class.
 
 #### Updating The Config File
  
@@ -101,7 +101,7 @@ nano Responder.conf
 
 Find the `DontRespondTo` line and add the IPv4 address as shown below.
 
-![`DontRespondTo` Config Setting](img/image.png){ width="70%" }
+![Responder configuration file showing DontRespondTo parameter for excluding specific hosts from poisoning attacks](img/responder-dontrespondto-config.png){ width="70%" }
 ///caption
 `DontRespondTo` Config Setting
 ///
@@ -118,7 +118,7 @@ Scope Config
 ???+ note
     You can also set specific systems to *ONLY* respond to, but we are **not** going to do that today.
 
-    ![`RespondTo`  Config Setting](img/Untitled.png){ width="70%" }
+    ![Responder configuration file displaying RespondTo parameter for targeting specific hosts with LLMNR poisoning](img/responder-respondto-config.png){ width="70%" }
     ///caption
     `RespondTo`  Config Setting
     ///
@@ -131,7 +131,7 @@ Now, we need to figure out which network interface to have Responder listen on. 
 ip addr
 ```
 
-![Network Interfaces](img/Untitled%202.png){ width="70%" }
+![Responder interface selection prompt showing available network adapters for launching poisoning attack](img/responder-interface-selection.png){ width="70%" }
 ///caption
 Network Interfaces
 ///
@@ -180,7 +180,7 @@ To make things easier, Responder included a python script which grabs the unique
 sudo -E -H $VIRTUAL_ENV/bin/python DumpHash.py
 ```
 
-![DumpHash.py](img/image%203.png){ width="70%" }
+![Terminal showing dumphash.py script execution extracting captured NTLMv2 hashes from Responder logs](img/responder-dumphash-output.png){ width="70%" }
 ///caption
 DumpHash.py
 ///
@@ -216,7 +216,7 @@ We must stop the responder SMB and HTTP server as we don’t want to get the has
 nano ~/git-tools/Responder/Responder.conf
 ```
 
-![Turn Off Services](img/Untitled%204.png){ width="70%" }
+![Text editor showing Responder.conf with SMB and HTTP servers disabled for relay attack compatibility](img/responder-services-off.png){ width="70%" }
 ///caption
 Turn Off Services
 ///
@@ -227,7 +227,7 @@ Once you've turned off SMB and HTTP. in the configuration. you can start Respond
 sudo -E -H $VIRTUAL_ENV/bin/python Responder.py -I ens36
 ```
 
-![Services are Off](img/Untitled%205.png){ width="70%" }
+![Responder startup output confirming SMB and HTTP servers disabled for ntlmrelayx integration](img/responder-services-disabled.png){ width="70%" }
 ///caption
 Services are Off
 ///
@@ -248,7 +248,7 @@ We are now configured to start relaying hashes to various targets on our network
 
 Well remember back when we captured those hashes with Responder? The protocol defined alongside the hash capturing output was `[SMB]`.
 
-![Protocol Used To Capture Hashes](img/image%204.png){ width="70%" }
+![Responder log output showing SMBv2 protocol used to capture authentication hash from domain user](img/responder-smb-protocol.png){ width="70%" }
 ///caption
 Protocol Used To Capture Hashes
 ///
@@ -288,7 +288,7 @@ The output from this command is shown below, which highlights the SMB authentica
 
 The below screenshot was cleaned up a bit to fit everything in neatly. Your output may appear…more jumbled.
 
-![Relaying SUCCESS!](img/Untitled%206.png){ width="70%" }
+![Ntlmrelayx output displaying successful NTLM relay attack with administrative access and dumped credentials](img/responder-relay-success.png){ width="70%" }
 ///caption
 Relaying SUCCESS!
 ///
@@ -345,7 +345,7 @@ sudo rm ~/git-tools/Responder/*.db
 
 If you don’t do this, the Lab *should* still work but the terminal won’t *show* the hashes. Instead, it would look like this.
 
-![Skipping Hash Output](img/Untitled%201.png){ width="70%" }
+![Ntlmrelayx console showing skipped hash entries for already relayed authentication attempts](img/responder-hash-skipped.png){ width="70%" }
 ///caption
 Skipping Hash Output
 ///
@@ -375,7 +375,7 @@ netexec smb 192.168.56.22 -u eddard.stark -H '76E26250ABF96A09E68ADC5A9B1A4C29' 
 - **`--local-auth`**: This flag indicates that local authentication should be used. This means the authentication attempt will be made assuming the provided credentials are for a local account on the target system, as opposed to a domain account.
 - `--shares`: An option to list or interact with the SMB shares on the target machine.
 
-![Untitled](img/Untitled%207.png){ width="70%" }
+![Ntlmrelayx socks command displaying active SOCKS proxy connections for relayed sessions](img/responder-socks-list.png){ width="70%" }
 
 You won’t get the same results with the `robb.stark` user’s command below because that user doesn’t have the rights to access and list out the different shares.
 
