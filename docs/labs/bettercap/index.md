@@ -32,6 +32,11 @@ To start Bettercap with superuser privileges, simply run:
 sudo bettercap -iface ens36
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `sudo`: Runs bettercap with root privileges, required for network interface manipulation and packet sniffing
+    - `bettercap`: Network attack and monitoring framework for performing man-in-the-middle attacks, network reconnaissance, and protocol analysis
+    - `-iface ens36`: Specifies which network interface to use. Bettercap will listen on and manipulate traffic through this interface. Using the wrong interface means you won't see any network traffic.
+
 This launches the Bettercap interactive session. From here, you can execute commands directly.
 
 ```bash
@@ -58,6 +63,11 @@ One of the first steps in using Bettercap is to perform network discovery. This 
 net.probe on
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `net.probe on`: Enables active host discovery using ARP requests to find all live hosts on the subnet
+    - Why needed: Passive scanning (net.recon) only sees hosts that are actively transmitting. Active probing discovers all live hosts including idle systems, giving you a complete network map.
+    - The module sends ARP "who-has" requests to every IP in the subnet and records which ones respond.
+
 ![Bettercap output after activating net.probe module for active host discovery](img/bettercap-net-probe-on.png){ width="70%" }
 ///caption
 net.probe
@@ -68,6 +78,11 @@ This command scans the network for active hosts. Use `net.show` to list the disc
 ```bash
 net.show
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `net.show`: Displays all discovered hosts with their IP addresses, MAC addresses, hostnames, and manufacturers
+    - Output includes: gateway identification, host count, and network topology at a glance
+    - This is your primary command for viewing reconnaissance results and selecting MITM attack targets
 
 ![Bettercap net.show command listing all discovered network hosts with IP and MAC addresses](img/bettercap-net-show-output.png){ width="70%" }
 ///caption
@@ -81,6 +96,14 @@ To start sniffing network traffic, you can enable the `net.sniff` module:
 ```bash
 net.sniff on
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `net.sniff on`: Enables bettercap's packet sniffing module to capture and display network traffic in real-time
+    - What it captures: HTTP requests, DNS queries, HTTPS metadata, credentials in cleartext protocols (FTP, Telnet, HTTP Basic Auth)
+    - Requires ARP spoofing: Traffic sniffing works best when combined with `arp.spoof on` to redirect traffic through your machine
+    - Output format: Displays captured packets in the bettercap console with source/destination IPs, protocols, and payload data
+    - Why useful: Identifies unencrypted credentials, API keys, session tokens, and maps application behavior during MITM attacks
+    - Comparison to tcpdump: Unlike tcpdump's raw packet capture, bettercap presents human-readable protocol-specific data extraction
 
 ![Bettercap net.sniff module activated showing real-time network traffic monitoring](img/bettercap-net-sniff-on.png){ width="70%" }
 ///caption
@@ -97,6 +120,11 @@ It's also possible from within bettercap to start up your own HTTP server on the
 https.server on
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `https.server on`: Starts a local HTTPS web server that bettercap controls
+    - Purpose: Serves malicious payloads, phishing pages, or acts as a relay point for SSL stripping attacks
+    - The server uses a self-signed certificate, which browsers will warn about (part of the attack surface)
+
 ![Bettercap HTTPS server started for SSL stripping attacks against encrypted traffic](img/bettercap-https-server-on.png){ width="70%" }
 ///caption
 https.server
@@ -111,6 +139,12 @@ A "caplet" is a script or automation file used by Bettercap to execute a series 
 ```bash
 caplets.update
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `caplets.update`: Downloads the latest caplet scripts from the official bettercap repository
+    - Caplets = automation scripts that configure multiple modules and settings with one command
+    - Why update: Gets you the newest attack techniques, bug fixes, and additional functionality from the community
+    - Location after update: `/usr/local/share/bettercap/caplets/`
 
 ![Bettercap caplets.update command downloading latest attack automation scripts from repository](img/bettercap-caplets-update.png){ width="70%" }
 ///caption
@@ -136,6 +170,11 @@ We can also simply list all the installed capelets from within Bettercap using t
 caplets.show
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `caplets.show`: Lists all available caplet scripts with descriptions
+    - Shows: caplet name, file path, and brief description of what each one does
+    - Use this to discover pre-built attack scenarios like DNS spoofing, credential sniffing, or browser exploitation (BeEF integration)
+
 ![Bettercap caplets.show command displaying list of available automation scripts including beef-inject and dns-spoof](img/bettercap-caplets-list.png){ width="70%" }
 ///caption
 Caplet List
@@ -147,11 +186,24 @@ Running a caplet is as easy as starting Bettercap normally then executing the `i
 include mitm6
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `include mitm6`: Executes the mitm6 caplet script, which automates a comprehensive man-in-the-middle attack configuration
+    - What mitm6 caplet does: Enables ARP spoofing, packet sniffing, and SSL stripping in a single command
+    - Automation benefit: Instead of manually running `arp.spoof on`, `net.sniff on`, and configuring proxies, the caplet handles all setup
+    - Caplet location: Stored in `/usr/local/share/bettercap/caplets/` - you can examine the script with `cat` to understand what it automates
+    - Why use caplets: Saves time on repetitive attack configurations and ensures consistent setup across engagements
+    - Custom caplets: You can create your own caplet scripts to automate complex multi-step attacks specific to your testing methodology
+
 After which you can run the below command to see what the caplet activated via its script.
 
 ```bash
 active
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `active`: Shows which modules are currently running in the bettercap session
+    - Displays: module name and current state (running/stopped)
+    - Why useful: Confirms your attack configuration is active and helps troubleshoot when things aren't working. If a module isn't listed, it's not running.
 
 ![Bettercap status display showing currently active modules including arp.spoof and http.proxy](img/bettercap-active-modules.png){ width="70%" }
 ///caption
@@ -166,6 +218,12 @@ Bettercap provides powerful capabilities for performing MITM attacks. The `arp.s
 set arp.spoof.targets [target IP address(es)]
 arp.spoof on
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `set arp.spoof.targets [IP]`: Defines which host(s) to target for ARP poisoning. You can specify single IPs, ranges, or comma-separated lists.
+    - `arp.spoof on`: Activates the ARP spoofing attack, sending fake ARP responses to poison the target's ARP cache
+    - How it works: Tells the target that your MAC address corresponds to the gateway's IP, redirecting all their traffic through your system before forwarding it to the real gateway (man-in-the-middle position)
+    - Why powerful: Once positioned, you can intercept, modify, or block any traffic from the target
 
 ![Bettercap ARP spoofing attack activated with target configuration for man-in-the-middle positioning](img/bettercap-arp-spoof-on.png){ width="70%" }
 ///caption
@@ -188,6 +246,12 @@ set https.proxy.sslstrip true
 https.proxy on
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `set https.proxy.sslstrip true`: Enables SSL stripping, which downgrades HTTPS connections to HTTP
+    - `https.proxy on`: Activates the HTTPS proxy to intercept SSL/TLS traffic
+    - Attack mechanism: When a victim requests HTTPS, bettercap maintains the HTTPS connection to the real server but serves HTTP to the victim, allowing you to see plaintext traffic
+    - Limitation: HSTS (HTTP Strict Transport Security) can prevent this attack on sites the victim has previously visited
+
 ![Bettercap HTTPS proxy module running to intercept and manipulate SSL/TLS encrypted traffic](img/bettercap-https-proxy-on.png){ width="70%" }
 ///caption
 Proxying
@@ -196,6 +260,15 @@ Proxying
 ```bash
 include hstshijack/hstshijack
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `include hstshijack/hstshijack`: Loads the HSTS hijacking caplet to bypass HTTP Strict Transport Security protections
+    - What HSTS is: Browser security mechanism that forces HTTPS connections to specific domains, preventing SSL stripping attacks
+    - How hstshijack works: Intercepts HSTS headers before they reach the victim's browser, preventing the browser from enforcing HTTPS-only connections
+    - Attack flow: Strips HSTS headers from server responses → victim browser doesn't learn about HSTS requirement → SSL stripping becomes possible even on HSTS-protected sites
+    - Requirements: Must be combined with `https.proxy.sslstrip true` and ARP spoofing to position yourself as MITM
+    - Real-world effectiveness: Modern browsers with HSTS preload lists (hardcoded HSTS for major sites like Google, Facebook) cannot be bypassed this way
+    - Why powerful: Defeats one of the most common SSL stripping defenses, allowing interception of traffic to sites that implemented HSTS post-deployment
 
 ![Bettercap HSTS hijacking module bypassing HTTP Strict Transport Security protections for SSL stripping](img/bettercap-hsts-hijack.png){ width="70%" }
 ///caption

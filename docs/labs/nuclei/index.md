@@ -7,11 +7,22 @@
     sudo juice-shop -h
     ```
 
-    After you’re done, make sure you shut down OWASP Juice Shop by running the below command.
+    ???- note "Command Options/Arguments Explained"
+        - `sudo`: Runs with superuser privileges to bind to privileged ports
+        - `juice-shop`: OWASP Juice Shop deliberately vulnerable web application for security testing
+        - `-h`: Starts the web server (despite looking like a help flag, this is the start command)
+        - Why needed: Nuclei requires a target web application to scan - Juice Shop provides a safe, local testing environment with known vulnerabilities
+
+    After you're done, make sure you shut down OWASP Juice Shop by running the below command.
 
     ```bash
     sudo juice-shop-stop -h
     ```
+
+    ???- note "Command Options/Arguments Explained"
+        - `sudo juice-shop-stop`: Stops the running Juice Shop web server
+        - `-h`: Stop command (same naming quirk as the start command)
+        - Why cleanup: Frees up port 42000 and system resources after lab completion
 
 ## Intro
 Nuclei is used to send requests across targets based on a template, leading to zero false positives and providing fast scanning on a large number of hosts. Nuclei offers scanning for a variety of protocols, including TCP, DNS, HTTP, SSL, File, Whois, Websocket, Headless, Code etc. With powerful and flexible templating, Nuclei can be used to model all kinds of security checks.
@@ -23,6 +34,12 @@ First, let’s look at the `help` information for Nuclei.
 ```bash
 nuclei -h
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `nuclei`: Fast and customizable vulnerability scanner based on simple YAML-based templates
+    - `-h`: Displays help information showing all available flags and options
+    - What help shows: Target options (`-target`, `-list`), template selection (`-t`, `-tl`), output formatting, rate limiting, and protocol-specific options
+    - Why review help: Nuclei has extensive functionality - understanding available options helps tailor scans for specific use cases (web apps, networks, APIs, etc.)
 
 ![Terminal displaying nuclei command with -u flag for targeting the Juice Shop vulnerable web application](img/nuclei-help-dialog.png){ width="70%" }
 ///caption
@@ -66,6 +83,13 @@ Now, let’s take a look at the available templates nuclei uses via the nuclei c
 nuclei -tl | grep "http/"
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `nuclei -tl`: Lists all available templates (thousands of YAML files organized by protocol/category)
+    - `| grep "http/"`: Pipes output to grep, filtering to show only HTTP-related templates
+    - Why filter: The full template list is overwhelming (5000+ templates) - filtering helps identify relevant checks for your target type
+    - What HTTP templates include: CVE checks, misconfigurations, exposed panels, technology detection, OSINT gathering, and web application vulnerabilities
+    - Template organization: Templates are organized by protocol (`http/`, `network/`, `dns/`, etc.) and severity (`critical`, `high`, `medium`, etc.)
+
 Taking a look at the output snippet below we can see there is a good variety of checks related to HTTP. Including specific CVEs, OSINT, known vulnerabilities, and more.
 
 ![Terminal output showing nuclei HTTP templates directory listing with categorized vulnerability detection scripts](img/nuclei-http-templates-list.png){ width="70%" }
@@ -95,6 +119,13 @@ Lets try one more target. This time it’ll be Portswigger’s `ginandjuice.shop
 nuclei -target https://ginandjuice.shop/
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `nuclei -target https://ginandjuice.shop/`: Scans Portswigger's deliberately vulnerable test site
+    - HTTPS target: Unlike the local Juice Shop, this requires TLS/SSL capability and produces additional SSL-related findings
+    - Why this target: Production-like deployment shows how Nuclei performs against internet-facing applications with encryption enabled
+    - Additional checks: Includes TLS version detection, certificate validation, WHOIS lookups, and cloud provider identification (AWS in this case)
+    - Broader results: Real-world hosting environment reveals infrastructure details beyond just web vulnerabilities
+
 This will produce more broad results as it is a proper deployed web application on the open internet.
 
 ![Nuclei verbose scan output displaying detected web technologies and version fingerprinting for custom domain](img/nuclei-ginandjuice-scan.png){ width="70%" }
@@ -112,6 +143,14 @@ Nuclei isn’t just for HTTP and web apps. It also has a LOT of network focused 
 nuclei -tl | grep "network/"
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `nuclei -tl`: Lists all available templates (same as HTTP example, but filtering differently)
+    - `| grep "network/"`: Pipes output to grep, filtering to show only network protocol templates
+    - Why network templates: Nuclei isn't just for web apps - includes templates for SMB, RDP, SSH, FTP, DNS, MSSQL, and other network services
+    - Template categories: Network templates test for service misconfigurations, version detection, known CVEs in network protocols, and authentication issues
+    - Use case: When scanning infrastructure (not web apps), network templates identify vulnerable services, weak encryption, and exposed management interfaces
+    - Auto-detection: Nuclei automatically selects appropriate templates based on target type (IP vs URL)
+
 ![Terminal showing nuclei network templates directory with protocol-specific detection scripts including SMB and RDP](img/nuclei-network-templates.png){ width="70%" }
 ///caption
 Network Templates (Snippet)
@@ -120,11 +159,20 @@ Network Templates (Snippet)
 ???+ warning
     You’ll need GOAD-SRV02 running for this next part.
 
-Let’s see what happens if we point Nuclei at one of our GOAD target servers.
+Let's see what happens if we point Nuclei at one of our GOAD target servers.
 
 ```bash
 nuclei -target 192.168.56.22
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `nuclei -target 192.168.56.22`: Scans GOAD-SRV02 (Windows Server) using network protocol templates
+    - IP target vs URL: When given an IP address, Nuclei automatically uses network templates instead of HTTP templates
+    - Why this target: GOAD-SRV02 runs Windows domain services (MSSQL, SMB, IIS, RDP) making it ideal for demonstrating network scanning capabilities
+    - Service detection: Nuclei performs port scanning and service fingerprinting before applying relevant templates
+    - Automatic template selection: Detects MSSQL → runs MSSQL templates; detects SMB → runs SMB templates; no manual configuration needed
+    - Attack surface mapping: Identifies versions, misconfigurations, and known CVEs across all detected network services
+    - Comparison to web scanning: Network mode tests infrastructure vulnerabilities (weak SMB signing, outdated TLS) rather than web application flaws
 
 We can see in the screenshot below that Nuclei detected MSSQL, SMB, and IIS running on the target. Also, it did additional checks when there were applicable templates after a service was detected.
 

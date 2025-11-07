@@ -15,6 +15,14 @@ The results of SMB relay often land us SAM tables and credential material. The N
 netexec --help
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `netexec --help`: Displays NetExec's main help menu showing available protocols and global options
+    - Available protocols: SMB, WinRM, LDAP, SSH, MSSQL, RDP, FTP, and more - each with specialized enumeration capabilities
+    - First-run behavior: On initial execution, prompts to initialize the local database (nxcdb) for storing credentials, hosts, and findings
+    - Database location: Creates `~/.nxc/workspaces/default/` to persist enumeration data across sessions
+    - Why check help: NetExec has extensive functionality - reviewing help shows protocol-specific modules and authentication options
+    - Next step: After reviewing global help, use protocol-specific help (e.g., `nxc smb --help`) to see detailed module options
+
 ![NetExec first run dialog prompting database initialization and EULA acceptance](img/netexec-first-run.png){ width="70%" }
 ///caption
 First time use
@@ -33,6 +41,14 @@ With the SMB (Server Message Block) protocol, and the **`--help`** flag is askin
 nxc smb --help
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `nxc smb --help`: Displays SMB protocol-specific help showing enumeration modules and authentication options
+    - What it shows: Available flags like `--shares`, `--sessions`, `--users`, `--groups`, `--sam`, `--lsa`, `--ntds`, credential dumping options, and execution methods
+    - Why protocol-specific: Each protocol (SMB, WinRM, LDAP) has unique capabilities - SMB specializes in Windows network enumeration and credential extraction
+    - Common SMB operations: Null session enumeration, authenticated user/share listing, local admin checking, credential dumping, command execution
+    - Authentication modes: Supports password authentication, hash passing (pass-the-hash), Kerberos tickets, and null sessions
+    - Module system: Shows available modules (spider_plus, enum_av, enum_dns, etc.) that extend core functionality
+
 ![NetExec SMB protocol help showing module-specific flags like --shares, --sessions, and --users](img/netexec-smb-help.png){ width="70%" }
 ///caption
 SMB module specific dialog
@@ -47,6 +63,16 @@ We can check which of our targets have SMB signing both enabled AND required by 
 ```bash
 sudo nmap -Pn -sV --script=smb2-security-mode 192.168.56.11,22
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `sudo nmap`: Runs Nmap with elevated privileges (required for SYN scans and OS detection)
+    - `-Pn`: Skips host discovery ping - treats all targets as online (useful when ICMP is blocked)
+    - `-sV`: Enables version detection to identify service versions on open ports
+    - `--script=smb2-security-mode`: Runs NSE script to check SMB signing configuration and authentication requirements
+    - `192.168.56.11,22`: Target specification using comma-separated IP addresses (GOAD-DC02 and GOAD-SRV02)
+    - Why check SMB signing: When "Message signing enabled but not required" = vulnerable to SMB relay attacks (ntlmrelayx)
+    - Attack relevance: Hosts without required signing can be compromised by relaying captured NTLM authentication to gain unauthorized access
+    - Alternative: NetExec also shows SMB signing status with `nxc smb --gen-relay-list` for easier parsing
 
 ![Nmap scan output showing SMB signing not required on port 445 making relay attacks possible](img/netexec-nmap-smb-signing.png){ width="70%" }
 ///caption
@@ -91,6 +117,10 @@ You may have asked yourself then “what if I have a LOT of in-scope systems”.
 nxc smb 192.168.56.10-23 --gen-relay-list ~/smb_relay.txt
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `--gen-relay-list`: Generates a list of hosts that don't require SMB signing. These targets are vulnerable to NTLM relay attacks because they will accept relayed authentication without verification.
+    - `~/smb_relay.txt`: Output file path where the list of vulnerable hosts will be saved. This file will be used in later labs for relay attacks, so it's critical to run this command and save the output.
+
 ## More to find without needing creds…
 
 ### Users
@@ -118,6 +148,10 @@ You can also easily export the list of only the enumerated usernames by using th
 nxc smb 192.168.56.10-23 --users-export enumerated_users.txt
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `--users-export`: Exports enumerated usernames to a text file, with one username per line. This format is ideal for password spraying attacks or further enumeration.
+    - `enumerated_users.txt`: Output file that will contain the list of discovered usernames. Having usernames in a clean list format makes it easy to feed them into other tools like Kerbrute or password sprayers.
+
 ![NetExec user enumeration output exported to text file showing discovered domain accounts](img/netexec-users-export.png){ width="70%" }
 ///caption
 User Enum Output
@@ -135,6 +169,10 @@ Next, let’s obtain the password policy of users on these systems?
 ```bash
 nxc smb 192.168.56.10-23 --pass-pol
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `--pass-pol`: Retrieves the domain password policy from the target. This reveals minimum password length, complexity requirements, lockout thresholds, and password history settings.
+    - Why it matters: Understanding the password policy helps you craft effective password spraying attacks without triggering account lockouts. For example, if lockout occurs after 5 attempts, you can safely try 3-4 passwords across all users.
 
 Why do you think getting this policy would be useful?
 
@@ -183,6 +221,10 @@ To access the DB in the termianl simply run `nxcdb`.
 nxcdb
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `nxcdb`: Interactive database interface for NetExec. This stores all enumeration data (hosts, users, credentials, shares) from your scans in an SQLite database.
+    - Why use it: The database persists across sessions, allowing you to query historical data, export results for reports, and avoid re-scanning targets. It's especially valuable for tracking credential reuse across multiple systems.
+
 ![nxcdb](img/nxcdb_start.png){ width="70%" }
 ///caption
 nxcdb
@@ -196,6 +238,10 @@ Let's take a look at the SMB database since we've gathered a little info with th
 proto smb
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `proto smb`: Switches the database context to the SMB protocol. Each protocol (SMB, WinRM, LDAP, etc.) has its own separate database tables.
+    - Why switch protocols: This lets you focus on data from specific protocol scans and run protocol-specific queries without mixing results from different enumeration methods.
+
 After entering the "smb" DB, we can submit `?` again to see what's available to us at this level.
 
 ![SMB Database](img/nxcdb_proto_smb.png){ width="70%" }
@@ -208,6 +254,10 @@ We can see from the screenshot above have 10 "documented" and 2 "undocumented" c
 ```bash
 hosts
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `hosts`: Database query command that displays all discovered hosts from SMB scans. Shows IP addresses, hostnames, domain names, OS versions, and SMB signing status.
+    - Why useful: Provides a quick overview of your target environment and helps identify high-value targets (like domain controllers) or vulnerable systems (SMB signing disabled).
 
 The image below presents a neatly formatted table view of the host information. This is just a snippet as the real output has many more columns.
 
@@ -228,6 +278,12 @@ Simply enter the below command and all your host data is now able to be delivere
 ```bash
 export hosts detailed nxc-hosts.csv
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `export hosts`: Exports the hosts table from the database to a file
+    - `detailed`: Export format that includes all available columns (vs. `simple` which includes only basic info)
+    - `nxc-hosts.csv`: Output filename in CSV format, easily imported into spreadsheets or report templates
+    - Why export: Professional penetration test reports require supporting evidence. CSV exports provide clean, shareable data for client deliverables without exposing your tools or methodologies.
 
 ![Exporting Hosts](img/nxcdb_export_hosts.png){ width="70%" }
 ///caption

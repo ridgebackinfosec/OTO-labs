@@ -176,6 +176,12 @@ chmod +x verify-lab-env.sh
 cd ~
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `chmod`: Changes file permissions in Unix/Linux systems
+    - `+x`: Adds execute permission to the file, making it runnable as a script. Without this permission, attempting to run the script would result in a "permission denied" error.
+    - `verify-lab-env.sh`: The verification script that tests network connectivity to GOAD VMs by sending ping requests. This ensures your network configuration is correct before proceeding with labs.
+    - `./`: Executes the script in the current directory. The `./` prefix tells the shell to run the file in the current location rather than searching system PATH directories.
+
 If everything is setup correctly, you should see `0% packet loss` following each ping command.
 
 ![Lab Environment Verification Passed!](img/verify-lab-env.png){ width="70%" }
@@ -203,6 +209,11 @@ The Forge VM will have the `juice-shop` APT package to deploy a local instance o
 sudo juice-shop -h
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `sudo`: Runs the command with superuser (root) privileges. Required because Juice Shop binds to port 80, which is a privileged port that only root can access.
+    - `juice-shop`: The OWASP Juice Shop application, a deliberately vulnerable web application used for security training and testing.
+    - `-h`: Starts the Juice Shop web server. Despite the `-h` looking like a help flag, this is the command to run the service (historical naming quirk from the package).
+
 ![Terminal output showing OWASP Juice Shop starting on localhost port 42000](img/vm-setup-start-juiceshop.png){ width="70%" }
 /// caption
 Starting Juice Shop
@@ -215,6 +226,11 @@ The command below will stop the local instance of OWASP Juice Shop.
 ```bash
 sudo juice-shop-stop -h
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `sudo`: Runs the command with superuser privileges to stop the service running on a privileged port.
+    - `juice-shop-stop`: Command to gracefully stop the OWASP Juice Shop web server and free up port 42000.
+    - `-h`: Stops the service. Like the start command, this uses `-h` (another naming quirk from the package maintainers).
 
 ![Terminal output confirming OWASP Juice Shop service has been stopped](img/vm-setup-stop-juiceshop.png){ width="70%" }
 /// caption

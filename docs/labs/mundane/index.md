@@ -28,6 +28,13 @@ Start by discovering what the tool can do.
 python ~/git-tools/auxiliary/nessus/mundane.py --help
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `python`: Executes the Python interpreter
+    - `~/git-tools/auxiliary/nessus/mundane.py`: Path to the mundane.py tool - a custom Nessus finding review utility
+    - `--help`: Displays usage information, available subcommands (wizard, review, view, compare, summary), and options
+    - Why start with help: Understanding the tool's capabilities and subcommands before diving in helps you choose the right workflow for your task
+    - What you'll see: List of all subcommands with brief descriptions of when to use each one
+
 ![Help Dialog](img/mundane_help.png){ width="70%" }
 ///caption
 Help Dialog
@@ -56,6 +63,14 @@ python ~/git-tools/auxiliary/nessus/mundane.py wizard \
   ~/OTO-labs/supp/nessus/class_goad/OTO-class_GOAD.nessus \
   --out-dir ~/nessus_plugin_hosts
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `wizard`: Subcommand that automates the export of .nessus scan files into organized per-plugin host lists
+    - `~/OTO-labs/supp/nessus/class_goad/OTO-class_GOAD.nessus`: Path to the Nessus scan export file (XML format)
+    - `--out-dir ~/nessus_plugin_hosts`: Output directory where plugin host files will be created, organized by severity (Critical/High/Medium/Low/Info)
+    - What wizard does: Clones the NessusPluginHosts helper repo if needed, parses the .nessus XML, and creates text files for each plugin containing affected hosts and ports
+    - Why use wizard: Transforms Nessus's verbose XML export into actionable, grep-able text files organized by finding severity, making manual review and tool integration much easier
+    - Next steps: After export completes, use the `review` subcommand to interactively analyze findings
 
 ![Parsing .nessus Into Plugin Files](img/mundane_file_parsing.png){ width="70%" }
 ///caption
@@ -103,6 +118,14 @@ If you didn’t pass the `--review` flage while using the `wizard` sub-command, 
 python ~/git-tools/auxiliary/nessus/mundane.py review \
   --export-root ~/nessus_plugin_hosts
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `review`: Interactive subcommand that provides a menu-driven interface for analyzing plugin host files
+    - `--export-root ~/nessus_plugin_hosts`: Root directory containing the exported plugin files (created by the wizard)
+    - What review provides: Interactive navigation by scan → severity → plugin file, with options to view findings in different formats (raw/grouped/hosts-only)
+    - Key features: Mark files as reviewed, copy findings to clipboard, launch tools (Nmap/NetExec) directly against affected hosts
+    - Workflow: Choose scan → Choose severity level → Select plugin file → Preview in preferred format → Mark complete or run tools
+    - Why interactive: Provides context switching between analysis and action, allowing you to move from vulnerability identification to validation/exploitation seamlessly
 
 ![Scan Review & Summary](img/mundane_scan_review.png){ width="70%" }
 ///caption
@@ -226,6 +249,14 @@ python ~/git-tools/auxiliary/nessus/mundane.py view \
   --grouped
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `view`: Non-interactive subcommand for quick viewing of a single plugin file
+    - Plugin file path: Direct path to specific plugin file you want to examine
+    - `--grouped`: Display format showing `host:port1,port2,...` with ports comma-separated per host (alternative: `--raw` for one port per line)
+    - When to use view: Fast inspection of a specific finding without entering the interactive reviewer, useful for scripting or quick checks
+    - Output: Terminal-based display of affected hosts and ports in the specified format
+    - Use case: When you know exactly which plugin file you want to see and don't need the full interactive interface
+
 ![File Quick View](img/mundane_view.png){ width="70%" }
 ///caption
 File Quick View
@@ -248,6 +279,14 @@ python ~/git-tools/auxiliary/nessus/mundane.py compare \
 python ~/git-tools/auxiliary/nessus/mundane.py summary \
   ~/nessus_plugin_hosts/OTO-class_GOAD
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `summary`: Generates statistical overview of an entire scan directory without entering interactive mode
+    - Scan directory path: Points to the specific scan folder (created by wizard, contains severity subdirectories)
+    - What summary shows: Total plugin files, reviewed vs unreviewed count, unique hosts, unique ports, top ports by frequency, and clusters of identical host:port combinations
+    - When to use: Quick health check of scan coverage, identifying scan scope, or gathering metrics for reporting
+    - Output value: Helps identify common attack surfaces (e.g., "80% of findings are on port 445") and scan completeness
+    - Use case: Before diving into detailed review, get a high-level understanding of what the scan found and where to focus efforts
 
 ![Scan Quick Summary](img/mundane_quick_summary.png){ width="70%" }
 ///caption

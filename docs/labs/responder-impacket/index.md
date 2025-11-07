@@ -36,6 +36,11 @@ You’ll probably be prompted for the telchar user’s password after this comma
 gophish-stop
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `gophish-stop`: Custom command script that gracefully stops the GoPhish phishing framework service
+    - Why needed: GoPhish runs on port 80 by default, which Responder also needs for its HTTP poisoning server. Having both running simultaneously creates port conflicts and prevents Responder from functioning properly.
+    - When to use: Always stop GoPhish before starting Responder in lab environments where both tools are installed.
+
 **RDP:**
 
 Next, The Forge is also configured to have an RDP service automatically running on boot up. This was included for flexibility in deployment options for students. 
@@ -46,6 +51,13 @@ Let’s go ahead and stop that service too so it doesn’t interfere with Respon
 sudo systemctl stop xrdp
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `sudo`: Runs the command with root privileges, required to manage system services
+    - `systemctl stop`: systemd command to stop a running service immediately
+    - `xrdp`: The Remote Desktop Protocol (RDP) service that allows remote graphical login to the system
+    - Why needed: XRDP listens on port 3389 and can interfere with Responder's ability to capture and respond to network traffic. Stopping it ensures Responder has full control over network services during the lab.
+    - Note: This change is temporary and only persists until the next reboot of The Forge VM.
+
 **IPv6:**
 
 Finally, lets disable IPv6 via the `sysctl` command. This will simplify configuring Responder's out-of-scope/exclude list.
@@ -55,6 +67,15 @@ sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
 sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `sudo`: Runs with root privileges, required to modify kernel parameters
+    - `sysctl`: System utility for modifying kernel parameters at runtime
+    - `-w`: Write/set a kernel parameter to a new value
+    - `net.ipv6.conf.all.disable_ipv6=1`: Disables IPv6 on all network interfaces (1=disabled, 0=enabled)
+    - `net.ipv6.conf.default.disable_ipv6=1`: Disables IPv6 for any new network interfaces created after this command
+    - Why needed: Simplifies Responder's scope configuration by eliminating IPv6 addresses from the exclusion list. In this lab environment, IPv6 is unnecessary and disabling it reduces complexity.
+    - Note: This change is temporary and will be reset on reboot.
+
 ### Activating the Python Virtual Environment
 
 We created a virtual environment during tool installation for Python to run Responder without conflicting with the system libraries. Let’s activate that again now so we can run things properly.
@@ -63,6 +84,12 @@ We created a virtual environment during tool installation for Python to run Resp
 cd ~/git-tools/Responder
 source venv/bin/activate
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `source venv/bin/activate`: Activates the Python virtual environment located in the `venv` directory
+    - Why virtual environments matter: Python virtual environments isolate project dependencies from system-wide Python packages. This prevents version conflicts and ensures Responder runs with the exact library versions it requires.
+    - What activation does: Modifies your shell's PATH to prioritize the virtual environment's Python interpreter and installed packages. You'll see `(venv)` appear in your terminal prompt when activated.
+    - When to use: Always activate the virtual environment before running Responder or any Python tools installed within it. Without activation, you may get "module not found" errors or use incompatible library versions.
 
 ### Configuring the Scope
 
@@ -99,6 +126,14 @@ Let's now add `192.168.56.1` to the `DontRespondTo` list in the config file like
 nano Responder.conf
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `nano`: Terminal-based text editor with simple keyboard shortcuts displayed at the bottom of the screen
+    - `Responder.conf`: Configuration file that controls Responder's behavior, including which services to run and which IP addresses to target or exclude
+    - Key config changes needed:
+        - `DontRespondTo`: List of IP addresses to exclude from poisoning attacks. Must include your gateway (192.168.56.1) to prevent the tool from erroring out.
+        - `SMB` and `HTTP`: Will be set to Off later when relaying with Impacket (to avoid hash collision)
+    - Saving changes: Press `Ctrl+X`, then `Y`, then `Enter` to save and exit nano
+
 Find the `DontRespondTo` line and add the IPv4 address as shown below.
 
 ![Responder configuration file showing DontRespondTo parameter for excluding specific hosts from poisoning attacks](img/responder-dontrespondto-config.png){ width="70%" }
@@ -131,6 +166,12 @@ Now, we need to figure out which network interface to have Responder listen on. 
 ip addr
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `ip addr`: Displays all network interfaces and their assigned IP addresses, replacing the older `ifconfig` command
+    - Why needed: You must identify which network interface has the static IP (192.168.56.100) assigned to it. Responder needs to listen on the correct interface to intercept traffic on the target network.
+    - What to look for: Find the interface with `inet 192.168.56.100` - this is typically named something like `ens36`, `enp0s8`, or `eth1` depending on your system.
+    - Common mistake: Choosing the NAT interface instead of the host-only interface will prevent Responder from seeing any traffic from the GOAD VMs.
+
 ![Responder interface selection prompt showing available network adapters for launching poisoning attack](img/responder-interface-selection.png){ width="70%" }
 ///caption
 Network Interfaces
@@ -141,6 +182,16 @@ Now let’s take that value and use it in the `-I` option when we start Responde
 ```bash
 sudo -E -H $VIRTUAL_ENV/bin/python Responder.py -I ens36
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `sudo`: Runs with root privileges, required to bind to privileged ports (like 80, 445, 389) and manipulate network traffic
+    - `-E`: Preserves environment variables when running with sudo, ensuring the virtual environment settings carry over
+    - `-H`: Sets the HOME environment variable to the target user's home directory (root in this case)
+    - `$VIRTUAL_ENV/bin/python`: Uses the Python interpreter from the activated virtual environment, ensuring correct dependencies
+    - `Responder.py`: The main Responder script that performs LLMNR, NBT-NS, and MDNS poisoning attacks
+    - `-I ens36`: Specifies the network interface to listen on. Replace `ens36` with your actual interface name (found using `ip addr`)
+    - How it works: Responder listens for broadcast name resolution requests (LLMNR/NBT-NS/MDNS) and responds claiming to be the requested host, causing victims to send authentication hashes to the attacker
+    - Attack scenario: When GOAD-DC02 tries to connect to "bravos" (misspelled), DNS fails, Windows broadcasts the request, and Responder answers, capturing hashes
 
 ???+ warning
     Your network interface name (`-I [this_value]`) might be different than the example command. Be sure to update it to reflect YOUR interface name.
@@ -179,6 +230,12 @@ To make things easier, Responder included a python script which grabs the unique
 ```bash
 sudo -E -H $VIRTUAL_ENV/bin/python DumpHash.py
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `DumpHash.py`: Responder's included utility script that extracts unique hashes from log files
+    - Why needed: Responder logs capture the same hash multiple times as it intercepts repeated authentication attempts. This script deduplicates the hashes, giving you one clean instance of each captured credential.
+    - Output format: Produces NTLMv1 and NTLMv2 hashes in hashcat-compatible format, ready for cracking
+    - What to do next: Copy the NTLMv2 hashes to a file (like `responder.hashes`) for offline password cracking with hashcat
 
 ![Terminal showing dumphash.py script execution extracting captured NTLMv2 hashes from Responder logs](img/responder-dumphash-output.png){ width="70%" }
 ///caption
@@ -226,6 +283,13 @@ Once you've turned off SMB and HTTP. in the configuration. you can start Respond
 ```bash
 sudo -E -H $VIRTUAL_ENV/bin/python Responder.py -I ens36
 ```
+
+???- note "Command Options/Arguments Explained"
+    - This is the same Responder command as before, but now with SMB and HTTP disabled in the configuration file
+    - Why disable SMB and HTTP: When relaying with Impacket's ntlmrelayx, you don't want Responder to capture and terminate the authentication. Instead, Responder poisons the request, but ntlmrelayx handles the actual hash relay to target systems.
+    - Configuration changes: `SMB = Off` and `HTTP = Off` in Responder.conf tell Responder to poison without serving authentication endpoints
+    - Workflow: Responder poisons → victim connects to ntlmrelayx → ntlmrelayx relays authentication to targets
+    - Verification: Startup output should show "SMB server" and "HTTP server" as OFF
 
 ![Responder startup output confirming SMB and HTTP servers disabled for ntlmrelayx integration](img/responder-services-disabled.png){ width="70%" }
 ///caption
@@ -343,7 +407,15 @@ sudo rm ~/git-tools/Responder/logs/*.log
 sudo rm ~/git-tools/Responder/*.db
 ```
 
-If you don’t do this, the Lab *should* still work but the terminal won’t *show* the hashes. Instead, it would look like this.
+???- note "Command Options/Arguments Explained"
+    - `sudo rm ~/git-tools/Responder/logs/*.log`: Removes all Responder log files from previous lab runs
+    - `sudo rm ~/git-tools/Responder/*.db`: Removes Responder's database files that track previously captured hashes
+    - Why cleanup is needed: Responder deduplicates captured hashes - it won't re-display hashes it has already seen and logged
+    - Lab impact: Without cleanup, re-running the lab won't show hash captures in the terminal (they're skipped as duplicates)
+    - When to clean: Always run these commands before repeating the Responder lab to ensure full output visibility
+    - Alternative: You can review previously captured hashes using `DumpHash.py` instead of re-capturing
+
+If you don't do this, the Lab *should* still work but the terminal won't *show* the hashes. Instead, it would look like this.
 
 ![Ntlmrelayx console showing skipped hash entries for already relayed authentication attempts](img/responder-hash-skipped.png){ width="70%" }
 ///caption

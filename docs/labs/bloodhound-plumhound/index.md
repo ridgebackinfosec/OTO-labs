@@ -31,6 +31,13 @@ First things first, BloodHound needs a backend database, and that’s where Neo4
 sudo neo4j console
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `sudo`: Runs with root privileges, required for Neo4j to bind to network ports and access system resources
+    - `neo4j`: Graph database management system that stores and queries the relationships between Active Directory objects
+    - `console`: Runs Neo4j in the foreground with live logging output, allowing you to monitor database activity and catch errors immediately
+    - Why needed: BloodHound requires a Neo4j database backend to store and query the complex relationships in Active Directory. Running in console mode (vs. as a background service) makes troubleshooting easier during lab work.
+    - What happens next: Navigate to http://localhost:7474 to access the Neo4j browser interface and set your credentials
+
 ![alt text](img/neo4jDB.png){ width="70%" }
 ///caption
 DB setup
@@ -59,6 +66,13 @@ Next, we need the interface that’ll let us visualize everything. Open another 
 cd ~/BloodHound-linux-x64
 ./BloodHound --no-sandbox
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `cd ~/BloodHound-linux-x64`: Changes to the BloodHound installation directory
+    - `./BloodHound`: Executes the BloodHound application binary (Electron-based GUI)
+    - `--no-sandbox`: Disables Chromium's sandboxing security feature, required when running as root or in containerized environments
+    - Why needed: The BloodHound GUI provides the visual interface for querying and exploring Active Directory attack paths. The `--no-sandbox` flag prevents permission errors that commonly occur when running Electron apps with elevated privileges.
+    - What happens next: You'll be prompted to enter Neo4j credentials (username: neo4j, password: ridgeback) to connect the GUI to the database
 
 ![alt text](img/start-bloodhound.png){ width="70%" }
 ///caption
@@ -154,15 +168,25 @@ cd ~/git-tools/PlumHound/
 source venv/bin/activate
 ```
 
-Breakdown:  
-- `cd ~/git-tools/PlumHound/` → Moves into the PlumHound directory.  
-- `source venv/bin/activate` → Activates the Python virtual environment, ensuring we use the correct dependencies. 
+???- note "Command Options/Arguments Explained"
+    - `cd ~/git-tools/PlumHound/`: Changes to the PlumHound installation directory
+    - `source venv/bin/activate`: Activates the Python virtual environment for PlumHound
+    - Why virtual environments: Isolates PlumHound's Python dependencies from system-wide packages, preventing version conflicts and ensuring the tool runs with its tested library versions
+    - How to verify: After activation, your terminal prompt will show `(venv)` prefix, indicating you're in the virtual environment
+    - When needed: Always activate the venv before running PlumHound commands, otherwise you may encounter import errors or version mismatches 
 
 Now we can execute the PlumHound commands below.
 
 ```bash
 python PlumHound.py -p ridgeback --easy
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `python PlumHound.py`: Executes the PlumHound analysis script
+    - `-p ridgeback`: Specifies the Neo4j database password (set earlier when configuring Neo4j)
+    - `--easy`: Runs a simplified "sanity check" query that lists domain users to verify database connectivity
+    - Why start with --easy: This quick test confirms PlumHound can successfully connect to Neo4j and retrieve data before running more complex analysis tasks
+    - Expected output: A simple list of domain users extracted from BloodHound data
 
 This first command (`--easy`) does a quick, out-of-the-box analysis to make sure the DB connection works. Note that we specicified "ridgeback" as the Neo4j DB password in the above command.
 
@@ -176,6 +200,13 @@ The output shows us a simple list of Domain users.
 ```bash
 python PlumHound.py -p ridgeback -x tasks/default.tasks
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `python PlumHound.py -p ridgeback`: Same as before - runs PlumHound with Neo4j password authentication
+    - `-x tasks/default.tasks`: Executes a comprehensive analysis using predefined task definitions from the tasks file
+    - What default.tasks includes: Pre-configured queries for common AD attack paths, privilege escalation opportunities, ACL misconfigurations, and high-value targets
+    - Output location: Generates detailed HTML/CSV reports in the `reports/` directory
+    - Why use task files: Automates systematic analysis instead of manually running queries one-by-one in BloodHound GUI, saving time and ensuring comprehensive coverage
 
 The second command (`-x tasks/default.tasks`) runs a more detailed assessment based on predefined task rules.
   
@@ -207,6 +238,13 @@ Open the main `index.html` report with the command below.
 firefox ~/git-tools/PlumHound/reports/index.html
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `firefox`: Launches the Firefox web browser
+    - `~/git-tools/PlumHound/reports/index.html`: Path to PlumHound's main HTML report dashboard
+    - What the report shows: Interactive HTML dashboard with links to detailed findings including privilege escalation paths, high-value targets, ACL misconfigurations, and other Active Directory weaknesses
+    - Why HTML format: Provides a professional, shareable report that can be reviewed by security teams without requiring Neo4j or BloodHound installation
+    - Alternative viewers: You can also open the report with any web browser (Chrome, Edge, etc.) or serve it via HTTP for remote viewing
+
 ![alt text](img/report.png){ width="70%" }
 ///caption
 Report
@@ -227,6 +265,12 @@ Deactivate the virtual environment by running:
 deactivate
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `deactivate`: Exits the Python virtual environment and returns your shell to the system Python environment
+    - Why deactivate: Frees up the virtual environment's PATH modifications and prevents accidentally running PlumHound commands outside the venv context in future terminal sessions
+    - How to verify: After deactivation, the `(venv)` prefix disappears from your terminal prompt
+    - When needed: Always deactivate when finished working with PlumHound to avoid confusion about which Python environment is active
+
 This exits the Python virtual environment used for PlumHound.
 
 ### Close BloodHound  
@@ -241,6 +285,14 @@ If you want to clean up any leftover BloodHound data:
 ```sh
 rm -rf ~/git-tools/PlumHound/reports/*
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `rm`: Remove/delete files and directories
+    - `-r`: Recursive - deletes directories and their contents
+    - `-f`: Force - suppresses confirmation prompts and continues even if files don't exist
+    - `~/git-tools/PlumHound/reports/*`: Target path - the asterisk wildcard matches all files and directories within the reports folder
+    - Why cleanup: Removes old HTML/CSV reports to free up disk space and prevent confusion when running fresh analyses in future labs
+    - What's preserved: The PlumHound tool itself and the tasks directory remain untouched - only generated reports are deleted
 
 This removes old reports but keeps the tools installed for future use.
 

@@ -70,6 +70,14 @@ hashcat -m 1000 hashes.txt /opt/wordlists/<file>.txt \
 --runtime 321123
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `-m 1000`: Specifies the hash mode for NTLM hashes (Windows NT LAN Manager password hashes)
+    - `hashes.txt`: Input file containing NTLM hashes to crack (you'll replace this with your actual file)
+    - `/opt/wordlists/<file>.txt`: Path to wordlist - common wordlists include rockyou.txt or custom dictionaries
+    - `--rules-file /opt/rules/<file>.rule`: Applies transformation rules to wordlist entries (e.g., l33tspeak, capitalization, appending numbers) to generate password candidates
+    - `--runtime 321123`: Limits the cracking session to specified seconds (~89 hours), useful for time-boxed assessments
+    - Why NTLM mode: NTLM hashes are commonly extracted from Windows SAM databases, LSASS memory dumps, or captured via pass-the-hash attacks
+
 #### Kerberos 5
 
 ```bash
@@ -78,6 +86,15 @@ hashcat -m 13100 hashes.txt /opt/wordlists/<file>.txt \
 --runtime 321123
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `-m 13100`: Specifies the hash mode for Kerberos 5 TGS-REP (Ticket Granting Service Response) hashes
+    - `hashes.txt`: Input file containing Kerberoast hashes extracted from service account tickets
+    - `/opt/wordlists/<file>.txt`: Wordlist for dictionary attack against service account passwords
+    - `--rules-file /opt/rules/<file>.rule`: Mutation rules to expand wordlist coverage
+    - `--runtime 321123`: Time limit for the cracking attempt
+    - Why Kerberos mode: Used for "Kerberoasting" attacks where attackers request service tickets for accounts with SPNs (Service Principal Names) and crack them offline to recover service account passwords
+    - Attack context: Kerberoast hashes are obtained using tools like Rubeus, Impacket's GetUserSPNs.py, or Invoke-Kerberoast
+
 #### JWT
 
 ```bash
@@ -85,6 +102,15 @@ hashcat -m 16500 hashes.txt /opt/wordlists/<file>.txt \
 --rules-file /opt/rules/<file>.rule \
 --runtime 321123
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `-m 16500`: Specifies the hash mode for JWT (JSON Web Token) signatures using HMAC-SHA256
+    - `hashes.txt`: Input file containing JWT tokens or just their signature portions
+    - `/opt/wordlists/<file>.txt`: Wordlist to attempt as the JWT secret key
+    - `--rules-file /opt/rules/<file>.rule`: Rules to mutate wordlist entries when guessing the secret
+    - `--runtime 321123`: Maximum time to spend attempting to crack the JWT secret
+    - Why JWT cracking: JWTs are commonly used for authentication in web applications. Cracking the secret key allows attackers to forge valid tokens and impersonate any user
+    - Attack scenario: Weak or leaked JWT secrets can be exploited to bypass authentication entirely, escalate privileges, or maintain persistent access
 
 ### Hash Types
 
@@ -106,11 +132,29 @@ wget -O ~/last-names.txt https://raw.githubusercontent.com/arineng/arincli/maste
 echo "robb.stark" >> ~/last-names.txt
 ```
 
+???- note "Command Options/Arguments Explained"
+    - `wget`: Command-line utility for downloading files from the web
+    - `-O ~/last-names.txt`: Saves the downloaded file to the specified path/filename (instead of using the remote filename)
+    - URL: Public repository containing a list of common last names (useful for username enumeration/generation)
+    - `echo "robb.stark" >>`: Appends the text to a file (the `>>` operator adds to the end without overwriting)
+    - `~/last-names.txt`: The target file to append to
+    - Why create a username list: Password spraying requires a list of potential usernames. Using common surnames with known domain account patterns (first.last) increases the chance of finding valid accounts
+    - Attack technique: This demonstrates creating a mixed username list for password spray testing
+
 If you had collected a user list in your travels (like we just created above), a Password Spraying attack with NetExec can be accomplished via the below command syntax.
 
 ```bash
 nxc smb 192.168.56.22 -u ~/last-names.txt -p 'sexywolfy'
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `nxc smb`: NetExec targeting SMB protocol (port 445)
+    - `192.168.56.22`: Target server IP address (GOAD-SRV02)
+    - `-u ~/last-names.txt`: Username list file containing potential account names to test
+    - `-p 'sexywolfy'`: The single password to spray across all usernames (cracked from Robb Stark's hash)
+    - Password Spraying explained: Tests one password against many usernames, avoiding account lockouts that would occur from testing many passwords against one account
+    - Why effective: Users often reuse passwords across accounts, or organizations use default/weak passwords for multiple service accounts
+    - Lockout avoidance: Unlike brute force (many passwords per user), password spraying stays under typical lockout thresholds (e.g., 5 attempts)
 
 ![Hashcat running password spray attack against multiple NTLM hashes with rockyou.txt wordlist](img/hashcat-password-spray.png){ width="70%" }
 ///caption
@@ -125,6 +169,14 @@ Let’s create a file of just `robb.stark` and rerun that command.
 echo "robb.stark" > ~/kinginthenorth
 nxc smb 192.168.56.22 -u ~/kinginthenorth -p 'sexywolfy'
 ```
+
+???- note "Command Options/Arguments Explained"
+    - `echo "robb.stark" >`: Creates a new file with the single username (the `>` operator overwrites the file if it exists)
+    - `~/kinginthenorth`: New file containing only the known-valid username
+    - `nxc smb 192.168.56.22 -u ~/kinginthenorth -p 'sexywolfy'`: Same NetExec SMB authentication test, but with a single-user file
+    - Why retest with single user: The previous spray showed unexpected results (user "SMITH" authenticated). Isolating to just robb.stark verifies the credential is valid and helps understand the unexpected match
+    - Troubleshooting technique: When password spraying produces unexpected results, isolate known-valid credentials to confirm behavior and understand what's happening
+    - Expected result: Should confirm robb.stark authenticates successfully with 'sexywolfy'
 
 ![Hashcat results revealing multiple domain accounts sharing identical weak passwords](img/hashcat-shared-passwords.png){ width="70%" }
 ///caption
