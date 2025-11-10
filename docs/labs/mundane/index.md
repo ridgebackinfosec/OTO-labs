@@ -11,26 +11,15 @@ The goal of `mundane.py` isn’t just to speed up review—it’s to connect vul
 
 ## Walkthrough
 
-???+ warning "Activating the Python Virtual Environment (venv)"
-    This tool, and many others discussed in this class, require you to first "activate" a python virtual environment before running it. The venv has already been setup for you during the tool installation process. You just have to activate it with the command below.
-
-    ```bash
-    source ~/git-tools/auxiliary/venv/bin/activate
-    ```
-
-    ***A [Python virtual environment](https://docs.python.org/3/tutorial/venv.html) is a self-contained workspace that keeps its own interpreter, libraries, and dependencies separate from the system Python. This isolation ensures that different projects can use different package versions without conflicts, making development and reproducibility more reliable.***
-
 ### Step 0 — Read the Help and Map the Terrain
 
 Start by discovering what the tool can do.
 
 ```bash
-python ~/git-tools/auxiliary/nessus/mundane.py --help
+mundane --help
 ```
 
 ???- note "Command Options/Arguments Explained"
-    - `python`: Executes the Python interpreter
-    - `~/git-tools/auxiliary/nessus/mundane.py`: Path to the mundane.py tool - a custom Nessus finding review utility
     - `--help`: Displays usage information, available subcommands (wizard, review, view, compare, summary), and options
     - Why start with help: Understanding the tool's capabilities and subcommands before diving in helps you choose the right workflow for your task
     - What you'll see: List of all subcommands with brief descriptions of when to use each one
@@ -59,7 +48,7 @@ You’ll see the top-level description and subcommands. Here’s what each does 
 Use the **wizard** to turn the `.nessus` file into per-plugin host lists under `~/nessus_plugin_hosts`, then jump directly into review.
 
 ```bash
-python ~/git-tools/auxiliary/nessus/mundane.py wizard \
+mundane wizard \
   ~/OTO-labs/supp/nessus/class_goad/OTO-class_GOAD.nessus \
   --out-dir ~/nessus_plugin_hosts
 ```
@@ -115,7 +104,7 @@ No High or Critical issues found, right? Remember, this is an **INTENTIONALLY** 
 If you didn’t pass the `--review` flage while using the `wizard` sub-command, you can start the interactive reviewer anytime using:
 
 ```bash
-python ~/git-tools/auxiliary/nessus/mundane.py review \
+mundane review \
   --export-root ~/nessus_plugin_hosts
 ```
 
@@ -244,7 +233,7 @@ You don’t always need the interactive UI—use these for quick checks.
 #### A) View
 
 ```bash
-python ~/git-tools/auxiliary/nessus/mundane.py view \
+mundane view \
   ~/nessus_plugin_hosts/OTO-class_GOAD/2_Medium/85582_Web_Application_Potentially_Vulnerable_to_Clickjacking.txt \
   --grouped
 ```
@@ -267,7 +256,7 @@ File Quick View
 #### B) Compare
 <!-- 
 ```bash
-python ~/git-tools/auxiliary/nessus/mundane.py compare \
+mundane compare \
   ~/nessus_plugin_hosts/OTO-class_GOAD/2_Medium/85582_Web_Application_Potentially_Vulnerable_to_Clickjacking.txt
 ```
 
@@ -276,7 +265,7 @@ python ~/git-tools/auxiliary/nessus/mundane.py compare \
 #### C) Summary -->
 
 ```bash
-python ~/git-tools/auxiliary/nessus/mundane.py summary \
+mundane summary \
   ~/nessus_plugin_hosts/OTO-class_GOAD
 ```
 
