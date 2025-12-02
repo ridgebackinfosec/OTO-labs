@@ -38,7 +38,7 @@ sudo neo4j console
     - Why needed: BloodHound requires a Neo4j database backend to store and query the complex relationships in Active Directory. Running in console mode (vs. as a background service) makes troubleshooting easier during lab work.
     - What happens next: Navigate to http://localhost:7474 to access the Neo4j browser interface and set your credentials
 
-![alt text](img/neo4jDB.png){ width="70%" }
+![Neo4j console startup showing initialization messages and HTTP connector binding to port 7474](img/neo4jDB.png){ width="70%" }
 ///caption
 DB setup
 ///
@@ -47,14 +47,14 @@ Neo4j is like BloodHound’s brain—it stores all the juicy AD relationships we
 
 After starting up Neo4j in the console, open a browser and go to http://localhost:7474. You'll be asked to enter the default credentials of user "neo4j" and password "neo4j".
 
-![alt text](img/default-DB-creds.png){ width="70%" }
+![Neo4j browser login screen showing default username and password fields](img/default-DB-creds.png){ width="70%" }
 ///caption
 Default DB Creds
 ///
 
 After that, you'll be asked to provide a new password. We're going to set the new password to "ridgeback".
 
-![alt text](img/new-DB-password.png){ width="70%" }
+![Neo4j password change prompt requesting new password and confirmation](img/new-DB-password.png){ width="70%" }
 ///caption
 Set New DB Password
 ///
@@ -74,7 +74,7 @@ cd ~/BloodHound-linux-x64
     - Why needed: The BloodHound GUI provides the visual interface for querying and exploring Active Directory attack paths. The `--no-sandbox` flag prevents permission errors that commonly occur when running Electron apps with elevated privileges.
     - What happens next: You'll be prompted to enter Neo4j credentials (username: neo4j, password: ridgeback) to connect the GUI to the database
 
-![alt text](img/start-bloodhound.png){ width="70%" }
+![Terminal showing BloodHound application launching with --no-sandbox flag](img/start-bloodhound.png){ width="70%" }
 ///caption
 Start BloodHound
 ///
@@ -83,7 +83,7 @@ The `--no-sandbox` flag helps avoid permission issues when running the Electron-
 
 The first thing you'll see *should* be a prompt for the Neo4j credentials we just set. Enter the username "neo4j" and the password "ridgeback". This will connect the BloodHound GUI with the Neo4j DB.
 
-![alt text](img/DB-auth.png){ width="70%" }
+![BloodHound GUI authentication dialog prompting for Neo4j database credentials](img/DB-auth.png){ width="70%" }
 ///caption
 DB Authentication
 ///
@@ -101,7 +101,7 @@ In a new terminal, run:
 bloodhound-python --zip -c all -d north.sevenkingdoms.local -u brandon.stark -p iseedeadpeople -dc winterfell.north.sevenkingdoms.local -ns 127.0.0.1 --dns-timeout 60 --dns-tcp
 ```  
 
-![alt text](img/data-collection.png){ width="70%" }
+![Terminal output showing bloodhound-python collecting Active Directory data with progress indicators](img/data-collection.png){ width="70%" }
 ///caption
 Data Collection
 ///
@@ -132,7 +132,7 @@ Go back to the BloodHound GUI.
 
 - hit "Open" to load the data into the Neo4j DB
 
-![alt text](img/upload-data.png){ width="70%" }
+![BloodHound GUI showing Upload Data button and file selection dialog](img/upload-data.png){ width="70%" }
 ///caption
 Upload Data
 ///
@@ -141,14 +141,14 @@ Upload Data
 
 Staying within the BloodHound GUI, you can navigate the data via the collapsible menu shown below.
 
-![alt text](img/menu.png){ width="70%" }
+![BloodHound sidebar menu displaying pre-built queries including Find all Domain Admins](img/menu.png){ width="70%" }
 ///caption
 Menu
 ///
 
 We can get a nice visualization of the Domain Admins by selecting the "Find all Domain Admins" pre-built query shown above.
 
-![alt text](img/DAs.png){ width="70%" }
+![BloodHound graph visualization showing Domain Admins and their relationships](img/DAs.png){ width="70%" }
 ///caption
 Domain Admins
 ///
@@ -192,7 +192,7 @@ This first command (`--easy`) does a quick, out-of-the-box analysis to make sure
 
 The output shows us a simple list of Domain users.
 
-![alt text](img/easy.png){ width="70%" }
+![PlumHound terminal output showing list of domain users from sanity check query](img/easy.png){ width="70%" }
 ///caption
 --easy
 ///
@@ -210,7 +210,7 @@ python PlumHound.py -p ridgeback -x tasks/default.tasks
 
 The second command (`-x tasks/default.tasks`) runs a more detailed assessment based on predefined task rules.
   
-![alt text](img/default-tasks.png){ width="70%" }
+![PlumHound terminal showing progress of default tasks execution with multiple queries completing](img/default-tasks.png){ width="70%" }
 ///caption
 Default Tasks
 ///
@@ -227,7 +227,7 @@ cd reports/
 ll
 ```
 
-![alt text](img/report-list.png){ width="70%" }
+![Terminal directory listing showing PlumHound-generated HTML and CSV report files](img/report-list.png){ width="70%" }
 ///caption
 Report List
 ///
@@ -245,7 +245,7 @@ firefox ~/git-tools/PlumHound/reports/index.html
     - Why HTML format: Provides a professional, shareable report that can be reviewed by security teams without requiring Neo4j or BloodHound installation
     - Alternative viewers: You can also open the report with any web browser (Chrome, Edge, etc.) or serve it via HTTP for remote viewing
 
-![alt text](img/report.png){ width="70%" }
+![PlumHound HTML report dashboard displaying Active Directory analysis results and attack paths](img/report.png){ width="70%" }
 ///caption
 Report
 ///
