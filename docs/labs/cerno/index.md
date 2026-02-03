@@ -5,9 +5,9 @@
 
 ## Intro
 
-In this lab, we’ll be working with `mundane.py`, a custom-built auxiliary tool designed to make Nessus finding reviews faster, more organized, and more actionable. Instead of manually digging through a clunky UI or lenghty HTML exports, `mundane.py` gives us an interactive interface to navigate by scan, severity, and file. Along the way, it highlights unreviewed findings, shows grouped host/port information, and provides quick ways to compare or analyze coverage across files.
+In this lab, we’ll be working with `cerno.py`, a custom-built auxiliary tool designed to make Nessus finding reviews faster, more organized, and more actionable. Instead of manually digging through a clunky UI or lenghty HTML exports, `cerno.py` gives us an interactive interface to navigate by scan, severity, and file. Along the way, it highlights unreviewed findings, shows grouped host/port information, and provides quick ways to compare or analyze coverage across files.
 
-The goal of `mundane.py` isn’t just to speed up review—it’s to connect vulnerability data to offensive workflows. From within the tool, you’ll be able to preview targets, copy lists to your clipboard, and even launch tools like Nmap or NetExec against hosts directly from the interface. By the end of this exercise, you’ll see how `mundane.py` helps move from raw scan results to hands-on validation and exploitation in a streamlined way.
+The goal of `cerno.py` isn’t just to speed up review—it’s to connect vulnerability data to offensive workflows. From within the tool, you’ll be able to preview targets, copy lists to your clipboard, and even launch tools like Nmap or NetExec against hosts directly from the interface. By the end of this exercise, you’ll see how `cerno.py` helps move from raw scan results to hands-on validation and exploitation in a streamlined way.
 
 ## Walkthrough
 
@@ -16,7 +16,7 @@ The goal of `mundane.py` isn’t just to speed up review—it’s to connect vul
 Start by discovering what the tool can do.
 
 ```bash
-mundane --help
+cerno --help
 ```
 
 ???- note "Command Options/Arguments Explained"
@@ -48,7 +48,7 @@ You’ll see the top-level description and subcommands. Here’s what each does 
 Use the **wizard** to turn the `.nessus` file into per-plugin host lists under `~/nessus_plugin_hosts`, then jump directly into review.
 
 ```bash
-mundane wizard \
+cerno wizard \
   ~/OTO-labs/supp/nessus/class_goad/OTO-class_GOAD.nessus \
   --out-dir ~/nessus_plugin_hosts
 ```
@@ -104,7 +104,7 @@ No High or Critical issues found, right? Remember, this is an **INTENTIONALLY** 
 If you didn’t pass the `--review` flage while using the `wizard` sub-command, you can start the interactive reviewer anytime using:
 
 ```bash
-mundane review \
+cerno review \
   --export-root ~/nessus_plugin_hosts
 ```
 
@@ -233,7 +233,7 @@ You don’t always need the interactive UI—use these for quick checks.
 #### A) View
 
 ```bash
-mundane view \
+cerno view \
   ~/nessus_plugin_hosts/OTO-class_GOAD/2_Medium/85582_Web_Application_Potentially_Vulnerable_to_Clickjacking.txt \
   --grouped
 ```
@@ -256,7 +256,7 @@ File Quick View
 #### B) Compare
 <!-- 
 ```bash
-mundane compare \
+cerno compare \
   ~/nessus_plugin_hosts/OTO-class_GOAD/2_Medium/85582_Web_Application_Potentially_Vulnerable_to_Clickjacking.txt
 ```
 
@@ -265,7 +265,7 @@ mundane compare \
 #### C) Summary -->
 
 ```bash
-mundane summary \
+cerno summary \
   ~/nessus_plugin_hosts/OTO-class_GOAD
 ```
 

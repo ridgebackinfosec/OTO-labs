@@ -47,7 +47,7 @@ pipx install git+https://github.com/ridgebackinfosec/BloodHound.py || pipx upgra
 pipx install git+https://github.com/ridgebackinfosec/Certipy || pipx upgrade git+https://github.com/ridgebackinfosec/Certipy
 pipx install git+https://github.com/ridgebackinfosec/o365spray || pipx upgrade git+https://github.com/ridgebackinfosec/o365spray
 pipx install git+https://github.com/ridgebackinfosec/auxiliary || pipx upgrade git+https://github.com/ridgebackinfosec/auxiliary
-pipx install git+https://github.com/ridgebackinfosec/mundane || pipx upgrade git+https://github.com/ridgebackinfosec/mundane
+pipx install git+https://github.com/ridgebackinfosec/cerno || pipx upgrade git+https://github.com/ridgebackinfosec/cerno
 # sudo pipx install mitm6
 
 pipx ensurepath

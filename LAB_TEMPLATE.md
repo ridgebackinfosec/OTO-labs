@@ -421,7 +421,7 @@ command --option value
 ## Questions?
 
 If you're unsure about any formatting decision, refer to the existing standardized labs:
-- `docs/labs/mundane/index.md` - Well-structured with clear steps
+- `docs/labs/cerno/index.md` - Well-structured with clear steps
 - `docs/labs/netexec/index.md` - Good example of command explanations
 - `docs/labs/bloodhound-plumhound/index.md` - Good use of admonitions
 
