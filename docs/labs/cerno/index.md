@@ -5,9 +5,9 @@
 
 ## Intro
 
-In this lab, we’ll be working with `cerno.py`, a custom-built auxiliary tool designed to make Nessus finding reviews faster, more organized, and more actionable. Instead of manually digging through a clunky UI or lenghty HTML exports, `cerno.py` gives us an interactive interface to navigate by scan, severity, and file. Along the way, it highlights unreviewed findings, shows grouped host/port information, and provides quick ways to compare or analyze coverage across files.
+In this lab, we’ll be working with `Cerno`, a custom-built auxiliary tool designed to make Nessus finding reviews faster, more organized, and more actionable. Instead of manually digging through a clunky UI or lenghty HTML exports, `Cerno` gives us an interactive interface to navigate by scan, severity, and file. Along the way, it highlights unreviewed findings, shows grouped host/port information, and provides quick ways to compare or analyze coverage across files.
 
-The goal of `cerno.py` isn’t just to speed up review—it’s to connect vulnerability data to offensive workflows. From within the tool, you’ll be able to preview targets, copy lists to your clipboard, and even launch tools like Nmap or NetExec against hosts directly from the interface. By the end of this exercise, you’ll see how `cerno.py` helps move from raw scan results to hands-on validation and exploitation in a streamlined way.
+The goal of `Cerno` isn’t just to speed up review—it’s to connect vulnerability data to offensive workflows. From within the tool, you’ll be able to preview targets, copy lists to your clipboard, and even launch tools like Nmap or NetExec against hosts directly from the interface. By the end of this exercise, you’ll see how `Cerno` helps move from raw scan results to hands-on validation and exploitation in a streamlined way.
 
 ## Walkthrough
 
@@ -24,7 +24,7 @@ cerno --help
     - Why start with help: Understanding the tool's capabilities and subcommands before diving in helps you choose the right workflow for your task
     - What you'll see: List of all subcommands with brief descriptions of when to use each one
 
-![Help Dialog](img/mundane_help.png){ width="70%" }
+![Help Dialog](img/cerno_help.png){ width="70%" }
 ///caption
 Help Dialog
 ///
@@ -61,7 +61,7 @@ cerno wizard \
     - Why use wizard: Transforms Nessus's verbose XML export into actionable, grep-able text files organized by finding severity, making manual review and tool integration much easier
     - Next steps: After export completes, use the `review` subcommand to interactively analyze findings
 
-![Parsing .nessus Into Plugin Files](img/mundane_file_parsing.png){ width="70%" }
+![Parsing .nessus Into Plugin Files](img/cerno_file_parsing.png){ width="70%" }
 ///caption
 Parsing .nessus Into Plugin Files
 ///
@@ -74,7 +74,7 @@ What happens:
 
 The script will tell you when it is done, reiterate back to you where it put the newly created files, and even give you an idea of what your next command should be.
 
-![Next Step](img/mundane_next_step.png){ width="70%" }
+![Next Step](img/cerno_next_step.png){ width="70%" }
 ///caption
 Next Step
 ///
@@ -116,7 +116,7 @@ cerno review \
     - Workflow: Choose scan → Choose severity level → Select plugin file → Preview in preferred format → Mark complete or run tools
     - Why interactive: Provides context switching between analysis and action, allowing you to move from vulnerability identification to validation/exploitation seamlessly
 
-![Scan Review & Summary](img/mundane_scan_review.png){ width="70%" }
+![Scan Review & Summary](img/cerno_scan_review.png){ width="70%" }
 ///caption
 Scan Review & Summary
 ///
@@ -127,7 +127,7 @@ What you’ll do in the reviewer:
 * Choose a **severity** (Critical/High/Medium/Low/Info, plus a special “Metasploit Module” virtual group if present).
 * Pick a **plugin file** to review.
 
-![Choose Severity & File](img/mundane_sev_file_selection.png){ width="70%" }
+![Choose Severity & File](img/cerno_sev_file_selection.png){ width="70%" }
 ///caption
 Choose Severity & File
 ///
@@ -138,7 +138,7 @@ When previewing a file:
 * **Grouped** view shows `host:port1,port2,…` (great for copy/paste into report).
 * **Hosts-only** shows just the hosts (no ports).
 
-![Finding File Details](img/mundane_file_details.png){ width="70%" }
+![Finding File Details](img/cerno_file_details.png){ width="70%" }
 ///caption
 Finding File Details
 ///
@@ -153,7 +153,7 @@ Finding File Details
 
 While still in the interactive reviewer flow and a plugin file is selected, choose **Run a tool now?** to see:
 
-![Tool Selection](img/mundane_tool_selection.png){ width="70%" }
+![Tool Selection](img/cerno_tool_selection.png){ width="70%" }
 ///caption
 Tool Selection
 ///
@@ -186,7 +186,7 @@ Every command is shown in a **review menu** first so you can **Run**, **Copy**, 
 ???+ warning "Target VM Required"
     You will need to have the `GOAD-SRV02` VM running for the above exercise to get results.
 
-![Run Tool](img/mundane_run_tool.png){ width="70%" }
+![Run Tool](img/cerno_run_tool.png){ width="70%" }
 ///caption
 Run Tool
 ///
@@ -203,7 +203,7 @@ You can:
 
 As you finish files, keep marking them **REVIEW_COMPLETE**.
 
-![Mark File Review Complete](img/mundane_review_complete.png){ width="70%" }
+![Mark File Review Complete](img/cerno_review_complete.png){ width="70%" }
 ///caption
 Mark File Review Complete
 ///
@@ -214,7 +214,7 @@ When you exit the reviewer, you’ll see a session summary showing:
 * Files **marked complete** (renamed),
 * Files **skipped** (e.g., empty).
 
-![Session Summary](img/mundane_session_summary.png){ width="70%" }
+![Session Summary](img/cerno_session_summary.png){ width="70%" }
 ///caption
 Session Summary
 ///
@@ -246,7 +246,7 @@ cerno view \
     - Output: Terminal-based display of affected hosts and ports in the specified format
     - Use case: When you know exactly which plugin file you want to see and don't need the full interactive interface
 
-![File Quick View](img/mundane_view.png){ width="70%" }
+![File Quick View](img/cerno_view.png){ width="70%" }
 ///caption
 File Quick View
 ///
@@ -277,7 +277,7 @@ cerno summary \
     - Output value: Helps identify common attack surfaces (e.g., "80% of findings are on port 445") and scan completeness
     - Use case: Before diving into detailed review, get a high-level understanding of what the scan found and where to focus efforts
 
-![Scan Quick Summary](img/mundane_quick_summary.png){ width="70%" }
+![Scan Quick Summary](img/cerno_quick_summary.png){ width="70%" }
 ///caption
 Scan Quick Summary
 ///
