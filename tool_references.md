@@ -25,6 +25,10 @@
   - [BHIS — AD CS: Part 3][bhis-certipy-3]
   - [Mayfly — GOAD: Pwning Part 6][mayfly-certipy]
 
+- Cerno
+  - [YouTube — Cerno Demo][yt-cerno]
+  - [Ridgeback — Cerno Tool Page][ridgeback-cerno]
+
 - Coercer
   - [Mayfly — GOAD: Poison & Relay (part 4)][mayfly-coercer-4]
   - [Mayfly — GOAD: Delegations (part 10)][mayfly-coercer-10]
@@ -121,6 +125,8 @@
 [bhis-certipy-2]: https://www.blackhillsinfosec.com/abusing-active-directory-certificate-services-part-2/
 [bhis-certipy-3]: https://www.blackhillsinfosec.com/abusing-active-directory-certificate-services-part-3/
 [mayfly-certipy]: https://mayfly277.github.io/posts/GOADv2-pwning-part6/
+[yt-cerno]: https://www.youtube.com/watch?v=aGmRenQ28Ro
+[ridgeback-cerno]: https://ridgebackinfosec.com/tools/index.html#cerno
 [mayfly-coercer-4]: https://mayfly277.github.io/posts/GOADv2-pwning-part4/
 [mayfly-coercer-10]: https://mayfly277.github.io/posts/GOADv2-pwning-part10/
 [orange-mindmap]: https://orange-cyberdefense.github.io/ocd-mindmaps/img/pentest_ad_dark_2023_02.svg
