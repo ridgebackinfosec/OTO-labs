@@ -23,7 +23,7 @@ fi
 # APT method
 sudo apt update
 sudo apt install pipx -y
-sudo apt install nmap locate python3-pip python3-venv aircrack-ng burpsuite eaphammer gophish bettercap hashcat tcpdump wireshark juice-shop powershell jq john -y
+sudo apt install sqlitebrowser nmap locate python3-pip python3-venv aircrack-ng burpsuite eaphammer gophish bettercap hashcat tcpdump wireshark juice-shop powershell jq john -y
 # sudo apt install kismet -y
 
 # BloodHound GUI
