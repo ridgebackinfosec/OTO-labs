@@ -98,7 +98,7 @@ For the sake of the Lab, we're going to assume we obtained the user `brandon.sta
 In a new terminal, run:  
 
 ```bash
-bloodhound-python --zip -c all -d north.sevenkingdoms.local -u brandon.stark -p iseedeadpeople -dc winterfell.north.sevenkingdoms.local -ns 127.0.0.1 --dns-timeout 60 --dns-tcp
+bloodhound-python --zip -c all -d north.sevenkingdoms.local -u brandon.stark -p iseedeadpeople -dc winterfell.north.sevenkingdoms.local -ns 192.168.56.11 --dns-timeout 60 --dns-tcp
 ```  
 
 ![Terminal output showing bloodhound-python collecting Active Directory data with progress indicators](img/data-collection.png){ width="70%" }

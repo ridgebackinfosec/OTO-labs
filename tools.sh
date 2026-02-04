@@ -43,11 +43,12 @@ pipx install git+https://github.com/ridgebackinfosec/Coercer || pipx upgrade git
 pipx install git+https://github.com/ridgebackinfosec/kerbrute || pipx upgrade git+https://github.com/ridgebackinfosec/kerbrute
 pipx install git+https://github.com/ridgebackinfosec/impacket || pipx upgrade git+https://github.com/ridgebackinfosec/impacket
 pipx install git+https://github.com/ridgebackinfosec/NetExec || pipx upgrade git+https://github.com/ridgebackinfosec/NetExec
-pipx install git+https://github.com/ridgebackinfosec/BloodHound.py || pipx upgrade git+https://github.com/ridgebackinfosec/BloodHound.py
+pipx install git+https://github.com/ridgebackinfosec/BloodHound.py || pipx upgrade bloodhound
 pipx install git+https://github.com/ridgebackinfosec/Certipy || pipx upgrade git+https://github.com/ridgebackinfosec/Certipy
 pipx install git+https://github.com/ridgebackinfosec/o365spray || pipx upgrade git+https://github.com/ridgebackinfosec/o365spray
 pipx install git+https://github.com/ridgebackinfosec/auxiliary || pipx upgrade git+https://github.com/ridgebackinfosec/auxiliary
 pipx install git+https://github.com/ridgebackinfosec/cerno || pipx upgrade git+https://github.com/ridgebackinfosec/cerno
+pipx install git+https://github.com/ridgebackinfosec/AD_Miner || pipx upgrade git+https://github.com/ridgebackinfosec/AD_Miner
 # sudo pipx install mitm6
 
 pipx ensurepath
