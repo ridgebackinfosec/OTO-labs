@@ -285,7 +285,7 @@ Shows all imported scans with severity breakdowns, review progress, and last rev
 Now that you've imported two scans, you can compare them to identify differences:
 
 ```bash
-cerno scan compare OTO-Class_GOAD OTO-_Full_GOAD
+cerno scan compare OTO_-_Class_GOAD OTO_-_Full_GOAD
 ```
 
 ???- note "Command Options/Arguments Explained"
