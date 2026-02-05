@@ -48,6 +48,7 @@ pipx install git+https://github.com/ridgebackinfosec/Certipy || pipx upgrade cer
 pipx install git+https://github.com/ridgebackinfosec/o365spray || pipx upgrade o365spray
 pipx install git+https://github.com/ridgebackinfosec/auxiliary || pipx upgrade auxiliary
 pipx install git+https://github.com/ridgebackinfosec/cerno || pipx upgrade cerno
+cerno --install-completion
 pipx install git+https://github.com/ridgebackinfosec/AD_Miner || pipx upgrade ad-miner
 # sudo pipx install mitm6
 
