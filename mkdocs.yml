@@ -25,20 +25,23 @@ plugins:
 
 nav:
   - Home: index.md
-  - Lab - VM Setup: labs/vm-setup/index.md
-  - Lab - Nmap Check: labs/nmap-check/index.md
-  - Lab - Mundane: labs/mundane/index.md
-  - Lab - GoPhish: labs/gophish/index.md
-  - Lab - Burp: labs/burp/index.md
-  - Lab - Nuclei: labs/nuclei/index.md
-  - Lab - Bettercap: labs/bettercap/index.md
-  - Optional - WiFi Forge: labs/wifi-forge/index.md
-  - Lab - NetExec: labs/netexec/index.md
-  - Lab - Bloodhound & Plumbhound: labs/bloodhound-plumhound/index.md
-  - Lab - Responder & Impacket: labs/responder-impacket/index.md
-  - Lab - Hashcat: labs/hashcat/index.md
-  - Lab - NetExec w/ Creds: labs/netexec-w-creds/index.md
-  - Optional - Bonus VMs: labs/bonus-vms/index.md
+  - Day 1:
+    - Lab - VM Setup: labs/vm-setup/index.md
+    - Lab - Nmap Check: labs/nmap-check/index.md
+    - Lab - GoPhish: labs/gophish/index.md
+    - Lab - Burp: labs/burp/index.md
+    - Lab - Nuclei: labs/nuclei/index.md
+    - Lab - Bettercap: labs/bettercap/index.md
+    - Lab - Cerno: labs/cerno/index.md
+    - Optional - WiFi Forge: labs/wifi-forge/index.md
+  - Day 2:
+    - Lab - NetExec: labs/netexec/index.md
+    - Lab - Responder & Impacket: labs/responder-impacket/index.md
+    - Lab - Hashcat: labs/hashcat/index.md
+    - Lab - NetExec w/ Creds: labs/netexec-w-creds/index.md
+    - Lab - Bloodhound & Plumbhound: labs/bloodhound-plumhound/index.md
+    - Optional - AD Miner: labs/ad-miner/index.md
+    - Optional - Bonus VMs: labs/bonus-vms/index.md
 
 theme:
   font:
@@ -48,13 +51,14 @@ theme:
   logo: assets/logo.png
   favicon: assets/favicon.ico
   features:
+    - navigation.sections
     - search.suggest
     - search.highlight
     # - navigation.footer
     - content.code.annotate
     - content.code.copy
     - content.code.select
-    - navigation.indexes
+
     - navigation.instant
     - navigation.tracking
     # - navigation.tabs

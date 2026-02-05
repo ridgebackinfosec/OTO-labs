@@ -23,7 +23,7 @@ fi
 # APT method
 sudo apt update
 sudo apt install pipx -y
-sudo apt install nmap locate python3-pip python3-venv aircrack-ng burpsuite eaphammer gophish bettercap hashcat tcpdump wireshark juice-shop powershell jq john -y
+sudo apt install metasploit-framework sqlitebrowser nmap locate python3-pip python3-venv aircrack-ng burpsuite eaphammer gophish bettercap hashcat tcpdump wireshark juice-shop powershell jq john -y
 # sudo apt install kismet -y
 
 # BloodHound GUI
@@ -39,15 +39,16 @@ else
 fi
 
 # pipx method
-pipx install git+https://github.com/ridgebackinfosec/Coercer || pipx upgrade git+https://github.com/ridgebackinfosec/Coercer
-pipx install git+https://github.com/ridgebackinfosec/kerbrute || pipx upgrade git+https://github.com/ridgebackinfosec/kerbrute
-pipx install git+https://github.com/ridgebackinfosec/impacket || pipx upgrade git+https://github.com/ridgebackinfosec/impacket
-pipx install git+https://github.com/ridgebackinfosec/NetExec || pipx upgrade git+https://github.com/ridgebackinfosec/NetExec
-pipx install git+https://github.com/ridgebackinfosec/BloodHound.py || pipx upgrade git+https://github.com/ridgebackinfosec/BloodHound.py
-pipx install git+https://github.com/ridgebackinfosec/Certipy || pipx upgrade git+https://github.com/ridgebackinfosec/Certipy
-pipx install git+https://github.com/ridgebackinfosec/o365spray || pipx upgrade git+https://github.com/ridgebackinfosec/o365spray
-pipx install git+https://github.com/ridgebackinfosec/auxiliary || pipx upgrade git+https://github.com/ridgebackinfosec/auxiliary
-pipx install git+https://github.com/ridgebackinfosec/mundane || pipx upgrade git+https://github.com/ridgebackinfosec/mundane
+pipx install git+https://github.com/ridgebackinfosec/Coercer || pipx upgrade coercer
+pipx install git+https://github.com/ridgebackinfosec/kerbrute || pipx upgrade kerbrute
+pipx install git+https://github.com/ridgebackinfosec/impacket || pipx upgrade impacket
+pipx install git+https://github.com/ridgebackinfosec/NetExec || pipx upgrade netexec
+pipx install git+https://github.com/ridgebackinfosec/BloodHound.py || pipx upgrade bloodhound
+pipx install git+https://github.com/ridgebackinfosec/Certipy || pipx upgrade certipy-ad
+pipx install git+https://github.com/ridgebackinfosec/o365spray || pipx upgrade o365spray
+pipx install git+https://github.com/ridgebackinfosec/auxiliary || pipx upgrade auxiliary
+pipx install git+https://github.com/ridgebackinfosec/cerno || pipx upgrade cerno
+pipx install git+https://github.com/ridgebackinfosec/AD_Miner || pipx upgrade ad-miner
 # sudo pipx install mitm6
 
 pipx ensurepath

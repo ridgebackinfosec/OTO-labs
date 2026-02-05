@@ -289,3 +289,45 @@ export hosts detailed nxc-hosts.csv
 ///caption
 Exporting Hosts
 ///
+
+## Finding Context with Cerno
+
+Cerno reads from NetExec's database to enrich Nessus findings with reconnaissance context. When you've run NetExec commands (like the SMB scans earlier in this lab), Cerno can display the gathered data alongside your vulnerability findings.
+
+Start the interactive review:
+
+```bash
+cerno review
+```
+
+???- note "Command Options/Arguments Explained"
+    - `cerno review`: Launches the interactive TUI for reviewing imported Nessus findings
+    - Navigation: Use number selection to browse findings by severity level
+    - Actions: Each finding shows contextual actions in the footer including `[N] NetExec Data`
+
+From the main menu, navigate to **Medium** severity findings (SMB Signing Not Required is rated Medium by Nessus). Select the "SMB Signing Not Required" finding.
+
+When viewing the finding, you'll see a **NetExec Context** panel that displays data pulled directly from NetExec's database:
+
+![Cerno finding view showing NetExec Context panel with host data and security flags](img/cerno-nxc-context-panel.png){ width="70%" }
+///caption
+NetExec Context Panel
+///
+
+The panel shows:
+
+- **Hosts**: Systems discovered during your NetExec scans
+- **Shares**: SMB shares with read/write access indicators
+- **Security Flags**: Highlights like "SMB signing disabled" that confirm the vulnerability
+
+Press **`[N]`** to view the per-host breakdown, which shows detailed NetExec data for each affected host:
+
+![Cerno per-host NetExec detail showing shares and security flags for individual hosts](img/cerno-nxc-per-host.png){ width="70%" }
+///caption
+Per-Host NetExec Detail
+///
+
+???+ info
+    Cerno reads from `~/.nxc/workspaces/default/` by default. If you're using a different NetExec workspace, you can configure the path with `cerno config set nxc_workspace_path /path/to/workspace`.
+
+This integration lets you correlate Nessus findings with your actual reconnaissance data, showing exactly which hosts have SMB signing disabled and what credentials or shares were discovered on those systems.
