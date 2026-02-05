@@ -28,8 +28,8 @@ Scan the GOAD VM(s) using Nmap on The Forge VM.
     ***This can take several minutes to complete depending on your setup.***
 
 ```bash
-mkdir nmap
-cd nmap
+mkdir ~/nmap
+cd ~/nmap
 sudo nmap -p- -A -Pn -oA nmap_lab $GOAD
 ```
 

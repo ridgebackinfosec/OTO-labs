@@ -43,6 +43,12 @@ You'll see the top-level description and subcommands. Here's what each does (you
 * **config** — View and modify Cerno configuration (results directory, default tool, page size, etc.).
 * **workflow** — List available verification workflows that map specific plugin IDs to step-by-step validation procedures.
 
+Before going any further, let's install command completion for Cerno.
+
+```bash
+cerno --install-completion
+```
+
 ---
 
 ### Step 1 — Import Nessus Scans
