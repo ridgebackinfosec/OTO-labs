@@ -39,16 +39,16 @@ else
 fi
 
 # pipx method
-pipx install git+https://github.com/ridgebackinfosec/Coercer || pipx upgrade git+https://github.com/ridgebackinfosec/Coercer
-pipx install git+https://github.com/ridgebackinfosec/kerbrute || pipx upgrade git+https://github.com/ridgebackinfosec/kerbrute
-pipx install git+https://github.com/ridgebackinfosec/impacket || pipx upgrade git+https://github.com/ridgebackinfosec/impacket
-pipx install git+https://github.com/ridgebackinfosec/NetExec || pipx upgrade git+https://github.com/ridgebackinfosec/NetExec
+pipx install git+https://github.com/ridgebackinfosec/Coercer || pipx upgrade coercer
+pipx install git+https://github.com/ridgebackinfosec/kerbrute || pipx upgrade kerbrute
+pipx install git+https://github.com/ridgebackinfosec/impacket || pipx upgrade impacket
+pipx install git+https://github.com/ridgebackinfosec/NetExec || pipx upgrade netexec
 pipx install git+https://github.com/ridgebackinfosec/BloodHound.py || pipx upgrade bloodhound
-pipx install git+https://github.com/ridgebackinfosec/Certipy || pipx upgrade git+https://github.com/ridgebackinfosec/Certipy
-pipx install git+https://github.com/ridgebackinfosec/o365spray || pipx upgrade git+https://github.com/ridgebackinfosec/o365spray
-pipx install git+https://github.com/ridgebackinfosec/auxiliary || pipx upgrade git+https://github.com/ridgebackinfosec/auxiliary
-pipx install git+https://github.com/ridgebackinfosec/cerno || pipx upgrade git+https://github.com/ridgebackinfosec/cerno
-pipx install git+https://github.com/ridgebackinfosec/AD_Miner || pipx upgrade git+https://github.com/ridgebackinfosec/AD_Miner
+pipx install git+https://github.com/ridgebackinfosec/Certipy || pipx upgrade certipy-ad
+pipx install git+https://github.com/ridgebackinfosec/o365spray || pipx upgrade o365spray
+pipx install git+https://github.com/ridgebackinfosec/auxiliary || pipx upgrade auxiliary
+pipx install git+https://github.com/ridgebackinfosec/cerno || pipx upgrade cerno
+pipx install git+https://github.com/ridgebackinfosec/AD_Miner || pipx upgrade ad-miner
 # sudo pipx install mitm6
 
 pipx ensurepath
