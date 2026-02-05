@@ -162,6 +162,46 @@ For example:
 * If you log in to your work computer, your username + password might get checked against Active Directory using LDAP.
 * If a printer wants to know who you are before letting you print, it can ask the directory via LDAP.
 
-👉 In short: LDAP is like the “search-and-verify tool” that applications and systems use to look people up in a big network phonebook (Active Directory or other directory services).
+👉 In short: LDAP is like the "search-and-verify tool" that applications and systems use to look people up in a big network phonebook (Active Directory or other directory services).
 
 As luck would have it, NetExec also supports the LDAP protocol! [Here](https://www.netexec.wiki/ldap-protocol/authentication) is the documentation of what can be done using NetExec. Read, adapt, and explore on your own!
+
+## Viewing Credentials in Cerno
+
+Now that you've gathered credentials with NetExec, Cerno can display them alongside your Nessus findings. Cerno reads directly from NetExec's database to enrich vulnerability context with the credentials you've discovered.
+
+Start the interactive review:
+
+```bash
+cerno review
+```
+
+???- note "Command Options/Arguments Explained"
+    - `cerno review`: Launches the interactive TUI for reviewing imported Nessus findings
+    - Navigation: Use number selection to browse findings by severity level
+    - Actions: Each finding shows contextual actions in the footer including `[N] NetExec Data`
+
+When viewing a finding that affects hosts you've enumerated with NetExec, you'll see a **NetExec Context** panel showing the credentials gathered from your scans:
+
+![Cerno finding view showing NetExec Context panel with discovered credentials](img/cerno-nxc-credentials-panel.png){ width="70%" }
+///caption
+NetExec Context with Credentials
+///
+
+The panel shows:
+
+- **Credentials**: Domain\username pairs discovered during your NetExec scans, including credential type and admin status
+- **Shares**: SMB shares with read/write access indicators
+- **Security Flags**: Highlights like "SMB signing disabled" that confirm vulnerabilities
+
+Press **`[N]`** to view the per-host breakdown, which shows exactly which credentials have access to each affected host:
+
+![Cerno per-host NetExec detail showing credentials table with admin status for individual hosts](img/cerno-nxc-credentials-per-host.png){ width="70%" }
+///caption
+Per-Host Credential Detail
+///
+
+???+ info
+    Cerno reads from `~/.nxc/workspaces/default/` by default. If you're using a different NetExec workspace, you can configure the path with `cerno config set nxc_workspace_path /path/to/workspace`.
+
+This integration lets you see at a glance which credentials from your NetExec enumeration have access to systems affected by specific vulnerabilities—helping you prioritize which findings to exploit next.
