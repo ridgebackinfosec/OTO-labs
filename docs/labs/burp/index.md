@@ -35,21 +35,6 @@ Burp Suite is a powerful web testing tool that functions as an interception prox
 
 ## Walkthrough
 
-???+ note "OWASP Juice Shop"
-    Start Juice Shop First:
-
-    Start up a the OWASP Juice Shop vulnerable web application. It will be available at `http://127.0.0.1:42000`.
-
-    ```bash
-    sudo juice-shop -h
-    ```
-
-    After you’re done, make sure you shut down OWASP Juice Shop by running the below command.
-
-    ```bash
-    sudo juice-shop-stop -h
-    ```
-
 ### Create A Project
 
 First things first. Let’s create a new temporary Burp project by following the screenshots below.
@@ -347,6 +332,21 @@ You can use Burp extensions to change Burp Suite's behavior in many ways, includ
   - Accessing information from Burp Suite.
 
 ### Identify Authentication Tokens
+
+???+ note "OWASP Juice Shop"
+    Start Juice Shop First:
+
+    Start up a the OWASP Juice Shop vulnerable web application. It will be available at `http://127.0.0.1:42000`.
+
+    ```bash
+    sudo juice-shop -h
+    ```
+
+    After you’re done, make sure you shut down OWASP Juice Shop by running the below command.
+
+    ```bash
+    sudo juice-shop-stop -h
+    ```
 
 In this part of the lab, you will use first use "the **Request Minimizer** extension in Burp Suite to strip unnecessary parts of HTTP requests and analyze their impact on server responses.
 
