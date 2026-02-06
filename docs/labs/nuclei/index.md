@@ -100,11 +100,21 @@ HTTP Templates (Snippet)
 Since we have a local vulnerable web application already running on The Forge VM, let’s go ahead and run nuclei with OWASP juice shop as the target. No additional options.
 
 ```bash
-nuclei -target http://127.0.0.1:42000
+nuclei -target http://127.0.0.1:42000 -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0' -ts -mhe 500 -c 32 -stats -si 300 -o ~/nuclei_results.txt -je ~/nuclei_results.json -elog ~/nuclei_errors.txt -me ~/
 ```
 
 ???- note "Command Options/Arguments Explained"
-  - `-target http://127.0.0.1:42000`: [using -u also works for specifying a target] Specifies the **target** for scanning, which in this case is the local machine (`127.0.0.1`) on port `42000`. That’s where OWASP juice shop is running.
+    - `-target http://127.0.0.1:42000`: [using `-u` also works] Specifies the **target** for scanning - the local machine on port `42000` where OWASP Juice Shop is running.
+    - `-H 'User-Agent: ...'`: Sets a custom **header** for all HTTP requests. Here we're using a Firefox User-Agent string to appear as a normal browser, which can help avoid detection or bypass simple bot filtering.
+    - `-ts`: Enables **timestamp** printing in CLI output, useful for tracking when findings occur during long scans.
+    - `-mhe 500`: **Max host error** threshold before skipping a host (default is 30). Setting this to 500 makes Nuclei more tolerant of errors, useful for unstable targets.
+    - `-c 32`: **Concurrency** - maximum number of templates executed in parallel (default is 25). Increasing this speeds up scans but uses more resources.
+    - `-stats`: Displays **statistics** about the running scan (templates executed, hosts scanned, requests sent, etc.).
+    - `-si 300`: **Stats interval** - seconds between statistics updates (default is 5). Set to 300 (5 minutes) to reduce output noise during long scans.
+    - `-o ~/nuclei_results.txt`: **Output** file to write discovered issues/vulnerabilities in plain text format.
+    - `-je ~/nuclei_results.json`: **JSON export** - exports results in JSON format for programmatic processing or integration with other tools.
+    - `-elog ~/nuclei_errors.txt`: **Error log** - file to write request errors, helpful for debugging failed scans.
+    - `-me ~/`: **Markdown export** - directory to export results in markdown format, useful for generating reports.
 
 ![Nuclei scan results against Juice Shop showing detected HTTP technologies and potential vulnerabilities](img/nuclei-juiceshop-results.png){ width="70%" }
 ///caption
@@ -116,7 +126,7 @@ Already we can see that Nuclei does a fairly good job at the basics without any 
 Lets try one more target. This time it’ll be Portswigger’s `ginandjuice.shop` website, which is “a deliberately vulnerable web application designed for testing web vulnerability scanners”.
 
 ```bash
-nuclei -target https://ginandjuice.shop/
+nuclei -target https://ginandjuice.shop/ -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0' -ts -mhe 500 -c 32 -stats -si 300 -o ~/nuclei_results.txt -je ~/nuclei_results.json -elog ~/nuclei_errors.txt -me ~/
 ```
 
 ???- note "Command Options/Arguments Explained"
