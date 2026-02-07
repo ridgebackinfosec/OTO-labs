@@ -63,7 +63,6 @@ cerno import nessus \
 ???- note "Command Options/Arguments Explained"
     - `import nessus`: Subcommand that parses a `.nessus` XML file and stores all findings, plugins, hosts, and ports in the Cerno SQLite database (`~/.cerno/cerno.db`)
     - `~/OTO-labs/supp/nessus/class_goad/OTO-class_GOAD.nessus`: Path to the Nessus scan export file (XML format)
-    - No `--out-dir` parameter needed—data is stored in the database automatically
     - What import does: Parses the XML, creates database records for each plugin, finding, host, and port, then displays a severity breakdown table
     - Why use import: Transforms Nessus's verbose XML into a structured, queryable database enabling interactive review, cross-scan comparison, and tool orchestration
 
@@ -223,18 +222,19 @@ You can:
 * Mark findings as reviewed in the database (review state tracked per finding—no file renaming).
 * Launch a **tool** (Nmap, NetExec, Metasploit, or a custom command) against parsed hosts, with a review/confirm step before execution.
 
+!!! tip "Contribute New Tools"
+    Have an idea for a new tool integration? The community is encouraged to submit PRs! Check out the [Adding Tools Quickstart Guide](https://github.com/ridgebackinfosec/cerno/blob/main/docs/ADDING_TOOLS_QUICKSTART.md) to get started.
+
 ---
 
 ### Step 4 — Track Progress and Review State
 
 As you work through findings, mark them as reviewed using **[M]** from the finding action menu.
 
-Cerno tracks review state in the database with four states:
+Cerno currently tracks review state in the database with two states:
 
 * **pending** — Not yet reviewed (default).
-* **reviewed** — Viewed but not marked complete.
 * **completed** — Marked as reviewed/complete.
-* **skipped** — Skipped (e.g., empty findings).
 
 ![Mark Complete](img/cerno_mark_complete.png){ width="70%" }
 ///caption
@@ -259,7 +259,7 @@ When you exit the reviewer, you'll see a session summary showing:
 Session Summary
 ///
 
-Sessions are **auto-saved** to the database. If you close the terminal and reopen Cerno later, you'll be prompted to resume your previous session.
+Sessions are **auto-saved** to the database. If you close the terminal and reopen Cerno later, you'll be shown your progress when you re-select a scan.
 
 **Exercise:**
 
@@ -314,7 +314,7 @@ This shows which findings are **new** (only in the second scan), **resolved** (o
 View the vulnerability timeline for a specific host across all imported scans:
 
 ```bash
-cerno scan history <host_ip>
+cerno scan history 192.168.56.22
 ```
 
 ???- note "Command Options/Arguments Explained"
@@ -327,7 +327,7 @@ cerno scan history <host_ip>
 Host Vulnerability History
 ///
 
-Replace `<host_ip>` with an IP address from your scan (you can find IPs by reviewing findings in Step 2).
+Replace the `<host_ip>` with an IP address from your scan (you can find IPs by reviewing findings in Step 2).
 
 #### D) Configuration
 
@@ -348,7 +348,7 @@ Shows all Cerno configuration settings. Note where artifacts are stored (`result
 * Run `cerno scan list` and record: total findings, unique hosts, and severity breakdown for each imported scan.
 * Run `cerno scan compare` between the two scans. Record how many findings are new, resolved, and persistent.
 * Pick a host IP from one of your scans and run `cerno scan history` on it.
-* Run `cerno config show` and note where artifacts are stored.
+* Run `cerno config show` and discover how to customize the tool.
 
 ---
 
@@ -394,7 +394,7 @@ Workflows are **display-only** (not automatically executed)—they serve as guid
 
 #### C) Custom Workflows
 
-You can supplement or replace the bundled workflows with your own:
+Do you or your organization have super secret workflows that you only want internal folks to access? You can supplement or replace the bundled workflows with your own:
 
 ```bash
 # Supplement bundled workflows with custom ones
@@ -403,6 +403,11 @@ cerno review --custom-workflows ~/my_workflows.yaml
 # Use ONLY custom workflows (ignore bundled ones)
 cerno review --custom-workflows-only ~/my_workflows.yaml
 ```
+
+For detailed information on creating custom workflows, see the [Custom Workflows Documentation](https://github.com/ridgebackinfosec/cerno/blob/main/docs/CUSTOM_WORKFLOWS.md).
+
+!!! tip "Contribute Bundled Workflows"
+    Created a useful workflow? Consider submitting a PR to add it to Cerno's [bundled workflows](https://github.com/ridgebackinfosec/cerno/blob/main/cerno_pkg/workflow_mappings.yaml) so the whole community can benefit!
 
 **Exercise:**
 
