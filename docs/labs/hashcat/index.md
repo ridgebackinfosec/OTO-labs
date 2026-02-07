@@ -195,7 +195,9 @@ north.sevenkingdoms.local\STURM:sexywolfy (Guest)
 ...
 ```
 
-???+ info "Guest Account False Positives"
+#### Guest Account False Positives
+
+???+ info
     When the Guest account is enabled on a Windows system, SMB authentication will "succeed" for **any** username with **any** password - but you're just getting mapped to the Guest account with minimal privileges. NetExec helpfully marks these results with `(Guest)` to help you identify them.
 
     This is why:
@@ -206,7 +208,9 @@ north.sevenkingdoms.local\STURM:sexywolfy (Guest)
 To filter out these Guest account false positives and find only the **real** valid credentials, pipe the output through `grep`:
 
 ???+ warning
-    This command will take a while to complete due to the large user list. Be patient!
+    This command will take a long time to complete due to the large user list. I do NOT recommend running it during class. If you do, just be very patient!
+
+    Fair warning - it will flood your NetExec SMB creds table with every single credential (valid or not) that you try.
 
 ```bash
 nxc smb 192.168.56.22 -u ~/last-names.txt -p 'sexywolfy' --continue-on-success | grep -v "(Guest)"
