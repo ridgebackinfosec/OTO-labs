@@ -67,6 +67,9 @@ nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --interfaces
 Network Interfaces
 ///
 
+???+ warning "Guest Account Access"
+    The `--interfaces` flag can work with Guest-level privileges. On systems where the Guest account is enabled, even invalid credentials may successfully enumerate network interfaces. If you're seeing results for credentials you haven't verified, remember to check for `(Guest)` in your authentication output. See the [Guest Account False Positives](../hashcat/index.md#guest-account-false-positives) section in the Hashcat lab for more details on identifying and filtering Guest authentications.
+
 ### Hash Gathering
 
 Try dumping the SAM database (Security Account Manager) to get mor hashes. Remember this requires at least local admin level access on a target system. Do so using the `--sam` flag.
@@ -82,6 +85,11 @@ nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --sam
     - Attack value: Extracted hashes can be cracked offline with hashcat or used for pass-the-hash attacks against other systems using the same local admin password
     - Common finding: Many organizations reuse the same local Administrator password across multiple systems, making lateral movement easy once you crack one hash
     - Storage location: SAM database is located at `C:\Windows\System32\config\SAM` and is normally locked while the OS is running
+
+![NetExec SAM dump output showing extracted local user accounts and their NTLM password hashes](img/netexec-creds-sam.png){ width="70%" }
+///caption
+SAM hashes
+///
 
 The is a file on Windows that stores local user account information for that specific machine. It holds usernames and password hashes for local accounts (not domain accounts). It also contains details like group memberships and security identifiers (SIDs).
 
