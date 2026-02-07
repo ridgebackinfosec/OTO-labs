@@ -212,8 +212,8 @@ Once you have captured the hashes for ***BOTH*** `robb.stark` and `eddard.stark`
 
 The NTLMv2 hashes are not usable to do pass-the-hash with just Responder, but you CAN crack them to retrieve the cleartext passwords.
 
-???+ note
-    Captured hashes can also be used with NetExec to SMB enumeration. We’ll show an optional example of this later in the Lab.
+<!-- ???+ note
+    Captured hashes can also be used with NetExec to SMB enumeration. We’ll show an optional example of this later in the Lab. -->
 
 Let’s extract the captured hashes for `robb.stark` and `eddard.stark` from Responder and set them aside. We’re not ready to do cracking just yet.
 
