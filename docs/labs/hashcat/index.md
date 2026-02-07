@@ -161,26 +161,67 @@ nxc smb 192.168.56.22 -u ~/last-names.txt -p 'sexywolfy'
 Password Spraying
 ///
 
-Wait we weren’t targeting the user “SMITH”. What happened??
+Wait we weren't targeting the user "SMITH". What happened??
 
-Let’s create a file of just `robb.stark` and rerun that command.
+By default, `nxc` exits after finding a valid credential. Since "SMITH" appeared in the username list before "robb.stark", NetExec stopped there. Maybe SMITH also has the same password? Let's use the `--continue-on-success` flag to find ALL accounts that authenticate successfully.
 
 ```bash
-echo "robb.stark" > ~/kinginthenorth
-nxc smb 192.168.56.22 -u ~/kinginthenorth -p 'sexywolfy'
+nxc smb 192.168.56.22 -u ~/last-names.txt -p 'sexywolfy' --continue-on-success
 ```
 
 ???- note "Command Options/Arguments Explained"
-    - `echo "robb.stark" >`: Creates a new file with the single username (the `>` operator overwrites the file if it exists)
-    - `~/kinginthenorth`: New file containing only the known-valid username
-    - `nxc smb 192.168.56.22 -u ~/kinginthenorth -p 'sexywolfy'`: Same NetExec SMB authentication test, but with a single-user file
-    - Why retest with single user: The previous spray showed unexpected results (user "SMITH" authenticated). Isolating to just robb.stark verifies the credential is valid and helps understand the unexpected match
-    - Troubleshooting technique: When password spraying produces unexpected results, isolate known-valid credentials to confirm behavior and understand what's happening
-    - Expected result: Should confirm robb.stark authenticates successfully with 'sexywolfy'
+    - `--continue-on-success`: Continues spraying even after finding valid credentials instead of exiting on first match
+    - Why use it: Useful for spraying a single password against a large user list where multiple accounts may share the same weak password
 
-![Hashcat results revealing multiple domain accounts sharing identical weak passwords](img/hashcat-shared-passwords.png){ width="70%" }
+![NetExec password spray with continue-on-success showing many Guest authentications](img/hashcat-continue-on-success.png){ width="70%" }
 ///caption
-Shared Passwords
+Continue on Success Results
 ///
 
-It looks like we *might* have stumbled across another valid user with the same password.
+Wait... *every* username is coming back as valid?? That seems suspicious. Let's verify one of these by trying to actually log in to SRV02 (192.168.56.22).
+
+![Windows login screen showing NORTH\smith authentication attempt](img/hashcat-login-attempt.png){ width="70%" }
+///caption
+Testing Login Directly
+///
+
+The login fails! So these aren't actually valid credentials. What's going on?
+
+Look closely at the NetExec output - every result shows `(Guest)` at the end:
+
+```
+north.sevenkingdoms.local\VANWINKLE:sexywolfy (Guest)
+north.sevenkingdoms.local\STURM:sexywolfy (Guest)
+...
+```
+
+???+ info "Guest Account False Positives"
+    When the Guest account is enabled on a Windows system, SMB authentication will "succeed" for **any** username with **any** password - but you're just getting mapped to the Guest account with minimal privileges. NetExec helpfully marks these results with `(Guest)` to help you identify them.
+
+    This is why:
+
+    1. NetExec shows `[+]` (success) for every username
+    2. But actual interactive login fails because the account doesn't really exist
+
+To filter out these Guest account false positives and find only the **real** valid credentials, pipe the output through `grep`:
+
+???+ warning
+    This command will take a while to complete due to the large user list. Be patient!
+
+```bash
+nxc smb 192.168.56.22 -u ~/last-names.txt -p 'sexywolfy' --continue-on-success | grep -v "(Guest)"
+```
+
+???- note "Command Options/Arguments Explained"
+    - `| grep -v "(Guest)"`: Pipes output to grep, which filters out (`-v`) any lines containing `(Guest)`
+    - Result: Only shows authentications that are NOT Guest account mappings - i.e., truly valid credentials
+
+![NetExec output filtered to show only real valid credentials](img/hashcat-filtered-results.png){ width="70%" }
+///caption
+Filtered Results - Real Credentials Only
+///
+
+Now we can see that `robb.stark` is the only user with a legitimately valid password of `sexywolfy`.
+
+???+ tip "Verification Mindset"
+    Always validate your findings before trusting them! Password spraying can produce false positives due to Guest accounts, misconfigured systems, or other environmental factors. When something seems too good to be true (like every username being valid), investigate further.
