@@ -28,7 +28,7 @@ First, lets discuss the following questions to understand the planning aspects o
 
 **(Written from the perspective of a Pentest report.)**
 
-Ridgeback InfoSec performed one phishing ruse against for up to 25 Dog Fish Clothing employees.
+Ridgeback InfoSec performed one phishing ruse against up to 25 Dog Fish Clothing employees.
 
 ???+ note
     The POC requested Ridgeback InfoSec send a sample of the phishing email prior to engaging with the target list. This was done to receive approval from Dog Fish Clothing for the ruse, as well as ensure the phishing message would successfully navigate any defensive measures in place.
@@ -36,7 +36,7 @@ Ridgeback InfoSec performed one phishing ruse against for up to 25 Dog Fish Clot
 ### Organizational Reconnaissance
 The tester investigated the Dog Fish Clothing landing page (dogfish.com) to identify authentication forms, design elements, relevant blog posts, company location, departments, and other information which could be used in the phishing ruse. 
 
-<!-- ///caption
+<!-- /// caption
 Dog Fish Clothing Landing Page
 /// -->
 
@@ -44,7 +44,7 @@ Dog Fish Clothing Landing Page
 Next, Ridgeback InfoSec checked for potential domains that could be used for sending phishing emails as well as hosting spoofed login pages intended to capture credentials of targets. Ridgeback InfoSec observed a number of potentially interesting or possible domains that could be used:
 
 ![img/domains](img/domains.png){ width="70%" }
-///caption
+/// caption
 Available Domains (Sample)
 ///
 
@@ -53,14 +53,14 @@ Ridgeback InfoSec purchased the dog-phish.com domain to use as a form of domain 
 Ridgeback InfoSec used the tool GoPhish  as a framework for conducting this portion of the phishing campaign. This open-source tool allowed for metrics to be tracked, malicious links to be embedded in emails, and for granular IDs to be inserted into emails such as {{FirstName}} that directly correlate to individual targets.
 
 ![img/gophish-login.png](img/gophish-login.png){ width="70%" }
-///caption 
+/// caption 
 GoPhish Login Page
 ///
 
 GoPhish was installed and configured on a Digital Ocean droplet that was provisioned for this engagement. This system's public IP address was 138.NN.NN.113 as shown in the image below. 
 
 ![img/DO-ip.png](img/DO-ip.png){ width="70%" }
-///caption
+/// caption
 External System IP Address
 ///
 
@@ -68,14 +68,14 @@ For email sending purposes, Ridgeback InfoSec used the service Mailgun. This ser
 The following screenshot shows an overview of the DNS records for the dog-phish.com domain:
 
 ![](img/DNS-config.png){ width="70%" }
-///caption 
+/// caption 
 DNS Records
 ///
 
 After installing GoPhish, it was configured to use Mailgun for sending purposes. The following screenshot shows the GoPhish server configured to send email using Mailgun.
 
 ![img/sending-profile.png](img/sending-profile.png){ width="70%" }
-///caption 
+/// caption 
 Mailgun Configuration
 ///
 
@@ -86,7 +86,7 @@ The sending email address of support@dog-phish.com was also used for testing pur
 
 Next, the tester confirmed that SMTP settings were configured correctly by sending a test "It works!" email, which was successfully received in the tester's inbox.
 
-<!-- ///caption
+<!-- /// caption
 Successful Test Email from GoPhish Server
 /// -->
 
@@ -99,7 +99,7 @@ Next, the tester developed the following ruse phishing campaign against Dog Fish
 The tester drafted an initial phishing email template to send to the POC for approval.
 
 ![img/email.png](img/email.png){ width="70%" }
-///caption 
+/// caption 
 Sample Phishing Email Template
 ///
 
@@ -114,15 +114,15 @@ The phishing email also included implied a sense of urgency for employees to res
 Next, Ridgeback InfoSec crafted a landing page hosted on the dog-phish.com domain via the GoPhish server and is shown in the below image. Again, Dog Fish Clothing UI design elements we leveraged to make the form feel legitimate to users.
 
 ![img/landing-page.png](img/landing-page.png){ width="70%" }
-///caption 
+/// caption 
 Landing Page Form
 ///
 
 After a target user submitted the form, the browser would redirect to the main ridgebackinfosec.com landing page. All form fields were captured by the GoPhish server and stored for analysis.
 
-<!-- ///caption
+<!-- /// caption
 GoPhish Form Data Capture Sample
-///caption -->
+/// caption -->
 
 The attack path of this ruse is as follows:
 
@@ -142,21 +142,21 @@ The attack path of this ruse is as follows:
 
 Ridgeback InfoSec was provided with a list of 40 targets from the Dog Fish Clothing team. As opposed to sending these emails all at once, it was decided to trickle them out between the hours of 4:19PM and 6:30PM ET on January 29th. This list was randomized upon sending.
 
-<!-- ///caption
+<!-- /// caption
 Target CSV Snippet
 /// -->
 
 The image below shows the GoPhish configuration used during live campaign execution.
 
 ![img/campaign.png](img/campaign.png){ width="70%" }
-///caption 
+/// caption 
 GoPhish Campaign Configuration
 ///
 
 The image below shows the results of the campaign.
 
 ![img/results.png](img/results.png){ width="70%" }
-///caption 
+/// caption 
 Results of Emails
 ///
 

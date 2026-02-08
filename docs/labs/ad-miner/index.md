@@ -28,7 +28,7 @@ AD-miner --help
     - `--help`: Displays all available command-line options and usage information
 
 ![AD Miner help output showing available command-line options including connection and analysis parameters](img/ad-miner-help.png){ width="70%" }
-///caption
+/// caption
 AD Miner Help Output
 ///
 
@@ -67,7 +67,7 @@ AD-miner -cf ~/GOAD_Audit -u neo4j -p ridgeback
     - Default connection: `bolt://127.0.0.1:7687` (use `-b` to specify a different endpoint if needed)
 
 ![Terminal output showing AD Miner analyzing BloodHound data with progress indicators for each control check](img/ad-miner-running.png){ width="70%" }
-///caption
+/// caption
 AD Miner Analysis in Progress
 ///
 
@@ -93,7 +93,7 @@ firefox ~/render_GOAD_Audit/index.html
     - `GOAD_Audit/index.html`: Path to the main report dashboard (folder name matches your `-cf` parameter)
 
 ![AD Miner main dashboard showing security rating, control categories, and summary statistics](img/ad-miner-report-main.png){ width="70%" }
-///caption
+/// caption
 AD Miner Report Dashboard
 ///
 
@@ -106,7 +106,7 @@ The main dashboard provides an overview of:
 Click into any control category to see detailed findings:
 
 ![AD Miner control details view showing specific findings with risk ratings and remediation guidance](img/ad-miner-controls.png){ width="70%" }
-///caption
+/// caption
 Control Category Details
 ///
 
@@ -118,7 +118,7 @@ Each finding includes:
 - **Attack Path Visualization**: Interactive graphs showing exploitation potential
 
 ![AD Miner finding detail showing attack path visualization with affected users and groups](img/ad-miner-finding.png){ width="70%" }
-///caption
+/// caption
 Finding Detail with Attack Path
 ///
 

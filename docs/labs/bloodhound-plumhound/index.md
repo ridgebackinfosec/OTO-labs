@@ -1,7 +1,7 @@
 # Lab - BloodHound & PlumHound
 
 ???+ warning "Prerequisites" 
-    You will need at least the `GOAD-DC02` (`192.168.56.11`) target VM and The Forge VM up and running for this Lab. If you can have **both** GOAD VMs on, that would yeild even better results since we are trying to map out a whole Domain.
+    You will need at least the `GOAD-DC02` (`192.168.56.11`) target VM and The Forge VM up and running for this Lab. If you can have **both** GOAD VMs on, that would yield even better results since we are trying to map out a whole Domain.
 
 ## Intro
 
@@ -39,7 +39,7 @@ sudo neo4j console
     - What happens next: Navigate to http://localhost:7474 to access the Neo4j browser interface and set your credentials
 
 ![Neo4j console startup showing initialization messages and HTTP connector binding to port 7474](img/neo4jDB.png){ width="70%" }
-///caption
+/// caption
 DB setup
 ///
   
@@ -48,14 +48,14 @@ Neo4j is like BloodHound’s brain—it stores all the juicy AD relationships we
 After starting up Neo4j in the console, open a browser and go to http://localhost:7474. You'll be asked to enter the default credentials of user "neo4j" and password "neo4j".
 
 ![Neo4j browser login screen showing default username and password fields](img/default-DB-creds.png){ width="70%" }
-///caption
+/// caption
 Default DB Creds
 ///
 
 After that, you'll be asked to provide a new password. We're going to set the new password to "ridgeback".
 
 ![Neo4j password change prompt requesting new password and confirmation](img/new-DB-password.png){ width="70%" }
-///caption
+/// caption
 Set New DB Password
 ///
 
@@ -75,7 +75,7 @@ cd ~/BloodHound-linux-x64
     - What happens next: You'll be prompted to enter Neo4j credentials (username: neo4j, password: ridgeback) to connect the GUI to the database
 
 ![Terminal showing BloodHound application launching with --no-sandbox flag](img/start-bloodhound.png){ width="70%" }
-///caption
+/// caption
 Start BloodHound
 ///
   
@@ -84,7 +84,7 @@ The `--no-sandbox` flag helps avoid permission issues when running the Electron-
 The first thing you'll see *should* be a prompt for the Neo4j credentials we just set. Enter the username "neo4j" and the password "ridgeback". This will connect the BloodHound GUI with the Neo4j DB.
 
 ![BloodHound GUI authentication dialog prompting for Neo4j database credentials](img/DB-auth.png){ width="70%" }
-///caption
+/// caption
 DB Authentication
 ///
 
@@ -106,7 +106,7 @@ bloodhound-python --zip -c all -d north.sevenkingdoms.local -u robb.stark -p sex
 ```
 
 ![Terminal output showing bloodhound-python collecting Active Directory data with progress indicators](img/data-collection.png){ width="70%" }
-///caption
+/// caption
 Data Collection
 ///
 
@@ -114,9 +114,9 @@ Data Collection
     Breaking it down:  
     - `-c all` → Grabs everything: users, groups, ACLs, sessions—you name it.  
     - `-d north.sevenkingdoms.local` → That’s our target AD domain.  
-    - `-u robb.stark -p sexywolf` → Our captured and cracked credentials.  
-    - `-dc winterfell.north.sevenkingdoms.local` → The specific domain controller we’re hitting.  
-    - `-ns 127.0.0.1` → Using our local machine for DNS resolution.  
+    - `-u robb.stark -p sexywolfy` → Our captured and cracked credentials.
+    - `-dc winterfell.north.sevenkingdoms.local` → The specific domain controller we're hitting.
+    - `-ns 192.168.56.11` → Using the domain controller for DNS resolution.  
     - `--dns-timeout 60 --dns-tcp` → Tweaks DNS settings for better reliability.  
 
 Looks like we found some data alright!
@@ -137,7 +137,7 @@ Go back to the BloodHound GUI.
 - hit "Open" to load the data into the Neo4j DB
 
 ![BloodHound GUI showing Upload Data button and file selection dialog](img/upload-data.png){ width="70%" }
-///caption
+/// caption
 Upload Data
 ///
 
@@ -146,14 +146,14 @@ Upload Data
 Staying within the BloodHound GUI, you can navigate the data via the collapsible menu shown below.
 
 ![BloodHound sidebar menu displaying pre-built queries including Find all Domain Admins](img/menu.png){ width="70%" }
-///caption
+/// caption
 Menu
 ///
 
 We can get a nice visualization of the Domain Admins by selecting the "Find all Domain Admins" pre-built query shown above.
 
 ![BloodHound graph visualization showing Domain Admins and their relationships](img/DAs.png){ width="70%" }
-///caption
+/// caption
 Domain Admins
 ///
 
@@ -192,12 +192,12 @@ python PlumHound.py -p ridgeback --easy
     - Why start with --easy: This quick test confirms PlumHound can successfully connect to Neo4j and retrieve data before running more complex analysis tasks
     - Expected output: A simple list of domain users extracted from BloodHound data
 
-This first command (`--easy`) does a quick, out-of-the-box analysis to make sure the DB connection works. Note that we specicified "ridgeback" as the Neo4j DB password in the above command.
+This first command (`--easy`) does a quick, out-of-the-box analysis to make sure the DB connection works. Note that we specified "ridgeback" as the Neo4j DB password in the above command.
 
 The output shows us a simple list of Domain users.
 
 ![PlumHound terminal output showing list of domain users from sanity check query](img/easy.png){ width="70%" }
-///caption
+/// caption
 --easy
 ///
 
@@ -215,7 +215,7 @@ python PlumHound.py -p ridgeback -x tasks/default.tasks
 The second command (`-x tasks/default.tasks`) runs a more detailed assessment based on predefined task rules.
   
 ![PlumHound terminal showing progress of default tasks execution with multiple queries completing](img/default-tasks.png){ width="70%" }
-///caption
+/// caption
 Default Tasks
 ///
 
@@ -232,7 +232,7 @@ ll
 ```
 
 ![Terminal directory listing showing PlumHound-generated HTML and CSV report files](img/report-list.png){ width="70%" }
-///caption
+/// caption
 Report List
 ///
 
@@ -250,13 +250,13 @@ firefox ~/git-tools/PlumHound/reports/index.html
     - Alternative viewers: You can also open the report with any web browser (Chrome, Edge, etc.) or serve it via HTTP for remote viewing
 
 ![PlumHound HTML report dashboard displaying Active Directory analysis results and attack paths](img/report.png){ width="70%" }
-///caption
+/// caption
 Report
 ///
 
 This is where all our work pays off. The report will highlight attack paths, misconfigured permissions, and other AD weaknesses—like spotting an overprivileged account that could lead to domain dominance.  
 
-Want to dig deeper? Try tweaking collection parameters or using custom tasks in PlumHound for even more targeted asnalysis. Happy hunting!🐺
+Want to dig deeper? Try tweaking collection parameters or using custom tasks in PlumHound for even more targeted analysis. Happy hunting!🐺
 
 ## Lab Cleanup🧹
 

@@ -42,7 +42,7 @@ nuclei -h
     - Why review help: Nuclei has extensive functionality - understanding available options helps tailor scans for specific use cases (web apps, networks, APIs, etc.)
 
 ![Terminal displaying nuclei command with -u flag for targeting the Juice Shop vulnerable web application](img/nuclei-help-dialog.png){ width="70%" }
-///caption
+/// caption
 Help Dialog
 ///
 
@@ -62,7 +62,7 @@ First, let’s look at an example template since template are what makes Nuclei 
 This vulnerability gained some notoriety in for being particularly wide spread and critical. It was so severe that the Cybersecurity & Infrastructure Security Agency (CISA) issued guidance on it ([CISA Alert](https://www.cisa.gov/news-events/news/apache-log4j-vulnerability-guidance)).
 
 ![Text editor displaying nuclei YAML template structure with id, info, and requests sections for Log4j vulnerability](img/nuclei-log4j-template.png){ width="70%" }
-///caption
+/// caption
 Template Snippet
 ///
 
@@ -71,7 +71,7 @@ As we can see from the image above, the template provides helpful references and
 Further down in the template we see the actual HTTP request and matching rules used to fingerprint the existence of this RCE vuln on a target.
 
 ![Nuclei YAML template showing HTTP request structure and matching conditions for vulnerability detection](img/nuclei-template-requests.png){ width="70%" }
-///caption
+/// caption
 ...More Template
 ///
 
@@ -93,7 +93,7 @@ nuclei -tl | grep "http/"
 Taking a look at the output snippet below we can see there is a good variety of checks related to HTTP. Including specific CVEs, OSINT, known vulnerabilities, and more.
 
 ![Terminal output showing nuclei HTTP templates directory listing with categorized vulnerability detection scripts](img/nuclei-http-templates-list.png){ width="70%" }
-///caption
+/// caption
 HTTP Templates (Snippet)
 ///
 
@@ -117,7 +117,7 @@ nuclei -target http://127.0.0.1:42000 -H 'User-Agent: Mozilla/5.0 (Windows NT 10
     - `-me ~/`: **Markdown export** - directory to export results in markdown format, useful for generating reports.
 
 ![Nuclei scan results against Juice Shop showing detected HTTP technologies and potential vulnerabilities](img/nuclei-juiceshop-results.png){ width="70%" }
-///caption
+/// caption
 Command Output
 ///
 
@@ -139,7 +139,7 @@ nuclei -target https://ginandjuice.shop/ -H 'User-Agent: Mozilla/5.0 (Windows NT
 This will produce more broad results as it is a proper deployed web application on the open internet.
 
 ![Nuclei verbose scan output displaying detected web technologies and version fingerprinting for custom domain](img/nuclei-ginandjuice-scan.png){ width="70%" }
-///caption
+/// caption
 ginandjuice.shop
 ///
 
@@ -162,7 +162,7 @@ nuclei -tl | grep "network/"
     - Auto-detection: Nuclei automatically selects appropriate templates based on target type (IP vs URL)
 
 ![Terminal showing nuclei network templates directory with protocol-specific detection scripts including SMB and RDP](img/nuclei-network-templates.png){ width="70%" }
-///caption
+/// caption
 Network Templates (Snippet)
 ///
 
@@ -187,7 +187,7 @@ nuclei -target 192.168.56.22
 We can see in the screenshot below that Nuclei detected MSSQL, SMB, and IIS running on the target. Also, it did additional checks when there were applicable templates after a service was detected.
 
 ![Nuclei network scan output against GOAD targets showing Windows service detection and version identification](img/nuclei-goad-network-scan.png){ width="70%" }
-///caption
+/// caption
 Network Scanning (Snippet)
 ///
 

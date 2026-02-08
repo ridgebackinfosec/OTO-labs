@@ -9,7 +9,7 @@
     ```
 
     ![Terminal output displaying the successful setup of the GOAD environment variable with IP range 192.168.56.10-25](img/nmap-check-goad-env-variable.png){ width="70%" }
-    ///caption
+    /// caption
     Terminal Output
     ///
 
@@ -49,21 +49,21 @@ Review the results…
 Looks like LDAP is open.
 
 ![Nmap scan output showing LDAP service detected on port 389 with NSE script enumeration results](img/nmap-check-ldap-open-port.png){ width="70%" }
-///caption
+/// caption
 LDAP
 ///
 
 HTTP (web service) is also accessible.
 
 ![Nmap scan results displaying HTTP web service detection with version information and NSE script output](img/nmap-check-http-web-service.png){ width="70%" }
-///caption
+/// caption
 HTTP
 ///
 
 A database also appears to be running on the target.
 
 ![Nmap output identifying database service with version detection and NSE script fingerprinting](img/nmap-check-database-service.png){ width="70%" }
-///caption
+/// caption
 Database
 ///
 
@@ -100,7 +100,7 @@ sudo nmap -n --script="ldap* and not brute" -p 389 $GOAD
     - **`-p 389`** specifies the port number for the scan, where **`389`** is the default port for LDAP (Lightweight Directory Access Protocol), a protocol used for accessing and maintaining distributed directory information services over an IP network.
 
 ![Comprehensive LDAP enumeration output from Nmap NSE scripts displaying directory structure and organizational information](img/nmap-check-ldap-enumeration-results.png){ width="70%" }
-///caption
+/// caption
 LDAP Enumeration
 ///
 
@@ -128,7 +128,7 @@ sudo nmap -p 88 --script=krb5-enum-users --script-args="krb5-enum-users.realm='n
 
 
 ![Kerberos user enumeration results showing discovered valid user principals in the north.sevenkingdoms.local realm](img/nmap-check-kerberos-user-enum.png){ width="70%" }
-///caption
+/// caption
 User Enumeration
 ///
 
@@ -168,7 +168,7 @@ sudo nmap -Pn --script=smb-vuln* -p 139,445 $GOAD
     - **`-p 139,445`**: Specifies the ports to scan. Ports 139 and 445 are the traditional ports associated with SMB services. Port 139 is used for SMB over NetBIOS, whereas port 445 is for SMB directly over TCP/IP without the NetBIOS layer.
 
 ![Nmap SMB vulnerability scan output checking for common SMB exploits across ports 139 and 445](img/nmap-check-smb-vuln-scan.png){ width="70%" }
-///caption
+/// caption
 smb-vuln*
 ///
 
@@ -195,7 +195,7 @@ sudo nmap -sV --script=vulners $GOAD
     - **`--script=vulners`**: Specifies the use of the **`vulners`** NSE (Nmap Scripting Engine) script. The **`vulners`** script is a script that queries the Vulners vulnerability database to find known vulnerabilities of the detected service versions. It's a powerful way to quickly assess the potential vulnerabilities present on the scanned host(s) based on the service versions detected during the scan.
 
 ![Nmap Vulners NSE script output displaying CVE references for discovered software versions](img/nmap-check-vulners-output.png){ width="70%" }
-///caption
+/// caption
 Looks like there’s potential here.
 ///
 

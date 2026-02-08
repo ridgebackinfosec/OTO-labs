@@ -56,7 +56,7 @@ nxc smb 192.168.56.11 -u robb.stark -p sexywolfy
 You should see successful authentication with `(Pwn3d!)` indicating admin access. But let's understand *why* we have this access.
 
 ![NetExec SMB authentication showing Pwn3d! indicating admin access on target](img/nxc-validate-creds.png){ width="70%" }
-///caption
+/// caption
 Validating Credentials with NetExec
 ///
 
@@ -67,7 +67,7 @@ Open BloodHound (start Neo4j first if needed) and search for `robb.stark`. Click
 You'll discover that `robb.stark` is a member of **ADMINISTRATORS@NORTH.SEVENKINGDOMS.LOCAL** - meaning we already have Domain Admin privileges!
 
 ![BloodHound showing robb.stark group membership including Administrators](img/bloodhound-robb-memberships.png){ width="70%" }
-///caption
+/// caption
 robb.stark Group Memberships in BloodHound
 ///
 
@@ -88,7 +88,7 @@ nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --shares
     - These administrative shares enable remote management and lateral movement
 
 ![NetExec share enumeration showing admin shares C$ ADMIN$ and IPC$](img/nxc-shares-enum.png){ width="70%" }
-///caption
+/// caption
 Share Enumeration with DA Access
 ///
 
@@ -115,7 +115,7 @@ Administrator:500:aad3b435b51404eeaad3b435b51404ee:dbd13e1c4e338284ac4e9874f7de6
 The NTLM hash is: `dbd13e1c4e338284ac4e9874f7de6ef4`
 
 ![NetExec SAM dump showing Administrator NTLM hash extracted from targets](img/nxc-sam-dump.png){ width="70%" }
-///caption
+/// caption
 SAM Credential Dump
 ///
 
@@ -156,7 +156,7 @@ nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --ntds
     - Impact: Complete domain compromise - with NTDS.dit, an attacker has persistent access even if all passwords are changed (until hashes are rotated)
 
 ![NTDS dump showing domain account hashes](img/nxc_ntds.png){ width="70%" }
-///caption
+/// caption
 NTDS Credential Dump
 ///
 
@@ -202,7 +202,7 @@ nxc smb 192.168.56.22 -u Administrator -H 'dbd13e1c4e338284ac4e9874f7de6ef4' --l
 You should see `(Pwn3d!)` indicating successful authentication with admin access.
 
 ![NetExec pass-the-hash authentication showing Pwn3d! on SRV02](img/nxc-pth-srv02.png){ width="70%" }
-///caption
+/// caption
 Pass-the-Hash to SRV02
 ///
 
@@ -231,7 +231,7 @@ castelblack
 ```
 
 ![psexec.py interactive shell showing SYSTEM access on castelblack](img/psexec-shell-srv02.png){ width="70%" }
-///caption
+/// caption
 SYSTEM Shell on CASTELBLACK via psexec.py
 ///
 
@@ -269,7 +269,7 @@ You'll find several accounts including:
 - `sql_svc` (MSSQLSvc/castelblack)
 
 ![BloodHound query results showing Kerberoastable accounts with SPNs](img/bloodhound-kerberoastable.png){ width="70%" }
-///caption
+/// caption
 Kerberoastable Accounts in BloodHound
 ///
 
@@ -296,7 +296,7 @@ GetUserSPNs.py 'north.sevenkingdoms.local/robb.stark:sexywolfy' -dc-ip 192.168.5
 You should see output listing the discovered SPNs and accounts.
 
 ![GetUserSPNs.py output showing extracted TGS hashes for service accounts](img/getuserspns-output.png){ width="70%" }
-///caption
+/// caption
 Kerberoasting with GetUserSPNs.py
 ///
 
@@ -322,7 +322,7 @@ hashcat -m 13100 ~/tgs_hashes.txt --show
 You should crack `jon.snow`'s password: `iknownothing`
 
 ![Hashcat output showing cracked Kerberos TGS hash revealing jon.snow password](img/hashcat-kerberoast-cracked.png){ width="70%" }
-///caption
+/// caption
 Cracked TGS Hash - jon.snow:iknownothing
 ///
 
@@ -337,7 +337,7 @@ nxc smb 192.168.56.11-22 -u jon.snow -p iknownothing
 You'll see successful authentication, but **no `(Pwn3d!)`** - meaning `jon.snow` doesn't have admin access on these systems.
 
 ![NetExec showing jon.snow authentication without Pwn3d indicating no admin access](img/nxc-jonsnow-noadmin.png){ width="70%" }
-///caption
+/// caption
 jon.snow - Valid Credentials but No Admin Access
 ///
 

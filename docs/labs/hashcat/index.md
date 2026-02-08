@@ -46,7 +46,7 @@ hashcat -m 5600 --force -a 0 ~/responder.hashes /usr/share/eaphammer/wordlists/r
     This process might take a while depending on your setup so get comfortable and watch for the output below. You should be able to crack Robb's password but not Eddard's.
 
 ![Hashcat output showing successfully cracked NTLM hash with recovered cleartext password](img/hashcat-password-cracked.png){ width="70%" }
-///caption
+/// caption
 The King in the North!
 ///
 
@@ -117,7 +117,7 @@ hashcat -m 16500 hashes.txt /opt/wordlists/<file>.txt \
 [https://hashcat.net/wiki/doku.php?id=example_hashes](https://hashcat.net/wiki/doku.php?id=example_hashes)
 
 ![Hashcat example hashes reference table displaying hash types and corresponding mode numbers](img/hashcat-example-hashes.png){ width="70%" }
-///caption
+/// caption
 Sample Set
 ///
 
@@ -157,7 +157,7 @@ nxc smb 192.168.56.22 -u ~/last-names.txt -p 'sexywolfy'
     - Lockout avoidance: Unlike brute force (many passwords per user), password spraying stays under typical lockout thresholds (e.g., 5 attempts)
 
 ![Hashcat running password spray attack against multiple NTLM hashes with rockyou.txt wordlist](img/hashcat-password-spray.png){ width="70%" }
-///caption
+/// caption
 Password Spraying
 ///
 
@@ -174,14 +174,14 @@ nxc smb 192.168.56.22 -u ~/last-names.txt -p 'sexywolfy' --continue-on-success
     - Why use it: Useful for spraying a single password against a large user list where multiple accounts may share the same weak password
 
 ![NetExec password spray with continue-on-success showing many Guest authentications](img/hashcat-continue-on-success.png){ width="70%" }
-///caption
+/// caption
 Continue on Success Results
 ///
 
 Wait... *every* username is coming back as valid?? That seems suspicious. Let's verify one of these by trying to actually log in to SRV02 (192.168.56.22).
 
 ![Windows login screen showing NORTH\smith authentication attempt](img/hashcat-login-attempt.png){ width="70%" }
-///caption
+/// caption
 Testing Login Directly
 ///
 
@@ -221,7 +221,7 @@ nxc smb 192.168.56.22 -u ~/last-names.txt -p 'sexywolfy' --continue-on-success |
     - Result: Only shows authentications that are NOT Guest account mappings - i.e., truly valid credentials
 
 ![NetExec output filtered to show only real valid credentials](img/hashcat-filtered-results.png){ width="70%" }
-///caption
+/// caption
 Filtered Results - Real Credentials Only
 ///
 

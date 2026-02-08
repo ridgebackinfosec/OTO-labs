@@ -43,7 +43,7 @@ nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --local-groups
     - Follow-up: Can specify a specific group to enumerate its members (e.g., `--local-groups Administrators`)
 
 ![NetExec output showing enumerated local security groups including Administrators and Remote Desktop Users](img/netexec-creds-local-groups.png){ width="70%" }
-///caption
+/// caption
 Local Groups
 ///
 
@@ -63,7 +63,7 @@ nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --interfaces
     - Network segmentation bypass: Multi-homed hosts can be leveraged to tunnel traffic between isolated networks
 
 ![NetExec interface enumeration displaying network adapter details including IP addresses and subnet masks](img/netexec-creds-interfaces.png){ width="70%" }
-///caption
+/// caption
 Network Interfaces
 ///
 
@@ -87,7 +87,7 @@ nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --shares
     - Note: You may see shares listed but not all will be accessible - the permissions column shows your actual access
 
 ![NetExec share enumeration showing accessible shares with READ/WRITE permissions](img/netexec-creds-shares.png){ width="70%" }
-///caption
+/// caption
 SMB Share Enumeration
 ///
 
@@ -114,7 +114,7 @@ nxc smb 192.168.56.11 -u robb.stark -p sexywolfy --rid-brute
     - Output format: Shows RID number, account name, and account type (SidTypeUser, SidTypeGroup, SidTypeAlias)
 
 ![NetExec RID brute force output showing enumerated users and groups with their SID types](img/netexec-creds-rid-brute.png){ width="70%" }
-///caption
+/// caption
 RID Brute Force Enumeration (Snippet)
 ///
 
@@ -167,7 +167,7 @@ cerno review
 When viewing a finding that affects hosts you've enumerated with NetExec, you'll see a **NetExec Context** panel showing the credentials gathered from your scans:
 
 ![Cerno finding view showing NetExec Context panel with discovered credentials](img/cerno-nxc-credentials-panel.png){ width="70%" }
-///caption
+/// caption
 NetExec Context with Credentials
 ///
 
@@ -180,7 +180,7 @@ The panel shows:
 Press **`[N]`** to view the per-host breakdown, which shows exactly which credentials have access to each affected host:
 
 ![Cerno per-host NetExec detail showing credentials table with admin status for individual hosts](img/cerno-nxc-credentials-per-host.png){ width="70%" }
-///caption
+/// caption
 Per-Host Credential Detail
 ///
 

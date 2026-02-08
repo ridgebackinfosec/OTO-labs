@@ -31,7 +31,7 @@ cerno --help
     - What you'll see: List of all subcommands with brief descriptions of when to use each one
 
 ![Help Dialog](img/cerno_help_dialog.png){ width="70%" }
-///caption
+/// caption
 Help Dialog
 ///
 
@@ -67,7 +67,7 @@ cerno import nessus \
     - Why use import: Transforms Nessus's verbose XML into a structured, queryable database enabling interactive review, cross-scan comparison, and tool orchestration
 
 ![Import Output](img/cerno_import_output.png){ width="70%" }
-///caption
+/// caption
 Importing a .nessus File
 ///
 
@@ -92,7 +92,7 @@ cerno scan list
 ```
 
 ![Scan List](img/cerno_scan_list.png){ width="70%" }
-///caption
+/// caption
 Listing Imported Scans
 ///
 
@@ -119,7 +119,7 @@ cerno review
     - Workflow: Choose scan → View scan summary → Choose severity level → Browse findings → Select finding → View details / Run tools / Mark reviewed
 
 ![Scan Selection](img/cerno_scan_selection.png){ width="70%" }
-///caption
+/// caption
 Scan Selection
 ///
 
@@ -131,7 +131,7 @@ What you'll do in the reviewer:
 * Browse the **finding list** (paginated, filterable, sortable).
 
 ![Severity Selection](img/cerno_severity_selection.png){ width="70%" }
-///caption
+/// caption
 Severity Selection and Review Progress
 ///
 
@@ -160,7 +160,7 @@ From the finding list itself, you also have:
 * **[O]** Overlapping — Analyze findings with identical host:port combinations.
 
 ![Finding Details](img/cerno_finding_details.png){ width="70%" }
-///caption
+/// caption
 Finding Preview and Action Menu
 ///
 
@@ -177,7 +177,7 @@ Finding Preview and Action Menu
 While in the interactive reviewer with a finding selected, press **[T]** to see the tool menu:
 
 ![Tool Menu](img/cerno_tool_menu.png){ width="70%" }
-///caption
+/// caption
 Tool Selection
 ///
 
@@ -212,7 +212,7 @@ Every command is shown in a **review menu** first so you can **Run**, **Copy**, 
     You will need to have the `GOAD-SRV02` VM running for the above exercise to get results.
 
 ![Tool Execution](img/cerno_tool_execution.png){ width="70%" }
-///caption
+/// caption
 Tool Execution and Results
 ///
 
@@ -237,7 +237,7 @@ Cerno currently tracks review state in the database with two states:
 * **completed** — Marked as reviewed/complete.
 
 ![Mark Complete](img/cerno_mark_complete.png){ width="70%" }
-///caption
+/// caption
 Marking a Finding as Reviewed
 ///
 
@@ -255,7 +255,7 @@ When you exit the reviewer, you'll see a session summary showing:
 * Findings skipped
 
 ![Session Statistics](img/cerno_session_stats.png){ width="70%" }
-///caption
+/// caption
 Session Summary
 ///
 
@@ -303,7 +303,7 @@ cerno scan compare OTO_-_Class_GOAD OTO_-_Full_GOAD
     - When to use: Tracking remediation progress, comparing scan scope, identifying new attack surface between scan cycles
 
 ![Scan Comparison](img/cerno_scan_compare.png){ width="70%" }
-///caption
+/// caption
 Cross-Scan Comparison
 ///
 
@@ -323,7 +323,7 @@ cerno scan history 192.168.56.22
     - When to use: Investigating a specific host's vulnerability profile, tracking remediation for a particular system
 
 ![Host History](img/cerno_host_history.png){ width="70%" }
-///caption
+/// caption
 Host Vulnerability History
 ///
 
@@ -369,7 +369,7 @@ cerno workflow list
     - When to use: Understanding what guided verification procedures are available before starting review
 
 ![Workflow List](img/cerno_workflow_list.png){ width="70%" }
-///caption
+/// caption
 Available Verification Workflows
 ///
 
@@ -380,7 +380,7 @@ This shows all bundled workflows with their associated plugin IDs, names, and de
 During interactive review, findings that have a mapped workflow display an indicator. When viewing such a finding, press **[W]** to see the verification steps:
 
 ![Workflow View](img/cerno_workflow_view.png){ width="70%" }
-///caption
+/// caption
 Workflow Verification Steps
 ///
 

@@ -13,19 +13,19 @@
     …or through the VM’s menu…
 
     ![Application menu showing Burp Suite launcher option in the VM's application list](img/burp-menu-launch.png){ width="70%" }
-    ///caption
+    /// caption
     Menu
     ///
 
     If this is your first time opening Burp, there are some extra clicks for you to do…
 
     ![Java Runtime Environment warning dialog appearing on first launch of Burp Suite](img/burp-jre-warning.png){ width="70%" }
-    ///caption
+    /// caption
     JRE Warning
     ///
 
     ![Burp Suite terms and conditions acceptance screen displayed during initial setup](img/burp-terms-conditions.png){ width="70%" }
-    ///caption
+    /// caption
     T&C
     ///
 
@@ -40,12 +40,12 @@ Burp Suite is a powerful web testing tool that functions as an interception prox
 First things first. Let’s create a new temporary Burp project by following the screenshots below.
 
 ![Burp Suite project creation wizard with temporary project option selected](img/burp-temporary-project.png){ width="70%" }
-///caption
+/// caption
 Temporary Project
 ///
 
 ![Burp Suite configuration selection screen displaying the default settings option](img/burp-defaults-config.png){ width="70%" }
-///caption
+/// caption
 Burp Defaults
 ///
 
@@ -54,7 +54,7 @@ Burp Defaults
     Click on the “Proxy” tab → “Intercept” sub-tab → “Open Browser” button
     
     ![Burp Suite Proxy tab with Open Browser button highlighted for launching embedded Chromium browser](img/burp-open-browser-button.png){ width="70%" }
-    ///caption
+    /// caption
     Open Browser
     ///
     
@@ -62,7 +62,7 @@ Burp Defaults
 3. Make sure “Intercept” is off
     
     ![Burp Suite Intercept control showing intercept is off toggle state](img/burp-intercept-toggle-off.png){ width="70%" }
-    ///caption
+    /// caption
     Disable Intercept
     ///
     
@@ -71,7 +71,7 @@ Burp Defaults
 Let’s explore some of the functionality within Burp’s tabs.
 
 ![Burp Suite main interface displaying all feature tabs including Dashboard, Target, Proxy, Intruder, and Extensions](img/burp-feature-tabs.png){ width="70%" }
-///caption
+/// caption
 Feature Tabs
 ///
 
@@ -80,14 +80,14 @@ Feature Tabs
 You can access most of Burp Suite's settings via the **Settings** dialog. To access this dialog, click **Settings** on the top menu.
 
 ![Burp Suite top menu bar with Settings option highlighted](img/burp-settings-menu.png){ width="70%" }
-///caption
+/// caption
 Settings
 ///
 
 There are two categories of settings “User” and “Project” level.
 
 ![Burp Suite settings dialog with expanded navigation showing User and Project configuration categories](img/burp-settings-expanded.png){ width="70%" }
-///caption
+/// caption
 Expanded Settings Pane
 ///
 
@@ -100,19 +100,19 @@ Everything from Proxy listeners, Interception, and Match & Replace rules can be 
 Find the “Default Proxy Interception State” setting to get rid of the pesky auto-intercept when you first start Burp.
 
 ![Burp Suite proxy interception configuration showing Default Proxy Interception State setting](img/burp-auto-intercept-setting.png){ width="70%" }
-///caption
+/// caption
 Stop the auto-intercepting
 ///
 
 Also explore the different options available on the proxy listeners.
 
 ![Burp Suite proxy listener configuration dialog displaying options for binding address and port settings](img/burp-listener-editing.png){ width="70%" }
-///caption
+/// caption
 Listener Editing
 ///
 
 ![Burp Suite proxy listener interface binding configuration showing network interface selection options](img/burp-interface-binding.png){ width="70%" }
-///caption
+/// caption
 Interface Binding
 ///
 
@@ -125,14 +125,14 @@ Burp Proxy operates as a web proxy server between the browser and target applica
 This is where you can see all the traffic flowing through Burp.
 
 ![Burp Suite Proxy HTTP History tab displaying captured web traffic with host, method, URL, and status codes](img/burp-proxy-traffic.png){ width="70%" }
-///caption
+/// caption
 Proxy Traffic
 ///
 
 It can become overwhelming at first, but don’t worry. It has robust filter settings to help focus your attention. Like the “Show only in-scope items” option.
 
 ![Burp Suite HTTP History filter controls with show only in-scope items option](img/burp-filter-scope.png){ width="70%" }
-///caption
+/// caption
 Filtering In-Scope Only
 ///
 
@@ -153,14 +153,14 @@ You can use Repeater for all kinds of purposes, for example to:
 You can send any request from the Proxy tab to the Repeater by right clicking on that request and selecting “Send to Repeater”.
 
 ![Burp Suite context menu displaying Send to Repeater option](img/burp-send-to-repeater.png){ width="70%" }
-///caption
+/// caption
 Send To Repeater
 ///
 
 Then select the “Repeater” tab in the GUI. From there you can replay requests by clicking the “Send” button
 
 ![Burp Suite Repeater interface showing HTTP request with Send button for manual testing](img/burp-repeater-send-button.png){ width="70%" }
-///caption
+/// caption
 Repeat Request
 ///
 
@@ -175,14 +175,14 @@ This is where the fun begins…
 Wherever there’s a request in Burp, you can also right click and select “Send to Intruder”.
 
 ![Burp Suite context menu with Send to Intruder option highlighted](img/burp-send-to-intruder.png){ width="70%" }
-///caption
+/// caption
 Send To Intruder
 ///
 
 From the Intruder tab, you can define injection points or “payload markers”, as well as the “Attack Type”.
 
 ![Burp Suite Intruder configuration showing Sniper attack type selected](img/burp-intruder-sniper.png){ width="70%" }
-///caption
+/// caption
 Sniper
 ///
 
@@ -191,7 +191,7 @@ Choose a request from the Proxy tab, send it to Intruder and click the “Auto�
 This will select all available payload positions for you.
 
 ![Burp Suite Intruder Positions tab displaying marked payload insertion points in the HTTP request](img/burp-payload-positions.png){ width="70%" }
-///caption
+/// caption
 Payload Positions
 ///
 
@@ -207,14 +207,14 @@ Some explanations for these various settings are listed below.
 Your choice of “Attack Type” will have the biggest impact on you target. There are four to choose from.
 
 ![Burp Suite Intruder attack type selection menu displaying Sniper, Battering ram, Pitchfork, and Cluster bomb options](img/burp-attack-types.png){ width="70%" }
-///caption
+/// caption
 Attack Types
 ///
 
 Once your finished defining your payload positions and selected an attack type, it’s time to choose you specific payloads.
 
 ![Burp Suite Intruder Payloads configuration tab showing payload set selection and list management](img/burp-intruder-payloads.png){ width="70%" }
-///caption
+/// caption
 Payloads
 ///
 
@@ -230,7 +230,7 @@ The Target tool enables you to define which targets are in scope for your curren
 You can do a lot from the but the most important is to set your scope. You can do this by right clicking on a “target” and selecting “Add to scope”.
 
 ![Burp Suite Target tab context menu with Add to scope option](img/burp-add-to-scope.png){ width="70%" }
-///caption
+/// caption
 Add To Scope
 ///
 
@@ -249,14 +249,14 @@ The Inspector enables you to quickly view and edit interesting features of HTTP 
 You can open Inspector from the collapsed right pane next to any request/response pane.
 
 ![Burp Suite message editor with collapsed Inspector panel showing expand control](img/burp-inspector-collapsed.png){ width="70%" }
-///caption
+/// caption
 Inspector
 ///
 
 This will show the below dialog which “inspects” the request/response headers and various details.
 
 ![Burp Suite Inspector panel displaying parsed HTTP message components in structured format](img/burp-inspector-contents.png){ width="70%" }
-///caption
+/// caption
 Contents
 ///
 
@@ -286,7 +286,7 @@ Burp Sequencer enables you to analyze the quality of randomness in a sample of t
 Burp Clickbandit makes it quicker and easier to test for clickjacking vulnerabilities. This is when an attack overlays a frame on a decoy website to trick a user into clicking on actionable content. Clickbandit enables you to create an attack to confirm that this vulnerability can be successfully exploited. You use your browser to perform actions on a website, then Clickbandit creates an HTML file with a clickjacking overlay.
 
 ![Burp Suite Clickbandit tool interface for testing clickjacking vulnerabilities](img/burp-clickbandit-tool.png){ width="70%" }
-///caption
+/// caption
 Clickbanbit
 ///
 
@@ -307,7 +307,7 @@ Burp Comparer enables you to compare any two items of data. You can use Comparer
   - To compare responses when testing for blind SQL injection bugs using Boolean condition injection, to see whether injecting different conditions results in a relevant difference in responses.
 
 ![Burp Suite Comparer tool interface allowing side-by-side comparison of HTTP requests and responses](img/burp-comparer-tool.png){ width="70%" }
-///caption
+/// caption
 Comparer
 ///
 
@@ -365,14 +365,14 @@ The JSON Web Tokens (JWT4B) extension lets you decode and manipulate JSON web to
 3. Search for the **JSON Web Tokens** extension
 
 ![Burp Suite BApp Store displaying the JSON Web Tokens JWT4B extension](img/burp-jwt-extension.png){ width="70%" }
-///caption
+/// caption
 JWTs
 ///
 
 4. Click "Install"
 
 ![Burp Suite extension installation interface for JSON Web Tokens extension](img/burp-jwt-install.png){ width="70%" }
-///caption
+/// caption
 Install JSON Web Tokens
 ///
 
@@ -384,7 +384,7 @@ Many web applications use JWTs. Including OWASP Juice Shop included with your VM
 2. Use the built in Burp browser
 
 ![Burp Suite Proxy interface highlighting Open Browser button for embedded Chromium browser](img/burp-embedded-browser.png){ width="70%" }
-///caption
+/// caption
 Burp Browser
 ///
 
@@ -398,14 +398,14 @@ Burp Browser
 Now go to Burp **HTTP history** sub-tab under **Proxy** tab and see all the highlighted JWTs. It's that easy to make your life easier using Extenstions!
 
 ![Burp Suite HTTP History displaying requests containing JSON Web Tokens highlighted in blue](img/burp-jwt-highlighted-history.png){ width="70%" }
-///caption
+/// caption
 JWTs Discovered
 ///
 
 Now that we've found JWTs, let's go one step further by decoding them. Click on any of the blue highlighted rows in the HTTP history tab. This wil bring up the request and response for that row. 
 
 ![Burp Suite request viewer displaying HTTP request with JWT token visible in Authorization header](img/burp-request-with-jwt.png){ width="70%" }
-///caption
+/// caption
 Inspect The Request
 ///
 
@@ -414,7 +414,7 @@ See the highlighted JWT value in the "Authorization" header of the request? Good
 Then, with the JWT selected, right click on it to get additional menu options.
 
 ![Burp Suite context menu showing JSON Web Tokens extension options for decoding JWT values](img/burp-jwt-context-menu.png){ width="70%" }
-///caption
+/// caption
 Request Menu Options
 ///
 
@@ -423,7 +423,7 @@ Select **Extensions** > **JSON Web Tokens** > **Send selected text to JSON Web T
 You'll be automatically switched to the JSON Web Tokens tab. And there we have it. Your captured JWT is now decoded for you.
 
 ![Burp Suite JSON Web Tokens tab displaying decoded JWT with visible header, payload, and signature sections](img/burp-jwt-decoded-view.png){ width="70%" }
-///caption
+/// caption
 Decoded JWT
 ///
 
@@ -443,7 +443,7 @@ As each parameter is removed, the extension repeats the request to ensure the re
 2. Search for **Request Minimizer**.
 
 ![Burp Suite BApp Store displaying Request Minimizer extension for automatic parameter removal](img/burp-request-minimizer-ext.png){ width="70%" }
-///caption
+/// caption
 Extension Info
 ///
 
@@ -452,21 +452,21 @@ Extension Info
   - Click the **Download Jython** button and download the **Jython Standalone JAR** file
 
   ![Jython downloads page showing standalone JAR file option required for Python-based Burp extensions](img/burp-jython-download.png){ width="70%" }
-  ///caption
+  /// caption
   Jython
   ///
 
 4. Now back in Burp, Open Settings -> search for "Jython" -> select the Jython file you just downloaded
 
   ![Burp Suite Extensions settings showing Jython environment configuration field](img/burp-jython-config.png){ width="70%" }
-  ///caption
+  /// caption
   Select Jython File
   ///
 
 5. Now go back to the Extensions tab and click **Install** for Request Minimizer 
 
 ![Burp Suite BApp Store with Request Minimizer extension ready for installation](img/burp-minimizer-install.png){ width="70%" }
-///caption
+/// caption
 Request Minimizer Install
 ///
 
@@ -477,7 +477,7 @@ Request Minimizer Install
 1. Right-click that same captured request we used to decode the JWT, but this time don't have the JWT value selected.
 
 ![Burp Suite HTTP History context menu with Send to Repeater option for authenticated request](img/burp-repeater-context-menu.png){ width="70%" }
-///caption
+/// caption
 Send To Repeater
 ///
 
@@ -486,21 +486,21 @@ Send To Repeater
 3. Go to the Repeater tab and click the "Send" button to get a baseline of the request and response.
 
 ![Burp Suite Repeater displaying baseline HTTP request and response before minimization](img/burp-repeater-baseline.png){ width="70%" }
-///caption
+/// caption
 Repeater
 ///
 
 4. From within the Repeater tab, right click on the request and select **Extensions** → **Request Minimizer** → **Minimize in a new tab**.
 
 ![Burp Suite Repeater context menu with Request Minimizer extension options showing Minimize in a new tab](img/burp-minimize-context-menu.png){ width="70%" }
-///caption
+/// caption
 Minimize It!
 ///
 
 After a short while, a new Repeater tab will open with the minimum viable request displayed. 
 
 ![Burp Suite Repeater displaying minimum viable request after automated parameter removal](img/burp-minimal-viable-request.png){ width="70%" }
-///caption
+/// caption
 Minimum Viable Request
 ///
 

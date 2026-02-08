@@ -112,7 +112,7 @@ We need to add the IPv4 address assigned to the VMWare virtual network we setup 
 The image below shows the `192.168.56.1` IP added to the out-of-scope list of our config file. This is so we avoid poisoning our gateway or else the tool will error out and break the Lab.
 
 ![Responder configuration file showing DontRespondTo parameter for excluding specific hosts from poisoning attacks](img/responder-dontrespondto-config.png){ width="70%" }
-///caption
+/// caption
 `DontRespondTo` Config Setting
 ///
 
@@ -137,7 +137,7 @@ nano Responder.conf
 Find the `DontRespondTo` line and add the IPv4 address as shown below.
 
 ![Responder configuration file showing DontRespondTo parameter for excluding specific hosts from poisoning attacks](img/responder-dontrespondto-config.png){ width="70%" }
-///caption
+/// caption
 `DontRespondTo` Config Setting
 ///
 
@@ -146,7 +146,7 @@ To save these config changes you can hit `Ctrl-x` → `y` → `Enter`.
 Once, we start Responder up we should see the `192.168.56.1` address in the out-of-scope settings reflected in the terminal output.
 
 ![Scope Config](img/exclude_output.png){ width="70%" }
-///caption
+/// caption
 Scope Config
 ///
 
@@ -154,7 +154,7 @@ Scope Config
     You can also set specific systems to *ONLY* respond to, but we are **not** going to do that today.
 
     ![Responder configuration file displaying RespondTo parameter for targeting specific hosts with LLMNR poisoning](img/responder-respondto-config.png){ width="70%" }
-    ///caption
+    /// caption
     `RespondTo`  Config Setting
     ///
 
@@ -173,7 +173,7 @@ ip addr
     - Common mistake: Choosing the NAT interface instead of the host-only interface will prevent Responder from seeing any traffic from the GOAD VMs.
 
 ![Responder interface selection prompt showing available network adapters for launching poisoning attack](img/responder-interface-selection.png){ width="70%" }
-///caption
+/// caption
 Network Interfaces
 ///
 
@@ -204,7 +204,7 @@ There is a bot on our `GOAD-DC02` target VM trying to make a SMB connections to 
 By saying *we* are `bravos` the `GOAD-DC02` systems sends us the user hashes while trying to make a SMB connection. Resulting in us capturing a couple NTLMv2 hashes.
 
 ![Hashes Captured](img/hashes_captured.png){ width="70%" }
-///caption
+/// caption
 Hashes Captured
 ///
 
@@ -238,7 +238,7 @@ sudo -E -H $VIRTUAL_ENV/bin/python DumpHash.py
     - What to do next: Copy the NTLMv2 hashes to a file (like `responder.hashes`) for offline password cracking with hashcat
 
 ![Terminal showing dumphash.py script execution extracting captured NTLMv2 hashes from Responder logs](img/responder-dumphash-output.png){ width="70%" }
-///caption
+/// caption
 DumpHash.py
 ///
 
@@ -274,7 +274,7 @@ nano ~/git-tools/Responder/Responder.conf
 ```
 
 ![Text editor showing Responder.conf with SMB and HTTP servers disabled for relay attack compatibility](img/responder-services-off.png){ width="70%" }
-///caption
+/// caption
 Turn Off Services
 ///
 
@@ -292,7 +292,7 @@ sudo -E -H $VIRTUAL_ENV/bin/python Responder.py -I ens36
     - Verification: Startup output should show "SMB server" and "HTTP server" as OFF
 
 ![Responder startup output confirming SMB and HTTP servers disabled for ntlmrelayx integration](img/responder-services-disabled.png){ width="70%" }
-///caption
+/// caption
 Services are Off
 ///
 
@@ -313,7 +313,7 @@ We are now configured to start relaying hashes to various targets on our network
 Well remember back when we captured those hashes with Responder? The protocol defined alongside the hash capturing output was `[SMB]`.
 
 ![Responder log output showing SMBv2 protocol used to capture authentication hash from domain user](img/responder-smb-protocol.png){ width="70%" }
-///caption
+/// caption
 Protocol Used To Capture Hashes
 ///
 
@@ -353,7 +353,7 @@ The output from this command is shown below, which highlights the SMB authentica
 The below screenshot was cleaned up a bit to fit everything in neatly. Your output may appear…more jumbled.
 
 ![Ntlmrelayx output displaying successful NTLM relay attack with administrative access and dumped credentials](img/responder-relay-success.png){ width="70%" }
-///caption
+/// caption
 Relaying SUCCESS!
 ///
 
@@ -418,7 +418,7 @@ sudo rm ~/git-tools/Responder/*.db
 If you don't do this, the Lab *should* still work but the terminal won't *show* the hashes. Instead, it would look like this.
 
 ![Ntlmrelayx console showing skipped hash entries for already relayed authentication attempts](img/responder-hash-skipped.png){ width="70%" }
-///caption
+/// caption
 Skipping Hash Output
 ///
 

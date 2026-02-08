@@ -44,7 +44,7 @@ The diagram below depicts two GOAD VMs (GOAD-DC02, and GOAD-SRV02). We will be t
     ~* [https://github.com/Orange-Cyberdefense/GOAD](https://github.com/Orange-Cyberdefense/GOAD)
 
 ![Untitled](img/class-goad-target.png){ width="70%" }
-///caption
+/// caption
 GOAD Environment
 ///
 
@@ -67,7 +67,7 @@ You will **ALSO** need to create a new custom network for the environment to wor
     Create a new “Host-only” type virtual network that matches the image below.
     
     ![VMware Virtual Network Editor showing host-only network configuration for 192.168.56.0 subnet](img/vm-setup-hostonly-network.png){ width="70%" }
-    ///caption
+    /// caption
     Host Only Network
     ///
     
@@ -87,21 +87,21 @@ Once the VMs are imported, click “VM” → “Settings” in VMware for each 
 Click “Add”.
 
 ![VMware VM settings dialog with Add button highlighted to add new virtual hardware](img/vm-setup-add-hardware.png){ width="70%" }
-///caption
+/// caption
 Add Virtual Hardware
 ///
 
 Select “Network Adapter” and click “Finish”.
 
 ![Hardware selection dialog showing Network Adapter option selected for adding to VM](img/vm-setup-add-network-adapter.png){ width="70%" }
-///caption
+/// caption
 Add Network Adapter
 ///
 
 You should now have a new “Network Adapter 2” (or similar) for the VM. Select it and choose the “Custom: Specific virtual network” radio button. From there, use the dropdown to select the name of the Host-only virtual network you created in a previous step.
 
 ![VMware network adapter settings showing Custom specific virtual network dropdown menu](img/vm-setup-select-custom-network.png){ width="70%" }
-///caption
+/// caption
 Select Network
 ///
 
@@ -116,7 +116,7 @@ Select Network
 This is how it looks in Fusion…
 
 ![VMware Fusion network adapter configuration showing two network interfaces](img/vm-setup-fusion-add-network.png){ width="70%" }
-///caption
+/// caption
 Fusion Add Network
 ///
 
