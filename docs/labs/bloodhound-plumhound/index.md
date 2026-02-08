@@ -121,8 +121,15 @@ Data Collection
 
 Looks like we found some data alright!
 
+???+ success "Checkpoint: Verify Data Collection"
+    After running bloodhound-python, you should have:
+
+    - [ ] A ZIP file created in your current directory (ending in `_bloodhound.zip`)
+    - [ ] No authentication errors in the output
+    - [ ] Multiple JSON files inside the ZIP containing users, groups, computers, and ACL data
+
 ???+ note
-    By default, `bloodhound-python` uses Python’s `dns.resolver`, which may bypass `/etc/hosts`. If the DC hostname is manually mapped in `/etc/hosts`, `bloodhound-python` might fail to resolve it properly. Specifying `-ns 127.0.0.1` ensures that the system's built-in resolver is used, allowing the tool to recognize the correct IP mappings.
+    By default, `bloodhound-python` uses Python's `dns.resolver`, which may bypass `/etc/hosts`. If the DC hostname is manually mapped in `/etc/hosts`, `bloodhound-python` might fail to resolve it properly. Specifying `-ns 127.0.0.1` or `-ns 192.168.56.11` ensures that the system's built-in resolver is used, allowing the tool to recognize the correct IP mappings.
 
 After running this, you’ll get a ZIP file full of BloodHound-compatible JSON data. This is the blueprint of AD relationships, which we’re about to analyze.  
 

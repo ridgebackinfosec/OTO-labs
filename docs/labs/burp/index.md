@@ -33,6 +33,16 @@
 
 Burp Suite is a powerful web testing tool that functions as an interception proxy. It allows users to intercept, inspect, modify, and replay web traffic. This helps users understand how data is transmitted and received between the client and the server, making it a valuable tool for finding and exploiting vulnerabilities in web applications.
 
+## Learning Objectives
+
+By the end of this lab, you will be able to:
+
+- Configure Burp Suite's proxy and understand its core tabs (Proxy, Repeater, Intruder, Target)
+- Intercept and analyze HTTP/HTTPS traffic between a browser and web application
+- Identify and decode JSON Web Tokens (JWTs) using Burp extensions
+- Use the Request Minimizer extension to find minimum viable requests for session analysis
+- Send requests to Repeater for manual testing and modification
+
 ## Walkthrough
 
 ### Create A Project
@@ -426,6 +436,13 @@ You'll be automatically switched to the JSON Web Tokens tab. And there we have i
 /// caption
 Decoded JWT
 ///
+
+???+ success "Checkpoint: Verify Your Progress"
+    At this point, you should be able to:
+
+    - [ ] See JWT-containing requests highlighted in blue in HTTP History
+    - [ ] View the decoded JWT showing header, payload, and signature sections
+    - [ ] Identify the user information (e.g., email) within the JWT payload
 
 #### Minimizing Requests
 

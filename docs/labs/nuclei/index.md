@@ -27,6 +27,16 @@
 ## Intro
 Nuclei is used to send requests across targets based on a template, leading to zero false positives and providing fast scanning on a large number of hosts. Nuclei offers scanning for a variety of protocols, including TCP, DNS, HTTP, SSL, File, Whois, Websocket, Headless, Code etc. With powerful and flexible templating, Nuclei can be used to model all kinds of security checks.
 
+## Learning Objectives
+
+By the end of this lab, you will be able to:
+
+- Understand Nuclei's template-based scanning approach and when to use it
+- Run Nuclei scans against web applications and network targets
+- Interpret Nuclei output to identify vulnerabilities, misconfigurations, and technology fingerprints
+- Create custom Nuclei templates with matchers and extractors
+- Chain multiple templates together for comprehensive scanning
+
 ## Walkthrough
 
 First, let’s look at the `help` information for Nuclei.
@@ -120,6 +130,13 @@ nuclei -target http://127.0.0.1:42000 -H 'User-Agent: Mozilla/5.0 (Windows NT 10
 /// caption
 Command Output
 ///
+
+???+ success "Checkpoint: Verify Your Progress"
+    At this point, you should see output similar to the screenshot above, including:
+
+    - [ ] Technology detection findings (e.g., Node.js, Express)
+    - [ ] HTTP header information
+    - [ ] Any detected vulnerabilities or misconfigurations
 
 Already we can see that Nuclei does a fairly good job at the basics without any additional configuration. Now, if you had a large list of systems you could use the `-l` option and provide the path to a file containing a list of target URLs/hosts to scan (one per line).
 
@@ -264,6 +281,13 @@ Create a custom Nuclei template to check if the **Swagger API** documentation is
    ```sh
    nuclei -t ~/nuclei-templates/custom/juiceshop-swagger.yaml -u http://localhost:42000
    ```
+
+???+ success "Checkpoint: Custom Template Working"
+    If your template is correctly configured, you should see output indicating the Swagger API was detected. If no output appears, verify:
+
+    - [ ] The YAML syntax is correct (proper indentation)
+    - [ ] Juice Shop is running on port 42000
+    - [ ] The template file path is correct
 
 <!-- ### Detect Sensitive Information in Responses
 Now, let’s create a Nuclei template to check if sensitive information, such as admin emails or API keys, is leaked.

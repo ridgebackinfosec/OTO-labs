@@ -10,6 +10,17 @@
 
 Bettercap is a powerful, flexible, and portable tool designed for network attacks and monitoring. It's suitable for various cybersecurity tasks such as network sniffing, man-in-the-middle attacks, real-time packet manipulation, network reconnaissance, and more. Bettercap is often praised for its ease of use and the wide array of features it offers.
 
+## Learning Objectives
+
+By the end of this lab, you will be able to:
+
+- Launch Bettercap and navigate its interactive console
+- Perform network discovery using `net.probe` and `net.show`
+- Capture network traffic with the `net.sniff` module
+- Execute ARP spoofing attacks to position yourself as man-in-the-middle
+- Use caplets to automate multi-step attack configurations
+- Understand SSL stripping and HSTS bypass techniques (conceptually)
+
 ## Walkthrough
 
 ```bash
@@ -274,3 +285,15 @@ include hstshijack/hstshijack
 /// caption
 HSTS Hijack
 ///
+
+## What You Learned
+
+In this lab, you explored Bettercap's core capabilities for network reconnaissance and man-in-the-middle attacks:
+
+- **Network Discovery**: Used `net.probe` and `net.show` to map all hosts on the network segment
+- **Traffic Sniffing**: Captured live network traffic with `net.sniff` to identify protocols and potential credentials
+- **ARP Spoofing**: Positioned yourself between targets and the gateway to intercept traffic
+- **Caplets**: Automated complex attack configurations using pre-built scripts
+- **HTTPS Interception**: Understood how SSL stripping and HSTS bypass work (even if not fully executable in the lab)
+
+These techniques form the foundation of network-based attacks and are critical for understanding both offensive security testing and defensive monitoring.
