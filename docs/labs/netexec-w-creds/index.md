@@ -70,95 +70,70 @@ Network Interfaces
 ???+ warning "Guest Account Access"
     The `--interfaces` flag can work with Guest-level privileges. On systems where the Guest account is enabled, even invalid credentials may successfully enumerate network interfaces. If you're seeing results for credentials you haven't verified, remember to check for `(Guest)` in your authentication output. See the [Guest Account False Positives](../hashcat/index.md#guest-account-false-positives) section in the Hashcat lab for more details on identifying and filtering Guest authentications.
 
-### Hash Gathering
+### SMB Shares
 
-Try dumping the SAM database (Security Account Manager) to get mor hashes. Remember this requires at least local admin level access on a target system. Do so using the `--sam` flag.
+Enumerate SMB shares accessible with your credentials. This reveals what network resources you can read or write to:
 
 ```bash
-nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --sam
+nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --shares
 ```
 
 ???- note "Command Options/Arguments Explained"
-    - `--sam`: Dumps the Security Account Manager (SAM) database from target systems
-    - Privilege requirement: Requires local Administrator access on the target to read the SAM hive
-    - What SAM contains: Local user accounts and their NTLM password hashes for that specific machine (not domain accounts)
-    - Attack value: Extracted hashes can be cracked offline with hashcat or used for pass-the-hash attacks against other systems using the same local admin password
-    - Common finding: Many organizations reuse the same local Administrator password across multiple systems, making lateral movement easy once you crack one hash
-    - Storage location: SAM database is located at `C:\Windows\System32\config\SAM` and is normally locked while the OS is running
+    - `--shares`: Enumerates SMB shares on each target and shows your access level (READ, WRITE)
+    - What you'll see: Share names, remarks/descriptions, and permission indicators
+    - Common shares: ADMIN$, C$, IPC$, NETLOGON, SYSVOL, plus any custom shares
+    - Attack value: Identifies shares you can read for sensitive data or write to for payload staging
+    - Look for: Shares with WRITE access (staging), shares containing backups, scripts, or config files
+    - Note: You may see shares listed but not all will be accessible - the permissions column shows your actual access
 
-![NetExec SAM dump output showing extracted local user accounts and their NTLM password hashes](img/netexec-creds-sam.png){ width="70%" }
+![NetExec share enumeration showing accessible shares with READ/WRITE permissions](img/netexec-creds-shares.png){ width="70%" }
 ///caption
-SAM hashes
+SMB Share Enumeration
 ///
 
-The is a file on Windows that stores local user account information for that specific machine. It holds usernames and password hashes for local accounts (not domain accounts). It also contains details like group memberships and security identifiers (SIDs).
+Looking at the output, you can see:
 
-In short, the SAM database is like a mini version of the NTDS file, but only for local accounts on one computer.
+- **WINTERFELL** (192.168.56.11): Standard domain controller shares including NETLOGON and SYSVOL
+- **CASTELBLACK** (192.168.56.22): Has a `public` share with "Basic RW share for all domain users" - this could be interesting for staging payloads or finding sensitive files
 
-The Local Security Authority (LSA) which holds secrets in memory on a system is also a great place to get more creds. This can be accomplished with the `--lsa` flag. Its secrets are another piece of Windows’ credential storage, tied to the LSASS process.
+The `public` share on CASTELBLACK is particularly noteworthy - shares explicitly created for "all domain users" often contain useful information or can be used for payload staging.
 
-???- warning "Elevated Privs Required"
-    Requires Domain Admin or Local Admin Priviledges on target Domain Controller.
+### RID Brute Force
+
+RID (Relative Identifier) brute forcing is a technique to enumerate domain users and groups by cycling through RID values. This can discover accounts that might not appear in standard enumeration:
 
 ```bash
-nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --lsa
+nxc smb 192.168.56.11 -u robb.stark -p sexywolfy --rid-brute
 ```
 
 ???- note "Command Options/Arguments Explained"
-    - `--lsa`: Dumps Local Security Authority (LSA) secrets from target systems
-    - Privilege requirement: Requires Domain Admin or Local Administrator access on the target system
-    - What LSA secrets contain: Cached domain credentials, service account passwords, auto-logon credentials, VPN passwords, and other sensitive data stored by Windows for authentication
-    - Attack value: LSA secrets often contain plaintext or reversibly encrypted passwords for service accounts, scheduled tasks, and cached domain logons
-    - Process: Extracts secrets from the LSASS (Local Security Authority Subsystem Service) process memory and registry
-    - Why valuable: Can reveal credentials not found in SAM, including domain account passwords used by services running on that machine
+    - `--rid-brute`: Enumerates users and groups by brute-forcing RID values
+    - How it works: Windows Security Identifiers (SIDs) end with a RID that identifies specific accounts. Well-known RIDs include 500 (Administrator), 501 (Guest), 502 (krbtgt)
+    - What you'll find: Domain users, groups, computer accounts, and built-in security principals
+    - Attack value: Discovers accounts that may not appear in standard enumeration, including service accounts and disabled users
+    - Output format: Shows RID number, account name, and account type (SidTypeUser, SidTypeGroup, SidTypeAlias)
 
-Finally, you can try retrieving the NTDS file. The **NTDS file** (often called `ntds.dit`) is basically the heart of **Active Directory** on a Windows domain controller.
-
-```bash
-nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --ntds
-```
-
-???- note "Command Options/Arguments Explained"
-    - `--ntds`: Dumps the NTDS.dit database from Domain Controllers
-    - Privilege requirement: Requires Domain Admin privileges to access the NTDS.dit file on domain controllers
-    - What NTDS.dit contains: The complete Active Directory database with ALL domain user account hashes, group memberships, computer accounts, security policies, and trust relationships
-    - Attack value: This is the "keys to the kingdom" - contains every domain credential including Domain Admins, Enterprise Admins, and all service accounts
-    - Extraction method: Uses Volume Shadow Copy Service (VSS) to create a snapshot and extract the normally locked NTDS.dit file
-    - Post-extraction: Hashes can be cracked offline or used immediately for pass-the-hash attacks to compromise the entire domain
-    - Impact: Complete domain compromise - with NTDS.dit, an attacker has persistent access even if all passwords are changed (until hashes are rotated)
-
-![NTDS](img/nxc_ntds.png){ width="70%" }
+![NetExec RID brute force output showing enumerated users and groups with their SID types](img/netexec-creds-rid-brute.png){ width="70%" }
 ///caption
-NTDS
+RID Brute Force Enumeration (Snippet)
 ///
 
-Here’s the simple breakdown:
+The output reveals the domain's user and group structure:
 
-* Think of NTDS as **a giant database file**.
-* It stores all the important information about your network domain:
+- **Well-known accounts**: Administrator (500), Guest (501), krbtgt (502)
+- **Domain groups**: Domain Admins (512), Domain Users (513), Domain Computers (515), Domain Controllers (516)
+- **Security groups**: Cert Publishers, Group Policy Creator Owners, DnsAdmins, and various replication groups
+- **Service accounts**: Look for accounts like `vagrant` (1000) that might be service or deployment accounts
 
-    * **User accounts** (names, passwords — in hashed/encrypted form)
-    * **Groups** (who belongs where)
-    * **Computers** (machines that are joined to the domain)
-    * **Security info** (permissions, trust relationships, etc.)
+This enumeration gives you a map of the domain's account structure, which is valuable for identifying potential targets for password spraying, Kerberoasting, or privilege escalation.
 
-In other words, if Active Directory is like the phonebook and security guard for a company’s network, the `ntds.dit` file is the **actual book** where all the names, numbers, and access rules are written down.
-
-That’s why attackers, penetration testers, and defenders pay close attention to it — if someone gets hold of the NTDS file, they essentially get the **keys to the kingdom** (because it contains all the domain’s accounts and password hashes).
-
-Once you have more hashes, you can try cracking them to get even more accounts.
-
-???+ note "Comparisons"
-    👉 In simple terms:
-
-    * SAM = local usernames + password hashes
-    * LSA secrets = cached credentials, service passwords, and keys that Windows uses behind the scenes
-    * NTDS = domain-wide usernames + password hashes (and more)
+???+ tip "More to Come"
+    There are additional powerful NetExec capabilities you'll unlock later when you discover accounts with elevated privileges. Stay tuned for the Pivot and Escalate lab!
 
 ## Optional: LDAP Exploration
 
 ???+ info "Optional"
-    This is an **optional** part of the lab to explore on your own. No guidance will be provided.
+    This is an **optional** part of the lab to explore on your own. LDAP authentication may not reliably work with the class VMs, but does work on other Domains within the larger GOAD environment. No guidance will be provided.
 
 LDAP (Lightweight Directory Access Protocol) is just a way for computers to talk to a directory service like Active Directory.
 
