@@ -88,7 +88,28 @@ The first thing you'll see *should* be a prompt for the Neo4j credentials we jus
 DB Authentication
 ///
 
-After that, BloodHound will be waiting for data—so let’s give it something to work with.  
+After that, BloodHound will be waiting for data—so let's give it something to work with.
+
+???- warning "Troubleshooting: Common Issues"
+    **Neo4j won't start or connection refused:**
+
+    - Ensure no other Neo4j instance is running: `sudo systemctl stop neo4j`
+    - Check if port 7474 is in use: `sudo lsof -i :7474`
+    - Verify Java is installed: `java -version`
+    - Check Neo4j logs: `tail -f /var/log/neo4j/neo4j.log`
+
+    **BloodHound can't connect to database:**
+
+    - Confirm Neo4j is running and accessible at http://localhost:7474
+    - Verify you're using the correct password ("ridgeback" if you followed the lab)
+    - Try restarting Neo4j and waiting 30 seconds before connecting
+
+    **bloodhound-python authentication fails:**
+
+    - Double-check the password (it's `sexywolfy` with a 'y' at the end)
+    - Ensure GOAD-DC02 is powered on and reachable: `ping 192.168.56.11`
+    - Verify DNS resolution is working with the `-ns 192.168.56.11` flag
+    - Check for typos in the domain name: `north.sevenkingdoms.local`
 
 ### Step 3: Collecting AD Data 
 Now comes the fun part: data collection. This is where we act like an attacker or pentester mapping out an AD environment. `bloodhound-python` is a tool used to collect Active Directory (AD) data for analysis in BloodHound, aiding in security assessments. 

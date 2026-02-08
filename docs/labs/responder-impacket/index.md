@@ -158,6 +158,34 @@ Scope Config
     `RespondTo`  Config Setting
     ///
 
+???- warning "Troubleshooting: Common Issues"
+    **Responder shows "Address already in use" error:**
+
+    - Stop GoPhish if running: `gophish-stop`
+    - Stop xrdp service: `sudo systemctl stop xrdp`
+    - Check what's using the port: `sudo lsof -i :80` or `sudo lsof -i :445`
+
+    **No hashes being captured:**
+
+    - Verify you're using the correct interface (the one with 192.168.56.100)
+    - Ensure GOAD-DC02 is running - the bot runs every 3-5 minutes
+    - Check that 192.168.56.1 is in `DontRespondTo` (not your attacker IP)
+    - Confirm IPv6 is disabled: `cat /proc/sys/net/ipv6/conf/all/disable_ipv6` (should show 1)
+
+    **"Interface not found" error:**
+
+    - Run `ip addr` to list all interfaces
+    - Your interface name may differ (e.g., `eth1`, `enp0s8`, `ens36`)
+    - Replace `ens36` in commands with your actual interface name
+
+    **Hashes not showing (but lab ran before):**
+
+    - Responder skips duplicate hashes - run the cleanup commands:
+      ```bash
+      sudo rm ~/git-tools/Responder/logs/*.log
+      sudo rm ~/git-tools/Responder/*.db
+      ```
+
 ### Multicast DNS Poisoning with Responder
 
 Now, we need to figure out which network interface to have Responder listen on. To do that, run the command below and look for the interface that has our IP address (`192.168.56.100`) that was set at the beginning of this Lab. You did do that step right? Right??

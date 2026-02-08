@@ -45,6 +45,31 @@ hashcat -m 5600 --force -a 0 ~/responder.hashes /usr/share/eaphammer/wordlists/r
 ???+ warning
     This process might take a while depending on your setup so get comfortable and watch for the output below. You should be able to crack Robb's password but not Eddard's.
 
+???- warning "Troubleshooting: Common Issues"
+    **Hashcat shows "No hashes loaded" error:**
+
+    - Verify the hash file exists: `cat ~/responder.hashes`
+    - Check for extra whitespace or blank lines in the file
+    - Ensure the hash format is complete (entire line from `robb.stark::...` to the end)
+
+    **Hashcat runs extremely slowly:**
+
+    - The `--force` flag bypasses GPU detection - you're likely running on CPU only
+    - This is expected in VM environments without GPU passthrough
+    - For class purposes, CPU cracking is sufficient for these weak passwords
+
+    **"Hash not found in potfile" when checking results:**
+
+    - The hash was already cracked in a previous session
+    - View stored results: `cat ~/.local/share/hashcat/hashcat.potfile`
+    - To re-crack, delete the potfile: `rm ~/.local/share/hashcat/hashcat.potfile`
+
+    **Password not cracking:**
+
+    - Eddard's password is intentionally NOT in rockyou.txt (demonstrates dictionary limitations)
+    - Robb's password (`sexywolfy`) should crack within a few minutes
+    - If neither cracks, verify your hash file matches the format exactly
+
 ![Hashcat output showing successfully cracked NTLM hash with recovered cleartext password](img/hashcat-password-cracked.png){ width="70%" }
 /// caption
 The King in the North!
