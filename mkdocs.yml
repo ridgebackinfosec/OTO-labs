@@ -40,6 +40,7 @@ nav:
     - Lab - Hashcat: labs/hashcat/index.md
     - Lab - NetExec w/ Creds: labs/netexec-w-creds/index.md
     - Lab - Bloodhound & Plumbhound: labs/bloodhound-plumhound/index.md
+    - Lab - Pivot and Escalate: labs/pivot-escalate/index.md
     - Optional - AD Miner: labs/ad-miner/index.md
     - Optional - Bonus VMs: labs/bonus-vms/index.md
 

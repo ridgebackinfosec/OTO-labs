@@ -93,13 +93,17 @@ After that, BloodHound will be waiting for data—so let’s give it something t
 ### Step 3: Collecting AD Data 
 Now comes the fun part: data collection. This is where we act like an attacker or pentester mapping out an AD environment. `bloodhound-python` is a tool used to collect Active Directory (AD) data for analysis in BloodHound, aiding in security assessments. 
 
-For the sake of the Lab, we're going to assume we obtained the user `brandon.stark`'s credentials by either initial compromise or provided by the POC.
+<!-- For the sake of the Lab, we're going to assume we obtained the user `brandon.stark`'s credentials by either initial compromise or provided by the POC. -->
 
 In a new terminal, run:  
 
-```bash
+<!-- ```bash
 bloodhound-python --zip -c all -d north.sevenkingdoms.local -u brandon.stark -p iseedeadpeople -dc winterfell.north.sevenkingdoms.local -ns 192.168.56.11 --dns-timeout 60 --dns-tcp
-```  
+```   -->
+
+```bash
+bloodhound-python --zip -c all -d north.sevenkingdoms.local -u robb.stark -p sexywolfy -dc winterfell.north.sevenkingdoms.local -ns 192.168.56.11 --dns-timeout 60 --dns-tcp
+```
 
 ![Terminal output showing bloodhound-python collecting Active Directory data with progress indicators](img/data-collection.png){ width="70%" }
 ///caption
@@ -110,7 +114,7 @@ Data Collection
     Breaking it down:  
     - `-c all` → Grabs everything: users, groups, ACLs, sessions—you name it.  
     - `-d north.sevenkingdoms.local` → That’s our target AD domain.  
-    - `-u brandon.stark -p iseedeadpeople` → Our credentials (hopefully, Bran has domain admin access 😉).  
+    - `-u robb.stark -p sexywolf` → Our captured and cracked credentials.  
     - `-dc winterfell.north.sevenkingdoms.local` → The specific domain controller we’re hitting.  
     - `-ns 127.0.0.1` → Using our local machine for DNS resolution.  
     - `--dns-timeout 60 --dns-tcp` → Tweaks DNS settings for better reliability.  
