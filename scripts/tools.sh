@@ -8,13 +8,21 @@ exec > >(tee -a "$LOG_FILE") 2>&1
 echo "[$(date)] tools.sh started"
 
 FAILURES=()
+FAILURE_OUTPUTS=()
 run_step() {
     local label="$1"; shift
-    if "$@"; then
+    local tmpfile exit_code
+    tmpfile=$(mktemp)
+    "$@" 2>&1 | tee "$tmpfile"
+    exit_code=${PIPESTATUS[0]}
+    if [ $exit_code -eq 0 ]; then
+        rm -f "$tmpfile"
         return 0
     else
         echo -e "\e[0;31m[FAILED] $label\e[m"
         FAILURES+=("$label")
+        FAILURE_OUTPUTS+=("$(tail -10 "$tmpfile")")
+        rm -f "$tmpfile"
     fi
 }
 
@@ -27,7 +35,7 @@ cd
 # Required Powershell Steps from https://learn.microsoft.com/en-us/powershell/scripting/install/install-debian?view=powershell-7.4
 # Download the Microsoft repository GPG keys
 if [ ! -f /etc/apt/sources.list.d/microsoft-prod.list ]; then
-    wget -q https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb
+    wget -q https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb
     # Register & remove the Microsoft repository GPG keys
     sudo dpkg -i packages-microsoft-prod.deb
     rm packages-microsoft-prod.deb
@@ -236,8 +244,11 @@ if [ ${#FAILURES[@]} -eq 0 ]; then
     echo -e "\e[0;32m[tools.sh] All steps completed successfully.\e[m"
 else
     echo -e "\e[0;31m[tools.sh] ${#FAILURES[@]} step(s) failed:\e[m"
-    for f in "${FAILURES[@]}"; do
-        echo -e "  \e[0;31m- $f\e[m"
+    for i in "${!FAILURES[@]}"; do
+        echo -e "  \e[0;31m- ${FAILURES[$i]}\e[m"
+        if [ -n "${FAILURE_OUTPUTS[$i]:-}" ]; then
+            echo "${FAILURE_OUTPUTS[$i]}" | sed 's/^/    /'
+        fi
     done
     echo ""
     echo "Full output: $LOG_FILE"
