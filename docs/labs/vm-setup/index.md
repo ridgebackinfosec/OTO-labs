@@ -98,7 +98,12 @@ Select “Network Adapter” and click “Finish”.
 Add Network Adapter
 ///
 
-You should now have a new “Network Adapter 2” (or similar) for the VM. Select it and choose the “Custom: Specific virtual network” radio button. From there, use the dropdown to select the name of the Host-only virtual network you created in a previous step.
+You should now have a new “Network Adapter 2” (or similar) for the VM.
+
+!!! danger “Select Network Adapter 2 — NOT Network Adapter”
+    You must configure **Network Adapter 2**, NOT **Network Adapter**. The first adapter is the NAT interface that provides internet access — changing it will break all labs. Only Network Adapter 2 should be assigned to the Host-only (GOAD) network. The GOAD target VMs were built with their static IPs bound to the 2nd adapter, so this assignment must match.
+
+Select **Network Adapter 2** and choose the “Custom: Specific virtual network” radio button. From there, use the dropdown to select the name of the Host-only virtual network you created in a previous step.
 
 ![VMware network adapter settings showing Custom specific virtual network dropdown menu](img/vm-setup-select-custom-network.png){ width="70%" }
 /// caption
@@ -134,7 +139,6 @@ Since we've added a new network interface and that network doesn't have DHCP ena
 3. Run the below commands to run a script that automates the static IP address assignment.
     
     ```bash
-    chmod +x ~/OTO-labs/scripts/set-static-ip.sh
     sudo ~/OTO-labs/scripts/set-static-ip.sh
     ```
 
@@ -168,13 +172,10 @@ Once all of the steps above have been completed...
     You don’t *have* to turn on *both* GOAD VMs at once if your host machine has lower resources. You can start/stop them as necessary.
 
 ```bash
-chmod +x ~/OTO-labs/scripts/verify-lab-env.sh
 ~/OTO-labs/scripts/verify-lab-env.sh
 ```
 
 ???- note "Command Options/Arguments Explained"
-    - `chmod`: Changes file permissions in Unix/Linux systems
-    - `+x`: Adds execute permission to the file, making it runnable as a script. Without this permission, attempting to run the script would result in a "permission denied" error.
     - `~/OTO-labs/scripts/verify-lab-env.sh`: The verification script that tests network connectivity to GOAD VMs by sending ping requests. This ensures your network configuration is correct before proceeding with labs.
 
 If everything is setup correctly, you should see `0% packet loss` following each ping command.
