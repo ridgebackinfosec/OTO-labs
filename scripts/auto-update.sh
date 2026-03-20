@@ -13,8 +13,16 @@ else
     HASH_BEFORE=""
 fi
 
+# Force HTTPS to avoid SSH agent dependency in cron
+git -C "$REPO_DIR" remote set-url origin https://github.com/ridgebackinfosec/OTO-labs.git
+
 # Pull
-git -C "$REPO_DIR" pull --ff-only --quiet
+echo "[$(date)] auto-update: running git pull..."
+if git -C "$REPO_DIR" pull --ff-only --quiet; then
+    echo "[$(date)] auto-update: pull succeeded"
+else
+    echo "[$(date)] auto-update: pull FAILED (exit $?)"
+fi
 
 # Hash requirements.txt after pull
 if [ -f "$REQ" ]; then

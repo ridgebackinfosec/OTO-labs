@@ -35,7 +35,7 @@ fi
 # 4. Install cron job (idempotent)
 CRON_JOB="*/10 * * * * $REPO_DIR/scripts/auto-update.sh >> /tmp/oto-labs-update.log 2>&1"
 if ! crontab -l 2>/dev/null | grep -qF "auto-update.sh"; then
-    ( crontab -l 2>/dev/null; echo "$CRON_JOB" ) | crontab -
+    ( crontab -l 2>/dev/null || true; echo "$CRON_JOB" ) | crontab -
     echo "==> Installed cron job (runs every 10 minutes)"
 else
     echo "==> Cron job already present (skipping)"
