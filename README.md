@@ -81,14 +81,15 @@ This enables us to quickly revert back if you run into any issues during class o
 
 <summary>Lab Guide & Tool Installation</summary>
 
-Turn The Forge VM on, login using the creds `telchar:ridgeback`, open a terminal, and run the below commands. 
+Turn The Forge VM on, login using the creds `telchar:ridgeback`, open a terminal, and run the below commands.
 
 ```bash
-get-labs OTO
-cd ~/OTO-labs
+git clone https://github.com/ridgebackinfosec/OTO-labs ~/OTO-labs
+~/OTO-labs/scripts/setup.sh
+source ~/.bashrc
 ```
 
-This will download and setup the Lab Guides.
+This will download and set up the Lab Guides, install the necessary Python dependencies, and schedule automatic updates so your lab materials stay current without any manual steps.
 
 **NOTE: If you're taking the _On-Demand_ version of this class, please check the version number of the recordings then perform the below extra command. This will ensure you're using the corresponding release of the labs.**
 

@@ -134,10 +134,8 @@ Since we've added a new network interface and that network doesn't have DHCP ena
 3. Run the below commands to run a script that automates the static IP address assignment.
     
     ```bash
-    cd ~/OTO-labs
-    chmod +x set-static-ip.sh
-    sudo ./set-static-ip.sh
-    cd ~
+    chmod +x ~/OTO-labs/scripts/set-static-ip.sh
+    sudo ~/OTO-labs/scripts/set-static-ip.sh
     ```
 
     ![Script Execution Example](img/static_ip_script.png){ width="70%" }
@@ -170,17 +168,14 @@ Once all of the steps above have been completed...
     You don’t *have* to turn on *both* GOAD VMs at once if your host machine has lower resources. You can start/stop them as necessary.
 
 ```bash
-cd ~/OTO-labs
-chmod +x verify-lab-env.sh
-./verify-lab-env.sh
-cd ~
+chmod +x ~/OTO-labs/scripts/verify-lab-env.sh
+~/OTO-labs/scripts/verify-lab-env.sh
 ```
 
 ???- note "Command Options/Arguments Explained"
     - `chmod`: Changes file permissions in Unix/Linux systems
     - `+x`: Adds execute permission to the file, making it runnable as a script. Without this permission, attempting to run the script would result in a "permission denied" error.
-    - `verify-lab-env.sh`: The verification script that tests network connectivity to GOAD VMs by sending ping requests. This ensures your network configuration is correct before proceeding with labs.
-    - `./`: Executes the script in the current directory. The `./` prefix tells the shell to run the file in the current location rather than searching system PATH directories.
+    - `~/OTO-labs/scripts/verify-lab-env.sh`: The verification script that tests network connectivity to GOAD VMs by sending ping requests. This ensures your network configuration is correct before proceeding with labs.
 
 If everything is setup correctly, you should see `0% packet loss` following each ping command.
 

@@ -1,0 +1,5 @@
+alias me='ip address | grep inet'
+
+alias run-labs='f(){ if [ -n "$1" ]; then repo=${1^^}; d="$HOME/${repo}-labs"; else set -- "$HOME"/*-labs; [ -e "$1" ] || { echo "No *-labs repo found in $HOME"; return 1; }; [ "$#" -eq 1 ] || { echo "Multiple *-labs repos found; specify one (e.g., run-labs OTO)"; printf "%s\n" "$@"; return 1; }; d=$1; fi; [ -f "$d/venv/bin/activate" ] || { echo "No venv in $d (run setup.sh first)"; return 1; }; cd "$d" || return 1; . venv/bin/activate; trap "deactivate; cd - >/dev/null" EXIT; mkdocs serve; }; f'
+
+alias get-tools='f(){ if [ -n "$1" ]; then repo=${1^^}; d="$HOME/${repo}-labs"; else set -- "$HOME"/*-labs; [ -e "$1" ] || { echo "No *-labs repo found in $HOME"; return 1; }; [ "$#" -eq 1 ] || { echo "Multiple *-labs repos found; specify one (e.g., get-tools OTO)"; printf "%s\n" "$@"; return 1; }; d=$1; fi; if [ -f "$d/scripts/tools.sh" ]; then s="$d/scripts/tools.sh"; else echo "Missing tools.sh in $d (checked scripts/tools.sh)"; return 1; fi; [ -x "$s" ] || chmod 744 "$s"; ( cd "$(dirname "$s")" && ./"$(basename "$s")" ); }; f'
