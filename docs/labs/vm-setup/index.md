@@ -233,6 +233,25 @@ sudo juice-shop-stop -h
 Stopping Juice Shop
 ///
 
+### Extra Offensive Tools
+
+After completing initial setup with `get-tools`, you can optionally install
+additional tools that are not required for class but are available for
+extended practice.
+
+???+ warning
+    This is **not required for the class** and is entirely optional.
+    Extra tools require significant additional disk space and installation time.
+
+```bash
+get-extra-tools
+```
+
+???- note "Command Options/Arguments Explained"
+    - `get-extra-tools`: Installs optional offensive security tools (additional
+      password crackers, credential spraying tools, network analyzers, and more)
+      into the VM. These tools are not covered in class walkthroughs.
+
 ### Additional GOAD Targets
 
 The full GOAD target environment is comprised of 5 systems. This class only utilizes 2 of those target systems.

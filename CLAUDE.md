@@ -19,7 +19,8 @@ cd ~/OTO-labs && source venv/bin/activate && mkdocs serve
 
 ### Install/Update Tools
 ```bash
-get-tools         # runs scripts/tools.sh
+get-tools         # runs scripts/lab_essential_tools.sh
+get-extra-tools   # runs scripts/extra_tools.sh (optional, not required for class)
 ```
 
 ### Setup (run once after clone)
@@ -43,10 +44,12 @@ source venv/bin/activate && pip install -r requirements.txt
 ### Key Files
 - **`mkdocs.yml`** — Site config, navigation, theme (Material), and plugin settings. The nav structure defines the order of Day 1 and Day 2 labs.
 - **`requirements.txt`** — Python packages for mkdocs. Monitored by `scripts/auto-update.sh`; pip reinstalls automatically if this file changes after a pull.
-- **`scripts/aliases.sh`** — Defines `me`, `run-labs`, and `get-tools` aliases. Sourced by `~/.bashrc` via a line added by `setup.sh`. This is the dynamic alias system — aliases live in the repo and update automatically.
+- **`scripts/aliases.sh`** — Defines `me`, `run-labs`, `get-tools`, and `get-extra-tools` aliases. Sourced by `~/.bashrc` via a line added by `setup.sh`. This is the dynamic alias system — aliases live in the repo and update automatically.
 - **`scripts/setup.sh`** — One-time setup: creates venv, installs requirements, adds source line to `~/.bashrc` (idempotent), installs cron job (idempotent).
 - **`scripts/auto-update.sh`** — Runs every 10 minutes via cron: `git pull --ff-only`, reinstalls pip deps if `requirements.txt` changed. Logs to `/tmp/oto-labs-update.log`.
-- **`scripts/tools.sh`** — Installs all offensive security tools via APT and pipx, clones tool repos into `~/git-tools/`, configures `/etc/hosts` for GOAD.
+- **`scripts/_tools_lib.sh`** — Shared library sourced by both tool scripts. Contains `FAILURES`/`FAILURE_OUTPUTS` arrays, `run_step()`, and `tools_summary_and_exit()`. Not executable (100644).
+- **`scripts/lab_essential_tools.sh`** — Installs tools directly used in class labs via APT, pipx, and git clone. Run via `get-tools`. Logs to `/tmp/oto-labs-lab-tools.log`.
+- **`scripts/extra_tools.sh`** — Installs optional tools not required for class (password crackers, spraying tools, network analyzers, etc.). Run via `get-extra-tools`. Logs to `/tmp/oto-labs-extra-tools.log`.
 - **`LAB_TEMPLATE.md`** — Template to follow when adding new lab pages.
 
 ### Lab Content (`docs/labs/`)
