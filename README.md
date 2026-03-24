@@ -109,6 +109,10 @@ get-tools
 
 This will install all the tools needed for the class.
 
+If any tools show as failed, re-run `get-tools`. The script is idempotent —
+already-installed tools are skipped. A second run resolves most failures caused
+by transient network or mirror issues.
+
 This process is intended to reduce initial VM download size, make it easy for students to hit the ground running, control tool versions, and permit dynamic updating of the course material.
 
 That's it!
