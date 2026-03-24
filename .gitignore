@@ -2,3 +2,4 @@ site/
 venv/
 .vscode/
 .claude/
+supp/lab_files/wordlists/rockyou.txt

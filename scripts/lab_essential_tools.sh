@@ -17,7 +17,7 @@ cd
 # APT method
 run_step "apt update" sudo apt-get -o DPkg::Lock::Timeout=300 update
 run_step "apt: pipx" sudo apt install -y pipx
-for pkg in python3-pip python3-venv nmap locate hashcat burpsuite eaphammer \
+for pkg in python3-pip python3-venv nmap locate hashcat burpsuite \
            bettercap gophish jq sqlitebrowser openjdk-11-jdk neo4j npm; do
     run_step "apt: $pkg" sudo apt install -y "$pkg"
 done
@@ -104,6 +104,12 @@ else
     echo "Juice Shop already cloned, skipping..."
 fi
 cd
+
+# Extract rockyou wordlist
+WORDLIST_DIR="$SCRIPT_DIR/../supp/lab_files/wordlists"
+if [ ! -f "$WORDLIST_DIR/rockyou.txt" ]; then
+    tar -xzf "$WORDLIST_DIR/rockyou.txt.tar.gz" -C "$WORDLIST_DIR/"
+fi
 
 # Updated hosts for the GOAD target env
 if ! grep -q "kingslanding.sevenkingdoms.local" /etc/hosts; then

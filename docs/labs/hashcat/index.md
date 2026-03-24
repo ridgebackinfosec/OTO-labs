@@ -32,7 +32,7 @@ eddard.stark::NORTH:1122334455667788:76E26250ABF96A09E68ADC5A9B1A4C29:0101000000
 Now that we have our hashes in a file that we can reach, run the command below to start cracking.
 
 ```bash
-hashcat -m 5600 --force -a 0 ~/responder.hashes /usr/share/eaphammer/wordlists/rockyou.txt
+hashcat -m 5600 --force -a 0 ~/responder.hashes ~/OTO-labs/supp/lab_files/wordlists/rockyou.txt
 ```
 
 ???- note "Command Options/Arguments Explained"
@@ -40,7 +40,7 @@ hashcat -m 5600 --force -a 0 ~/responder.hashes /usr/share/eaphammer/wordlists/r
     - **`--force`**: This option forces Hashcat to start despite any warnings that might suggest it's not a good idea to proceed. It's important to use this option with caution, as it can bypass safety mechanisms designed to protect your hardware or data.
     - **`-a 0`**: Specifies the attack mode. **`0`** is for a straight attack, which means Hashcat will use a wordlist as-is, trying each entry as a potential password against the provided hashes.
     - **`responder.hashes`**: This is the file containing the hashes that you're attempting to crack. The name suggests these hashes were obtained using Responder, a tool commonly used for network security testing, specifically for capturing hashes by responding to different types of network requests.
-    - **`/usr/share/eaphammer/wordlists/rockyou.txt`**: Specifies the path to the wordlist that Hashcat will use for the attack. The **`rockyou.txt`** wordlist is famous in password cracking and cybersecurity tests for its extensive collection of leaked passwords, making it a valuable resource for attempting to crack common or weak passwords.
+    - **`~/OTO-labs/supp/lab_files/wordlists/rockyou.txt`**: Specifies the path to the wordlist that Hashcat will use for the attack. The **`rockyou.txt`** wordlist is famous in password cracking and cybersecurity tests for its extensive collection of leaked passwords, making it a valuable resource for attempting to crack common or weak passwords.
 
 ???+ warning
     This process might take a while depending on your setup so get comfortable and watch for the output below. You should be able to crack Robb's password but not Eddard's.
