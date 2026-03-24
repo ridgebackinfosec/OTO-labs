@@ -18,7 +18,7 @@ cd
 run_step "apt update" sudo apt-get -o DPkg::Lock::Timeout=300 update
 run_step "apt: pipx" sudo apt install -y pipx
 for pkg in python3-pip python3-venv nmap locate hashcat burpsuite eaphammer \
-           bettercap gophish juice-shop jq sqlitebrowser openjdk-11-jdk neo4j; do
+           bettercap gophish juice-shop jq sqlitebrowser openjdk-11-jdk neo4j npm; do
     run_step "apt: $pkg" sudo apt install -y "$pkg"
 done
 
