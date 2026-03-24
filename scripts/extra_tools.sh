@@ -22,7 +22,7 @@ else
     echo "Microsoft repository already configured, skipping..."
 fi
 
-run_step "apt update" sudo apt update
+run_step "apt update" sudo apt-get -o DPkg::Lock::Timeout=300 update
 for pkg in aircrack-ng john metasploit-framework tcpdump wireshark powershell; do
     run_step "apt: $pkg" sudo apt install -y "$pkg"
 done
