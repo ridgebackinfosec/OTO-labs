@@ -68,7 +68,7 @@ Burp Defaults
     Open Browser
     ///
     
-2. Open `http://127.0.0.1:42000` in the browser window.
+2. Open `http://127.0.0.1:3000` in the browser window.
 3. Make sure “Intercept” is off
     
     ![Burp Suite Intercept control showing intercept is off toggle state](img/burp-intercept-toggle-off.png){ width="70%" }
@@ -346,17 +346,13 @@ You can use Burp extensions to change Burp Suite's behavior in many ways, includ
 ???+ note "OWASP Juice Shop"
     Start Juice Shop First:
 
-    Start up a the OWASP Juice Shop vulnerable web application. It will be available at `http://127.0.0.1:42000`.
+    Start up a the OWASP Juice Shop vulnerable web application. It will be available at `http://127.0.0.1:3000`.
 
     ```bash
-    sudo juice-shop -h
+    cd ~/git-tools/juice-shop && npm start
     ```
 
-    After you’re done, make sure you shut down OWASP Juice Shop by running the below command.
-
-    ```bash
-    sudo juice-shop-stop -h
-    ```
+    After you’re done, make sure you shut down OWASP Juice Shop by pressing **Ctrl+C** in the terminal where it is running.
 
 In this part of the lab, you will use first use "the **Request Minimizer** extension in Burp Suite to strip unnecessary parts of HTTP requests and analyze their impact on server responses.
 
@@ -400,7 +396,7 @@ Burp Browser
 
 ???+ warning "Make sure that "Intercept" toggle is off."
 
-3. With OWASP Juice Shop running, navigate to [http://127.0.0.1:42000/#/login](http://127.0.0.1:42000/#/login) from Burp's browser.
+3. With OWASP Juice Shop running, navigate to [http://127.0.0.1:3000/#/login](http://127.0.0.1:3000/#/login) from Burp's browser.
 4. Enter the user `admin@juice-sh.op` and password `admin123` to login.
 
 #### Identify an authenticated HTTP request

@@ -18,7 +18,7 @@ cd
 run_step "apt update" sudo apt-get -o DPkg::Lock::Timeout=300 update
 run_step "apt: pipx" sudo apt install -y pipx
 for pkg in python3-pip python3-venv nmap locate hashcat burpsuite eaphammer \
-           bettercap gophish juice-shop jq sqlitebrowser openjdk-11-jdk neo4j npm; do
+           bettercap gophish jq sqlitebrowser openjdk-11-jdk neo4j npm; do
     run_step "apt: $pkg" sudo apt install -y "$pkg"
 done
 
@@ -90,6 +90,18 @@ if [ ! -f "/usr/local/bin/nuclei" ]; then
     '
 else
     echo "Nuclei already installed, skipping..."
+fi
+cd
+
+# Juice Shop
+if [ ! -d "$HOME/git-tools/juice-shop" ]; then
+    run_step "git: juice-shop" bash -c '
+        git clone https://github.com/ridgebackinfosec/juice-shop ~/git-tools/juice-shop &&
+        cd ~/git-tools/juice-shop &&
+        npm install
+    '
+else
+    echo "Juice Shop already cloned, skipping..."
 fi
 cd
 

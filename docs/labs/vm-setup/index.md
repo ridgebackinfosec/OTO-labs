@@ -189,7 +189,7 @@ Lab Environment Verification Passed!
 
 ### OWASP Juice Shop
 
-The Forge VM will have the `juice-shop` APT package to deploy a local instance of the Open Worldwide Application Security Project (OWASP) Juice Shop for you to play with before, during, or after the class.
+The Forge VM includes OWASP Juice Shop, cloned via `get-tools` into `~/git-tools/juice-shop`. It is available for you to play with before, during, or after the class.
 
 > “OWASP Juice Shop is probably the most modern and sophisticated insecure web application! It can be used in security trainings, awareness demos, CTFs and as a guinea pig for security tools! Juice Shop encompasses vulnerabilities from the entire OWASP Top Ten along with many other security flaws found in real-world applications!
 
@@ -197,41 +197,25 @@ The Forge VM will have the `juice-shop` APT package to deploy a local instance o
 ~OWASP
 
 ???+ warning
-    The command below will start the local instance of OWASP Juice Shop on `http://127.0.0.1:42000`. 
-
-    It will state that, in the terminal output, that it will open a browser for you. This is a LIE. It is broken in ParrotOS currently. So, you’ll need to open a browser manually and navigate to the above address. 😢
+    The command below will start Juice Shop on `http://127.0.0.1:3000`.
+    Leave this terminal open while using Juice Shop — the server runs in the foreground.
 
 ```bash
-sudo juice-shop -h
+cd ~/git-tools/juice-shop && npm start
 ```
 
 ???- note "Command Options/Arguments Explained"
-    - `sudo`: Runs the command with superuser (root) privileges. Required because Juice Shop binds to port 80, which is a privileged port that only root can access.
-    - `juice-shop`: The OWASP Juice Shop application, a deliberately vulnerable web application used for security training and testing.
-    - `-h`: Starts the Juice Shop web server. Despite the `-h` looking like a help flag, this is the command to run the service (historical naming quirk from the package).
+    - `cd ~/git-tools/juice-shop`: Navigates to the cloned Juice Shop directory.
+    - `npm start`: Starts the Juice Shop web server on port 3000.
 
-![Terminal output showing OWASP Juice Shop starting on localhost port 42000](img/vm-setup-start-juiceshop.png){ width="70%" }
+![Terminal output showing OWASP Juice Shop starting on localhost port 3000](img/vm-setup-start-juiceshop.png){ width="70%" }
 /// caption
 Starting Juice Shop
 ///
 
-You can now access the vulnerable web app by loading [http://127.0.0.1:42000](http://127.0.0.1:42000) in your VM’s browser.
+You can now access the vulnerable web app by loading [http://127.0.0.1:3000](http://127.0.0.1:3000) in your VM's browser.
 
-The command below will stop the local instance of OWASP Juice Shop.
-
-```bash
-sudo juice-shop-stop -h
-```
-
-???- note "Command Options/Arguments Explained"
-    - `sudo`: Runs the command with superuser privileges to stop the service running on a privileged port.
-    - `juice-shop-stop`: Command to gracefully stop the OWASP Juice Shop web server and free up port 42000.
-    - `-h`: Stops the service. Like the start command, this uses `-h` (another naming quirk from the package maintainers).
-
-![Terminal output confirming OWASP Juice Shop service has been stopped](img/vm-setup-stop-juiceshop.png){ width="70%" }
-/// caption
-Stopping Juice Shop
-///
+To stop Juice Shop, press **Ctrl+C** in the terminal where it is running.
 
 ### Extra Offensive Tools
 

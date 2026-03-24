@@ -1,28 +1,18 @@
 # Lab - Nuclei
 
 ???+ warning "Prerequisites"
-    Start up a the OWASP Juice Shop vulnerable web application. It will be available at `http://127.0.0.1:42000`.
+    Start up a the OWASP Juice Shop vulnerable web application. It will be available at `http://127.0.0.1:3000`.
 
     ```bash
-    sudo juice-shop -h
+    cd ~/git-tools/juice-shop && npm start
     ```
 
     ???- note "Command Options/Arguments Explained"
-        - `sudo`: Runs with superuser privileges to bind to privileged ports
-        - `juice-shop`: OWASP Juice Shop deliberately vulnerable web application for security testing
-        - `-h`: Starts the web server (despite looking like a help flag, this is the start command)
+        - `cd ~/git-tools/juice-shop`: Navigates to the cloned Juice Shop directory
+        - `npm start`: Starts the Juice Shop web server on port 3000
         - Why needed: Nuclei requires a target web application to scan - Juice Shop provides a safe, local testing environment with known vulnerabilities
 
-    After you're done, make sure you shut down OWASP Juice Shop by running the below command.
-
-    ```bash
-    sudo juice-shop-stop -h
-    ```
-
-    ???- note "Command Options/Arguments Explained"
-        - `sudo juice-shop-stop`: Stops the running Juice Shop web server
-        - `-h`: Stop command (same naming quirk as the start command)
-        - Why cleanup: Frees up port 42000 and system resources after lab completion
+    After you're done, make sure you shut down OWASP Juice Shop by pressing **Ctrl+C** in the terminal where it is running.
 
 ## Intro
 Nuclei is used to send requests across targets based on a template, leading to zero false positives and providing fast scanning on a large number of hosts. Nuclei offers scanning for a variety of protocols, including TCP, DNS, HTTP, SSL, File, Whois, Websocket, Headless, Code etc. With powerful and flexible templating, Nuclei can be used to model all kinds of security checks.
@@ -110,11 +100,11 @@ HTTP Templates (Snippet)
 Since we have a local vulnerable web application already running on The Forge VM, let’s go ahead and run nuclei with OWASP juice shop as the target. No additional options.
 
 ```bash
-nuclei -target http://127.0.0.1:42000 -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0' -ts -mhe 500 -c 32 -stats -si 300 -o ~/nuclei_results.txt -je ~/nuclei_results.json -elog ~/nuclei_errors.txt -me ~/
+nuclei -target http://127.0.0.1:3000 -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0' -ts -mhe 500 -c 32 -stats -si 300 -o ~/nuclei_results.txt -je ~/nuclei_results.json -elog ~/nuclei_errors.txt -me ~/
 ```
 
 ???- note "Command Options/Arguments Explained"
-    - `-target http://127.0.0.1:42000`: [using `-u` also works] Specifies the **target** for scanning - the local machine on port `42000` where OWASP Juice Shop is running.
+    - `-target http://127.0.0.1:3000`: [using `-u` also works] Specifies the **target** for scanning - the local machine on port `3000` where OWASP Juice Shop is running.
     - `-H 'User-Agent: ...'`: Sets a custom **header** for all HTTP requests. Here we're using a Firefox User-Agent string to appear as a normal browser, which can help avoid detection or bypass simple bot filtering.
     - `-ts`: Enables **timestamp** printing in CLI output, useful for tracking when findings occur during long scans.
     - `-mhe 500`: **Max host error** threshold before skipping a host (default is 30). Setting this to 500 makes Nuclei more tolerant of errors, useful for unstable targets.
@@ -279,14 +269,14 @@ Create a custom Nuclei template to check if the **Swagger API** documentation is
   ```
 3. Run the template:
    ```sh
-   nuclei -t ~/nuclei-templates/custom/juiceshop-swagger.yaml -u http://localhost:42000
+   nuclei -t ~/nuclei-templates/custom/juiceshop-swagger.yaml -u http://localhost:3000
    ```
 
 ???+ success "Checkpoint: Custom Template Working"
     If your template is correctly configured, you should see output indicating the Swagger API was detected. If no output appears, verify:
 
     - [ ] The YAML syntax is correct (proper indentation)
-    - [ ] Juice Shop is running on port 42000
+    - [ ] Juice Shop is running on port 3000
     - [ ] The template file path is correct
 
 <!-- ### Detect Sensitive Information in Responses
@@ -321,7 +311,7 @@ Now, let’s create a Nuclei template to check if sensitive information, such as
    ```
 3. Run the template:
    ```sh
-   nuclei -t ~/nuclei-templates/custom/juiceshop-sensitive-info.yaml -u http://localhost:42000
+   nuclei -t ~/nuclei-templates/custom/juiceshop-sensitive-info.yaml -u http://localhost:3000
    ``` -->
 
 ### Detect a Vulnerable Admin Panel
@@ -360,7 +350,7 @@ Many vulnerable web apps have an accessible admin panel. Let’s check if Juice 
    ```
 3. Run the template:
    ```sh
-   nuclei -t ~/nuclei-templates/custom/juiceshop-admin-panel.yaml -u http://localhost:42000
+   nuclei -t ~/nuclei-templates/custom/juiceshop-admin-panel.yaml -u http://localhost:3000
    ```
 
 ### Chain Multiple Nuclei Templates Together
@@ -368,7 +358,7 @@ Instead of running templates one by one, let’s scan Juice Shop using **multipl
 
 1. Run all custom templates at once:
    ```sh
-   nuclei -t ~/nuclei-templates/custom/ -u http://localhost:42000
+   nuclei -t ~/nuclei-templates/custom/ -u http://localhost:3000
    ```
 2. The output should show multiple detections if vulnerabilities are present.
 
