@@ -13,12 +13,24 @@ run_step() {
     if [ $exit_code -eq 0 ]; then
         rm -f "$tmpfile"
         return 0
-    else
-        echo -e "\e[0;31m[FAILED] $label\e[m"
-        FAILURES+=("$label")
-        FAILURE_OUTPUTS+=("$(tail -10 "$tmpfile")")
-        rm -f "$tmpfile"
     fi
+    # If an apt install failed with a 404, refresh the cache and retry once
+    if grep -q "404" "$tmpfile" && [[ " $* " == *" apt "* || " $* " == *" apt-get "* ]]; then
+        echo -e "\e[0;33m[RETRYING] $label — 404 detected, refreshing apt cache\e[m"
+        sudo apt-get -o DPkg::Lock::Timeout=300 update
+        rm -f "$tmpfile"
+        tmpfile=$(mktemp)
+        "$@" 2>&1 | tee "$tmpfile"
+        exit_code=${PIPESTATUS[0]}
+        if [ $exit_code -eq 0 ]; then
+            rm -f "$tmpfile"
+            return 0
+        fi
+    fi
+    echo -e "\e[0;31m[FAILED] $label\e[m"
+    FAILURES+=("$label")
+    FAILURE_OUTPUTS+=("$(tail -10 "$tmpfile")")
+    rm -f "$tmpfile"
 }
 
 tools_summary_and_exit() {
