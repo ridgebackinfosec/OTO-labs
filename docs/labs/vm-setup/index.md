@@ -13,6 +13,7 @@
     - [x]  Add the above custom network to each VM’s config
 - [x]  Static IP Address Assignment
 - [x]  Verify Lab Environment
+- [x]  Install Tools
 
 ---
 
@@ -184,6 +185,26 @@ If everything is setup correctly, you should see `0% packet loss` following each
 /// caption
 Lab Environment Verification Passed!
 ///
+
+## Install Tools
+
+With the lab environment verified, run the below command to install all tools
+required for the class.
+
+```bash
+get-tools
+```
+
+???- note "Command Options/Arguments Explained"
+    - `get-tools`: Installs all offensive security tools needed for class labs via
+      APT, pipx, and git clone. Logs full output to `/tmp/oto-labs-lab-tools.log`.
+
+???+ note
+    If any tools show as failed, re-run `get-tools`. The script is idempotent —
+    already-installed tools are skipped. A second run resolves most failures caused
+    by transient network or mirror issues.
+
+---
 
 ## Extras
 
