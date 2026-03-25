@@ -103,7 +103,7 @@ tools_summary_and_exit() {
     echo ""
     echo "=================================================="
     if [ ${#FAILURES[@]} -eq 0 ]; then
-        echo -e "\e[0;32m[$script_name] All steps completed successfully.\e[m"
+        echo -e "\e[0;32m[$script_name] All tools installed successfully.\e[m"
     else
         echo -e "\e[0;31m[$script_name] ${#FAILURES[@]} tool(s) failed to install:\e[m"
         for i in "${!FAILURES[@]}"; do
