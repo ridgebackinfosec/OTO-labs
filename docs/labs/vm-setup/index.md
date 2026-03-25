@@ -254,8 +254,9 @@ get-extra-tools
 
 ???- note "Command Options/Arguments Explained"
     - `get-extra-tools`: Installs optional offensive security tools (additional
-      password crackers, credential spraying tools, network analyzers, and more)
-      into the VM. These tools are not covered in class walkthroughs.
+      password crackers, credential spraying tools, network analyzers, wireless
+      attack tools, and more) into the VM. These tools are not covered in class
+      walkthroughs.
 
 ### Additional GOAD Targets
 
