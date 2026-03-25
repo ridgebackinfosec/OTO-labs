@@ -350,26 +350,35 @@ jon.snow - Valid Credentials but No Admin Access
     - ACL-based attack paths (GenericAll, WriteDACL, etc.)
     - DCSync rights (Replicating Directory Changes)
 
-### Step B5: Understanding DCSync
+### Step B5: DCSync — Understanding the Attack
 
-DCSync is an attack where we impersonate a Domain Controller and request password replication data. It requires **Replicating Directory Changes** privileges.
+DCSync is an attack where the attacker impersonates a Domain Controller and requests password replication data from another DC using Microsoft's Directory Replication Service Remote Protocol (MS-DRSR). Rather than dumping credentials from disk or memory, DCSync abuses a legitimate AD mechanism — the same one real DCs use to sync password data.
+
+**What it can retrieve:**
+- NTLM hashes for every domain account, including Domain Admins
+- The `krbtgt` hash (used for forging Golden Tickets)
+- Historical password hashes
+
+**Privileges required:** The attacking account must have `Replicating Directory Changes` and `Replicating Directory Changes All` rights — typically held by Domain Admins, Enterprise Admins, and certain service accounts.
 
 The command syntax is:
 
 ```bash
-secretsdump.py 'north.sevenkingdoms.local/USER:PASSWORD@192.168.56.11' -just-dc
+secretsdump.py 'north.sevenkingdoms.local/robb.stark:sexywolfy@192.168.56.11' -just-dc
 ```
 
 ???- note "Command Options/Arguments Explained"
-    - `secretsdump.py`: Impacket tool for extracting secrets
-    - `-just-dc`: Only perform DCSync (don't dump local SAM/LSA)
+    - `secretsdump.py`: Impacket tool for extracting secrets via multiple methods
+    - `-just-dc`: Only perform DCSync (skip local SAM/LSA dumps)
     - Successful output includes all domain account NTLM hashes
-    - Key targets: `Administrator` (DA access) and `krbtgt` (Golden Ticket)
+    - Key targets: `Administrator` (DA access) and `krbtgt` (Golden Ticket material)
 
-???+ warning "Lab Environment Note"
-    In GOAD, DCSync may not work even with `robb.stark` (who has DA membership) due to specific permission configurations. On real engagements, Domain Admins typically have DCSync rights by default.
+???+ warning "GOAD Lab Note"
+    In this GOAD environment, DCSync may not succeed even with `robb.stark`'s Domain Admin membership, due to the specific permission configuration of these lab VMs. This is a known limitation of the lab environment — on real engagements, Domain Admins have DCSync rights by default.
 
-    If you completed the NetExec w/ Creds lab with `--ntds`, you've already extracted these hashes through a similar mechanism.
+    If you want to try it anyway, run the command above and observe the output. You may see a permissions error or partial results.
+
+    **The good news:** You've already accomplished the equivalent result. If you completed the `--ntds` step in the NetExec w/ Creds lab, you extracted all domain account hashes via VSS shadow copy — the same hashes DCSync would return.
 
 ### Step B6: Pass-the-Hash Concepts
 

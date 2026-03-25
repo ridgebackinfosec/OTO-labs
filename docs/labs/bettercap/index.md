@@ -286,6 +286,15 @@ include hstshijack/hstshijack
 HSTS Hijack
 ///
 
+### Defensive Considerations
+
+| Attack Technique | Detection | Defense |
+|---|---|---|
+| ARP spoofing / ARP poisoning | Duplicate IP-to-MAC mappings in ARP tables; IDS alerts on ARP anomalies | Enable Dynamic ARP Inspection (DAI) on managed switches; use static ARP entries for critical systems |
+| MITM traffic capture | Unexpected certificate issuers in TLS connections; certificate pinning violations | Enforce HSTS; deploy certificate transparency monitoring; use mutual TLS where possible |
+| SSL stripping | HTTP traffic where HTTPS is expected; missing HTTPS redirect in server logs | HSTS preloading (not just headers — preload ensures enforcement on first visit); enforce TLS at network boundary |
+| Caplet-based automated attacks | Rapid sequential module activation patterns; multiple simultaneous ARP requests | Network segmentation; 802.1X port authentication to limit rogue device access |
+
 ## What You Learned
 
 In this lab, you explored Bettercap's core capabilities for network reconnaissance and man-in-the-middle attacks:

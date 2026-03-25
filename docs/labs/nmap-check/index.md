@@ -172,7 +172,16 @@ sudo nmap -Pn --script=smb-vuln* -p 139,445 $GOAD
 smb-vuln*
 ///
 
-<!-- 
+### Defensive Considerations
+
+| Attack Technique | Detection | Defense |
+|---|---|---|
+| Port scanning | IDS/IPS signatures (Snort/Suricata nmap detection rules); firewall logs showing sequential port connections | Restrict unnecessary open ports; use host-based firewalls; consider port knocking for management interfaces |
+| LDAP enumeration | High-volume LDAP query activity in DC event logs; anonymous bind attempts | Disable anonymous LDAP binds; enable LDAP audit logging; monitor for bulk directory queries |
+| Kerberos user enumeration | Event ID 4768 errors for non-existent principal names on the DC | Enable Kerberos pre-authentication audit logging; deploy honeypot user accounts to alert on enumeration |
+| SMB vulnerability probing | IDS signatures for ms17-010 and other SMB exploit probe patterns | Patch and disable SMBv1; block SMB at network perimeter; monitor ports 139/445 for anomalous traffic |
+
+<!--
 Port 1433 is coming back filtered in the new GOAD update.
 This needs to be resoleved before readding in the below section
 -->

@@ -533,3 +533,12 @@ This is the most direct and no nonsense request that can be sent to the server a
 ### Build an Extension
 
 Want to get creative and learn how to make your own Burp Extensions? Check out this [BHIS webcast](https://www.youtube.com/watch?v=lyJihH8FYkI).
+
+### Defensive Considerations
+
+| Attack Technique | Detection | Defense |
+|---|---|---|
+| HTTP proxy interception | Anomalous or absent user agent strings; unexpected certificate issuers logged by the application | Enforce HSTS; implement certificate pinning for mobile/thick clients; log and alert on unexpected TLS certificate changes |
+| JWT token exposure in requests | Tokens appearing in URL parameters (logged in web server access logs and browser history) | Store tokens in `HttpOnly` cookies rather than `Authorization` headers or URL params; enforce short token expiry |
+| Session replay attacks | Repeated identical requests with the same session token from different source IPs or user agents | Bind sessions to user agent and IP fingerprint; implement short-lived, single-use tokens for sensitive operations |
+| Parameter manipulation via Intruder/Repeater | Unusually high request rates from a single IP; malformed or boundary-testing input in application logs | Input validation and output encoding; WAF rules for common injection patterns; rate limiting per session |

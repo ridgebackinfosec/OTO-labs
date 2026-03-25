@@ -427,3 +427,11 @@ For detailed information on creating custom workflows, see the [Custom Workflows
 * Session persistence — resume where you left off. Cerno auto-saves your review progress to the database.
 
 You're now set to move Nessus findings straight into an operator-friendly flow.
+
+### Defensive Considerations
+
+| Attack Technique | Detection | Defense |
+|---|---|---|
+| Authenticated vulnerability scanning | Unusual service account authentication events; scanning traffic patterns in firewall logs | Restrict scanner credentials to minimum required permissions; limit scanner source IPs via firewall rules |
+| Scanner-correlated tool execution | Outbound tool connections (Nmap, NetExec) from scanner source IPs following scan completion | Monitor for tool execution patterns correlated with recent scan activity; segment scanner infrastructure |
+| Nessus findings used for exploitation | Spike in vulnerability-relevant service connections post-scan | Treat scanner output as attacker intelligence; prioritize findings that map to active exploitation paths |

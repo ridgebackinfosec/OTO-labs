@@ -1,28 +1,51 @@
 # Lab - GoPhish
 
+???+ warning "Prerequisites"
+    No tools or VMs are required for this lab. This is a tabletop exercise and case study — you'll work through planning questions as a group and then review a real phishing engagement walkthrough.
+
+## Intro
+
+GoPhish is an open-source phishing framework used by red teams and penetration testers to plan, execute, and measure phishing campaigns. It provides campaign management, email template editing, credential-harvesting landing pages, and per-target tracking — all in a self-hosted web interface.
+
+Phishing remains the most common initial access vector on real-world engagements. Before any technical exploitation can begin, someone in the target organization typically has to click something. Understanding how campaigns are constructed — and what makes them succeed or fail — is foundational knowledge whether you're on offense or defense.
+
+This lab has two parts: a structured tabletop exercise where you'll reason through how you'd plan a campaign, followed by a walkthrough of a real red team engagement to see how these decisions play out in practice.
+
 ## Tabletop Exercise: Planning a Phishing Campaign
 
-First, lets discuss the following questions to understand the planning aspects of a phishing campaign:
+Work through the questions below as a group. There are no single right answers — the goal is to reason through the tradeoffs an attacker faces at each stage of campaign planning.
 
-1. **Target Selection**
-   - Who is the target audience for this phishing campaign?
-   - What are their roles and responsibilities?
-   - What information is valuable to an attacker?
+### Target Selection
 
-2. **Pretext & Lure**
-   - What is a convincing pretext for your phishing email?
-   - How would you make the email look legitimate?
-   - What kind of attachment or link would entice the target to interact?
+Before sending a single email, operators spend time understanding the organization and identifying the right targets. Consider:
 
-3. **Infrastructure & Payloads**
-   - What domains or email addresses will be used for sending phishing emails?
-   - Will you use an attachment, a credential harvesting site, or both?
-   - How will you track engagements and collect responses?
+- Who in the target organization is most likely to interact with a phishing email? Why?
+- What roles have access to the credentials or systems the campaign is trying to reach?
+- How would you identify specific individuals and their email addresses?
 
-4. **Detection & Response**
-   - What security measures might detect this attack?
-   - How can defenders mitigate the risk of this type of phishing campaign?
-   - What logging and monitoring tools would be helpful in identifying phishing attempts?
+### Pretext & Lure Design
+
+The pretext is the story you're telling. The lure is the mechanism that gets someone to act. Consider:
+
+- What organizational context would make an email feel urgent and legitimate?
+- How do you make the sender address, domain, and email design feel trustworthy?
+- What action do you want the target to take — click a link, open an attachment, submit a form?
+
+### Infrastructure & Delivery
+
+A phishing campaign requires infrastructure to send email and host landing pages. Consider:
+
+- What domain would you register, and what makes it convincing (typosquatting, subdomain abuse, lookalike)?
+- How do you configure the sending domain to avoid SPF/DKIM/DMARC failures?
+- How will you track who clicked, who submitted data, and who reported the email?
+
+### Detection & Response
+
+Defenders have multiple layers of visibility into phishing attempts. Consider:
+
+- At what points in the campaign lifecycle could a defender detect or block the attack?
+- What would a security-aware employee do differently than an average employee?
+- What does a 0% reporting rate tell you about an organization's security culture?
 
 ## Campaign Walkthrough 
 
@@ -161,3 +184,10 @@ Results of Emails
 ///
 
 The overall click-rate of 17.5% indicates the level of susceptibility within the organization, while 0.5% of users entered identifiable information into the attacker provided form, highlighting potential risks associated with social engineering. Additionally, 0% of users (trackable by GoPhish) reported the phishing attempt, providing insight into the effectiveness of security training.
+
+## Key Takeaways
+
+- **Campaign lifecycle**: Successful phishing follows a consistent chain — organizational recon → domain registration → GoPhish/infrastructure setup → email delivery → landing page → credential capture or follow-on action. Understanding each step helps both attackers and defenders reason about where the campaign can be disrupted.
+- **Metrics tell different stories**: A 17.5% click rate reflects susceptibility to the pretext. A 0.5% form submission rate reflects how many targets went all the way. A 0% reporting rate is arguably the most important finding — it means the security team had zero visibility into an active attack.
+- **Domain trust is engineered**: Dog-phish.com succeeds not through technical deception but because users scan for the brand name and don't scrutinize the full domain. SPF alignment (sending from the registered domain) helps evade email filters. Both are deliberate infrastructure choices, not accidents.
+- **Defenders detect phishing at multiple layers**: DMARC/DKIM enforcement on the receiving side, URL reputation in email security gateways, and user reporting programs are the three most reliable detection controls. Each one addresses a different phase of the kill chain.
