@@ -51,6 +51,8 @@ GOAD Environment
 
 ## Network Configuration
 
+*Estimated time: 10-15 minutes*
+
 All virtual machines should be pre-configured with at least one network interface in Network Address Translation (NAT) mode. This is required for the VMs to access the internet. After downloading and importing the VMs, students should verify each VM is indeed in NAT mode. This can be done using the steps below.
 
 You will **ALSO** need to create a new custom network for the environment to work. The steps for this are below.
@@ -133,6 +135,8 @@ Fusion GUI
 
 ## Static IP Address Assignment
 
+*Estimated time: 2-3 minutes*
+
 Since we've added a new network interface and that network doesn't have DHCP enabled, we need to manually set a static IP for The Forge VM.
 
 1. Log into The Forge VM using the creds mentioned above.
@@ -160,8 +164,13 @@ Since we've added a new network interface and that network doesn't have DHCP ena
 
     !!! warning
         The gateway is NOT specified by design due to the way VMware virtual networks handle traffic.
-   
+
+!!! success
+    The script should detect your host-only interface, assign `192.168.56.100`, and confirm the configuration. You should see the assigned IP printed in the output.
+
 ## Verify Lab Environment
+
+*Estimated time: 5 minutes*
 
 Once all of the steps above have been completed...
 
@@ -170,7 +179,7 @@ Once all of the steps above have been completed...
 3. Run the commands below to verify everything has been configured correctly.
 
 ???+ note
-    You don’t *have* to turn on *both* GOAD VMs at once if your host machine has lower resources. You can start/stop them as necessary.
+    For this verification step, turn on **all three VMs** so the script can confirm connectivity to both GOAD targets. Once setup is confirmed, you don’t need to keep all VMs running simultaneously during class — start and stop them as your host resources allow.
 
 ```bash
 ~/OTO-labs/scripts/verify-lab-env.sh
@@ -186,7 +195,15 @@ If everything is setup correctly, you should see `0% packet loss` following each
 Lab Environment Verification Passed!
 ///
 
+!!! success
+    All checks should show `0% packet loss`. If any ping fails, confirm that all three VMs are powered on and that Network Adapter 2 is configured correctly on each VM.
+
 ## Install Tools
+
+*Estimated time: &lt;5 minutes if done pre-class / 20-45 minutes if not*
+
+???+ note "Already ran get-tools before class?"
+    If you followed the pre-class setup instructions in the README, this is already done. Run `get-tools` once more to confirm — installed tools are skipped quickly and any that failed previously will retry.
 
 With the lab environment verified, run the below command to install all tools
 required for the class.

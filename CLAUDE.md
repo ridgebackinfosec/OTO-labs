@@ -77,3 +77,7 @@ git ls-files --stage scripts/
 - The Forge VM: Debian/ParrotOS, user `telchar`, password `ridgeback`
 - GOAD targets are Windows VMs reachable at `192.168.56.11` and `192.168.56.22` over a host-only VMware network
 - Students should NOT expose these VMs to untrusted networks
+
+## Claude Workflow Files
+
+**Never create Claude workflow files inside this repo.** Plan files, superpowers spec docs, brainstorm docs, and any other Claude-internal artifacts must not be added to the OTO-labs repository (including under `docs/superpowers/` or any other subdirectory). Keep all Claude planning artifacts in `~/.claude/` only.

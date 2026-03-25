@@ -79,7 +79,7 @@ This enables us to quickly revert back if you run into any issues during class o
 
 <details>
 
-<summary>Lab Guide & Tool Installation</summary>
+<summary>Lab Guide Setup</summary>
 
 Turn The Forge VM on, login using the creds `telchar:ridgeback`, open a terminal, and run the below commands.
 
@@ -101,7 +101,11 @@ git checkout tags/v1.0.1 # <-- Replace this version number with the correspondin
 # end of extra command
 ```
 
-Now finish up with this final command...
+</details>
+
+## Install Tools Before Class
+
+> ⏳ **This takes 20-45 minutes.** Run the command below now and let it finish before class starts.
 
 ```bash
 get-tools
@@ -113,13 +117,7 @@ If any tools show as failed, re-run `get-tools`. The script is idempotent —
 already-installed tools are skipped. A second run resolves most failures caused
 by transient network or mirror issues.
 
-This process is intended to reduce initial VM download size, make it easy for students to hit the ground running, control tool versions, and permit dynamic updating of the course material.
-
-That's it!
-
 Now shutdown the VMs and wait for class to begin.
-
-</details>
 
 ## Waiting is hard
 
