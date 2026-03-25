@@ -44,7 +44,7 @@ The diagram below depicts two GOAD VMs (GOAD-DC02, and GOAD-SRV02). We will be t
     *This lab use free windows VM only (180 days). After that timeframe enter a license on each server or rebuild all the lab (may be it's time for an update ;))
     ~* [https://github.com/Orange-Cyberdefense/GOAD](https://github.com/Orange-Cyberdefense/GOAD)
 
-![Untitled](img/class-goad-target.png){ width="70%" }
+![GOAD lab network diagram showing attacker Forge VM and two Windows target VMs](img/class-goad-target.png){ width="70%" }
 /// caption
 GOAD Environment
 ///

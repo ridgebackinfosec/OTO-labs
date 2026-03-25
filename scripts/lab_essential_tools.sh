@@ -48,6 +48,8 @@ sudo pipx ensurepath
 mkdir -p ~/git-tools
 
 # Responder (custom: sudo pip)
+# Responder captures network traffic and must run as root. Its dependencies must
+# also be installed as root so they're importable when invoked via sudo.
 if [ ! -d "$HOME/git-tools/Responder" ]; then
     run_step "git: Responder" bash -c '
         git clone https://github.com/ridgebackinfosec/Responder ~/git-tools/Responder &&
