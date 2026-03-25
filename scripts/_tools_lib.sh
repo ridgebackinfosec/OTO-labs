@@ -7,25 +7,36 @@ run_step() {
     local label="$1"; shift
     local tmpfile exit_code
     tmpfile=$(mktemp)
-    "$@" 2>&1 | tee "$tmpfile"
-    exit_code=${PIPESTATUS[0]}
+    echo -n "  Installing $label..."
+    "$@" > "$tmpfile" 2>&1
+    exit_code=$?
+    cat "$tmpfile" >> "$LOG_FILE"
     if [ $exit_code -eq 0 ]; then
+        echo " done"
         rm -f "$tmpfile"
         return 0
     fi
     # If an apt install failed with a 404, refresh the cache and retry once
     if grep -q "404" "$tmpfile" && [[ " $* " == *" apt "* || " $* " == *" apt-get "* ]]; then
+        echo ""
         echo -e "\e[0;33m[RETRYING] $label — 404 detected, refreshing apt cache\e[m"
-        sudo apt-get -o DPkg::Lock::Timeout=300 update
         rm -f "$tmpfile"
         tmpfile=$(mktemp)
-        "$@" 2>&1 | tee "$tmpfile"
-        exit_code=${PIPESTATUS[0]}
+        sudo apt-get -o DPkg::Lock::Timeout=300 update > "$tmpfile" 2>&1
+        cat "$tmpfile" >> "$LOG_FILE"
+        rm -f "$tmpfile"
+        tmpfile=$(mktemp)
+        echo -n "  Installing $label (retry)..."
+        "$@" > "$tmpfile" 2>&1
+        exit_code=$?
+        cat "$tmpfile" >> "$LOG_FILE"
         if [ $exit_code -eq 0 ]; then
+            echo " done"
             rm -f "$tmpfile"
             return 0
         fi
     fi
+    echo ""
     echo -e "\e[0;31m[FAILED] $label\e[m"
     FAILURES+=("$label")
     rm -f "$tmpfile"

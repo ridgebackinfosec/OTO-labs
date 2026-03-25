@@ -10,8 +10,6 @@ LOG_FILE=/tmp/oto-labs-lab-tools.log
 exec > >(tee -a "$LOG_FILE") 2>&1
 echo "[$(date)] lab_essential_tools.sh started"
 
-set -x
-
 cd
 
 # APT method

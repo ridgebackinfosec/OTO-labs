@@ -10,8 +10,6 @@ LOG_FILE=/tmp/oto-labs-extra-tools.log
 exec > >(tee -a "$LOG_FILE") 2>&1
 echo "[$(date)] extra_tools.sh started"
 
-set -x
-
 cd
 
 # Required PowerShell steps from https://learn.microsoft.com/en-us/powershell/scripting/install/install-debian?view=powershell-7.4
