@@ -26,10 +26,10 @@ for pkg in aircrack-ng john metasploit-framework tcpdump wireshark powershell ea
 done
 
 # pipx method
-run_step "pipx: coercer"   bash -c 'pipx install git+https://github.com/ridgebackinfosec/Coercer || pipx upgrade coercer'
-run_step "pipx: kerbrute"  bash -c 'pipx install git+https://github.com/ridgebackinfosec/kerbrute || pipx upgrade kerbrute'
-run_step "pipx: o365spray" bash -c 'pipx install git+https://github.com/ridgebackinfosec/o365spray || pipx upgrade o365spray'
-run_step "pipx: auxiliary" bash -c 'pipx install git+https://github.com/ridgebackinfosec/auxiliary || pipx upgrade auxiliary'
+pipx_install "coercer"   "https://github.com/ridgebackinfosec/Coercer"    "coercer"
+pipx_install "kerbrute"  "https://github.com/ridgebackinfosec/kerbrute"   "kerbrute"
+pipx_install "o365spray" "https://github.com/ridgebackinfosec/o365spray"  "o365spray"
+pipx_install "auxiliary" "https://github.com/ridgebackinfosec/auxiliary"  "auxiliary"
 
 pipx ensurepath
 sudo pipx ensurepath
@@ -38,21 +38,10 @@ sudo pipx ensurepath
 mkdir -p ~/git-tools
 
 # fireprox
-if [ ! -d "$HOME/git-tools/fireprox" ]; then
-    run_step "git: fireprox" bash -c '
-        git clone https://github.com/ridgebackinfosec/fireprox ~/git-tools/fireprox &&
-        cd ~/git-tools/fireprox &&
-        python3 -m venv venv &&
-        source venv/bin/activate &&
-        pip install -r requirements.txt &&
-        deactivate
-    '
-else
-    echo "fireprox already cloned, skipping..."
-fi
+clone_tool_venv "fireprox" "https://github.com/ridgebackinfosec/fireprox"
 cd
 
-# jwt_tool
+# jwt_tool (custom: explicit pip packages, no requirements.txt)
 if [ ! -d "$HOME/git-tools/jwt_tool" ]; then
     run_step "git: jwt_tool" bash -c '
         git clone https://github.com/ridgebackinfosec/jwt_tool ~/git-tools/jwt_tool &&
@@ -63,71 +52,16 @@ if [ ! -d "$HOME/git-tools/jwt_tool" ]; then
         deactivate
     '
 else
-    echo "jwt_tool already cloned, skipping..."
+    echo "  jwt_tool already cloned, skipping..."
 fi
 cd
 
-# PetitPotam
-if [ ! -d "$HOME/git-tools/PetitPotam" ]; then
-    run_step "git: PetitPotam" bash -c 'git clone https://github.com/ridgebackinfosec/PetitPotam ~/git-tools/PetitPotam'
-else
-    echo "PetitPotam already cloned, skipping..."
-fi
+clone_tool "PetitPotam" "https://github.com/ridgebackinfosec/PetitPotam"
+clone_tool "MailSniper" "https://github.com/ridgebackinfosec/MailSniper"
+clone_tool "MSOLSpray"  "https://github.com/ridgebackinfosec/MSOLSpray"
+clone_tool "MFASweep"   "https://github.com/ridgebackinfosec/MFASweep"
 
-# MailSniper
-if [ ! -d "$HOME/git-tools/MailSniper" ]; then
-    run_step "git: MailSniper" bash -c 'git clone https://github.com/ridgebackinfosec/MailSniper ~/git-tools/MailSniper'
-else
-    echo "MailSniper already cloned, skipping..."
-fi
-
-# MSOLSpray
-if [ ! -d "$HOME/git-tools/MSOLSpray" ]; then
-    run_step "git: MSOLSpray" bash -c 'git clone https://github.com/ridgebackinfosec/MSOLSpray ~/git-tools/MSOLSpray'
-else
-    echo "MSOLSpray already cloned, skipping..."
-fi
-
-# MFASweep
-if [ ! -d "$HOME/git-tools/MFASweep" ]; then
-    run_step "git: MFASweep" bash -c 'git clone https://github.com/ridgebackinfosec/MFASweep ~/git-tools/MFASweep'
-else
-    echo "MFASweep already cloned, skipping..."
-fi
-
-# CredMaster
-if [ ! -d "$HOME/git-tools/CredMaster" ]; then
-    run_step "git: CredMaster" bash -c '
-        git clone https://github.com/ridgebackinfosec/CredMaster ~/git-tools/CredMaster &&
-        cd ~/git-tools/CredMaster &&
-        python3 -m venv venv &&
-        source venv/bin/activate &&
-        pip install -r requirements.txt &&
-        deactivate
-    '
-else
-    echo "CredMaster already cloned, skipping..."
-fi
-cd
-
-# FindMeAccess
-if [ ! -d "$HOME/git-tools/FindMeAccess" ]; then
-    run_step "git: FindMeAccess" bash -c '
-        git clone https://github.com/ridgebackinfosec/FindMeAccess ~/git-tools/FindMeAccess &&
-        cd ~/git-tools/FindMeAccess &&
-        python3 -m venv venv &&
-        source venv/bin/activate &&
-        pip install -r requirements.txt &&
-        deactivate
-    '
-else
-    echo "FindMeAccess already cloned, skipping..."
-fi
-cd
-
-sudo apt autoremove -y
-sudo updatedb
-
-source .bashrc
+clone_tool_venv "CredMaster"   "https://github.com/ridgebackinfosec/CredMaster"
+clone_tool_venv "FindMeAccess" "https://github.com/ridgebackinfosec/FindMeAccess"
 
 tools_summary_and_exit

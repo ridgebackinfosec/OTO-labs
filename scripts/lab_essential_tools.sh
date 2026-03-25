@@ -34,12 +34,12 @@ else
 fi
 
 # pipx method
-run_step "pipx: impacket"   bash -c 'pipx install git+https://github.com/ridgebackinfosec/impacket || pipx upgrade impacket'
-run_step "pipx: netexec"    bash -c 'pipx install git+https://github.com/ridgebackinfosec/NetExec || pipx upgrade netexec'
-run_step "pipx: bloodhound" bash -c 'pipx install git+https://github.com/ridgebackinfosec/BloodHound.py || pipx upgrade bloodhound'
-run_step "pipx: certipy"    bash -c 'pipx install git+https://github.com/ridgebackinfosec/Certipy || pipx upgrade certipy-ad'
-run_step "pipx: cerno"      bash -c 'pipx install git+https://github.com/ridgebackinfosec/cerno || pipx upgrade cerno'
-run_step "pipx: ad-miner"   bash -c 'pipx install git+https://github.com/ridgebackinfosec/AD_Miner || pipx upgrade ad-miner'
+pipx_install "impacket"   "https://github.com/ridgebackinfosec/impacket"        "impacket"
+pipx_install "netexec"    "https://github.com/ridgebackinfosec/NetExec"          "netexec"
+pipx_install "bloodhound" "https://github.com/ridgebackinfosec/BloodHound.py"   "bloodhound"
+pipx_install "certipy"    "https://github.com/ridgebackinfosec/Certipy"         "certipy-ad"
+pipx_install "cerno"      "https://github.com/ridgebackinfosec/cerno"           "cerno"
+pipx_install "ad-miner"   "https://github.com/ridgebackinfosec/AD_Miner"        "ad-miner"
 
 pipx ensurepath
 sudo pipx ensurepath
@@ -47,7 +47,7 @@ sudo pipx ensurepath
 # GitHub method
 mkdir -p ~/git-tools
 
-# Responder
+# Responder (custom: sudo pip)
 if [ ! -d "$HOME/git-tools/Responder" ]; then
     run_step "git: Responder" bash -c '
         git clone https://github.com/ridgebackinfosec/Responder ~/git-tools/Responder &&
@@ -59,26 +59,13 @@ if [ ! -d "$HOME/git-tools/Responder" ]; then
         deactivate
     '
 else
-    echo "Responder already cloned, skipping..."
+    echo "  Responder already cloned, skipping..."
 fi
 cd
 
-# PlumHound
-if [ ! -d "$HOME/git-tools/PlumHound" ]; then
-    run_step "git: PlumHound" bash -c '
-        git clone https://github.com/ridgebackinfosec/PlumHound ~/git-tools/PlumHound &&
-        cd ~/git-tools/PlumHound &&
-        python3 -m venv venv &&
-        source venv/bin/activate &&
-        pip install -r requirements.txt &&
-        deactivate
-    '
-else
-    echo "PlumHound already cloned, skipping..."
-fi
-cd
+clone_tool_venv "PlumHound" "https://github.com/ridgebackinfosec/PlumHound"
 
-# Nuclei
+# Nuclei (custom: go build)
 if [ ! -f "/usr/local/bin/nuclei" ]; then
     run_step "git: nuclei" bash -c '
         git clone https://github.com/ridgebackinfosec/nuclei.git ~/git-tools/nuclei &&
@@ -87,11 +74,11 @@ if [ ! -f "/usr/local/bin/nuclei" ]; then
         sudo mv nuclei /usr/local/bin/
     '
 else
-    echo "Nuclei already installed, skipping..."
+    echo "  Nuclei already installed, skipping..."
 fi
 cd
 
-# Juice Shop
+# juice-shop (custom: npm install)
 if [ ! -d "$HOME/git-tools/juice-shop" ]; then
     run_step "git: juice-shop" bash -c '
         git clone https://github.com/ridgebackinfosec/juice-shop ~/git-tools/juice-shop &&
@@ -99,7 +86,7 @@ if [ ! -d "$HOME/git-tools/juice-shop" ]; then
         npm install
     '
 else
-    echo "Juice Shop already cloned, skipping..."
+    echo "  juice-shop already cloned, skipping..."
 fi
 cd
 
@@ -120,10 +107,5 @@ if ! grep -q "kingslanding.sevenkingdoms.local" /etc/hosts; then
 else
     echo "GOAD hosts already configured, skipping..."
 fi
-
-sudo apt autoremove -y
-sudo updatedb
-
-source .bashrc
 
 tools_summary_and_exit
