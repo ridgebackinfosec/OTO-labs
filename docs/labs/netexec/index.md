@@ -35,7 +35,7 @@ Help Dialog
 
 ### SMB Protocol
 
-With the SMB (Server Message Block) protocol, and the **`--help`** flag is asking for the help or usage information about the SMB module of NetExec.
+The **`--help`** flag displays help and usage information for the SMB module of NetExec.
 
 ```bash
 nxc smb --help
@@ -89,7 +89,7 @@ nxc smb 192.168.56.10-23
 
 ???- note "Command Options/Arguments Explained"
     - **`smb`**: Specifies that the SMB module of NetExec is to be used. This module focuses on actions and enumeration tasks that can be performed over the SMB protocol.
-    - **`192.168.56.10-23`**: This defines the target range for the command. It tells CME to operate on a range of IP addresses starting from 192.168.56.10 through 192.168.56.23. The tool will attempt to connect to each IP address in this range and perform its SMB protocol-based operations.
+    - **`192.168.56.10-23`**: This defines the target range for the command. It tells NetExec to operate on a range of IP addresses starting from 192.168.56.10 through 192.168.56.23. The tool will attempt to connect to each IP address in this range and perform its SMB protocol-based operations.
 
 ![NetExec SMB signing check confirming signing not required vulnerability on Windows domain controller](img/netexec-smb-signing-check.png){ width="70%" }
 /// caption
@@ -249,7 +249,7 @@ After entering the "smb" DB, we can submit `?` again to see what's available to 
 SMB Database
 ///
 
-We can see from the screenshot above have 10 "documented" and 2 "undocumented" commands available. This is where we can start querying the DB. Lets keep things simple as were just getting to know this tool and list out information about the hosts we've discovered so far.
+We can see from the screenshot above that we have 10 "documented" and 2 "undocumented" commands available. This is where we can start querying the DB. Let's keep things simple as we're just getting to know this tool and list out information about the hosts we've discovered so far.
 
 ```bash
 hosts

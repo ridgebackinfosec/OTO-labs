@@ -2,7 +2,7 @@
 
 ???+ warning "Prerequisites"
     - Have at least one GOAD VM running. GOAD-DC02 will respond best for the LDAP script steps. GOAD-SRV02 will give better results in the vulners portion of this Lab.
-    - Run the below command to setup an environment variable on The Forge VM.
+    - Run the below command to set up an environment variable on The Forge VM.
 
     ```bash
     export GOAD="192.168.56.10-25"
@@ -36,9 +36,9 @@ sudo nmap -p- -A -Pn -oA nmap_lab $GOAD
 ???- note "Command Options/Arguments Explained"
     We’re doing a few things with this scan…
 
-    - Running as root with the elevated `sudo` This gives nmap additional abilities.
+    - Running as root with the elevated `sudo`. This gives nmap additional abilities.
     - The option `-p-` directs nmap to conduct a “full port scan” of all 65,535 TCP ports.
-    - Nmap is doing an “aggressive” scan by using the `-A`
+    - Nmap is doing an “aggressive” scan by using the `-A` flag
         - Enables OS detection, version detection, script scanning, and traceroute
     - The `-Pn` option treats all hosts as online -- skip host discovery.
     - Creating output file(s) by using the `-oA nmap_lab` for other tools to consume

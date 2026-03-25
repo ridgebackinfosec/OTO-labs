@@ -21,7 +21,7 @@ Together, Responder and Impacket create a formidable combination for carrying ou
 
 ### Temporarily Disable Troublesome Services & Protocols
 
-Temporarily disabling the below services and protocols is necessary within our testing environment to ensure the Lab run smoothly. Normally, you wouldn't have all these things running at the same time on an engagement.
+Temporarily disabling the below services and protocols is necessary within our testing environment to ensure the Lab runs smoothly. Normally, you wouldn't have all these things running at the same time on an engagement.
 
 ???+ note
     These changes will only persist until the next reboot of The Forge VM.
@@ -60,7 +60,7 @@ sudo systemctl stop xrdp
 
 **IPv6:**
 
-Finally, lets disable IPv6 via the `sysctl` command. This will simplify configuring Responder's out-of-scope/exclude list.
+Finally, let's disable IPv6 via the `sysctl` command. This will simplify configuring Responder's out-of-scope/exclude list.
 
 ```bash
 sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
@@ -107,7 +107,7 @@ We're going to focus on the `DontRespondTo` approach for this Lab.
 
 #### *What* To Exclude
 
-We need to add the IPv4 address assigned to the VMWare virtual network we setup for class. 
+We need to add the IPv4 address assigned to the VMWare virtual network we set up for class.
 
 The image below shows the `192.168.56.1` IP added to the out-of-scope list of our config file. This is so we avoid poisoning our gateway or else the tool will error out and break the Lab.
 
@@ -143,7 +143,7 @@ Find the `DontRespondTo` line and add the IPv4 address as shown below.
 
 To save these config changes you can hit `Ctrl-x` → `y` → `Enter`.
  
-Once, we start Responder up we should see the `192.168.56.1` address in the out-of-scope settings reflected in the terminal output.
+Once we start Responder up, we should see the `192.168.56.1` address in the out-of-scope settings reflected in the terminal output.
 
 ![Scope Config](img/exclude_output.png){ width="70%" }
 /// caption
@@ -224,12 +224,12 @@ sudo -E -H $VIRTUAL_ENV/bin/python Responder.py -I ens36
 ???+ warning
     Your network interface name (`-I [this_value]`) might be different than the example command. Be sure to update it to reflect YOUR interface name.
 
-There is a bot on our `GOAD-DC02` target VM trying to make a SMB connections to `bravos` instead of the correct spelling of `braavos`. The DNS doesn’t know bravos without ‘aa’ so by default windows will send a broadcast request to find the associated computer. With responder we answer to that broadcast query and say that this server is us, and so we get the connection from the user.
+There is a bot on our `GOAD-DC02` target VM trying to make an SMB connection to `bravos` instead of the correct spelling of `braavos`. The DNS doesn’t know bravos without ‘aa’ so by default windows will send a broadcast request to find the associated computer. With responder we answer to that broadcast query and say that this server is us, and so we get the connection from the user.
 
 ???+ warning
     The bot only runs every 3 to 5 minutes. So you may have to wait a little bit to see traffic.
 
-By saying *we* are `bravos` the `GOAD-DC02` systems sends us the user hashes while trying to make a SMB connection. Resulting in us capturing a couple NTLMv2 hashes.
+By saying *we* are `bravos` the `GOAD-DC02` system sends us the user hashes while trying to make a SMB connection. Resulting in us capturing a couple NTLMv2 hashes.
 
 ![Hashes Captured](img/hashes_captured.png){ width="70%" }
 /// caption
@@ -295,7 +295,7 @@ eddard.stark::NORTH:1122334455667788:76E26250ABF96A09E68ADC5A9B1A4C29:0101000000
 
 Next up, we're gonna do some relaying with Impacket. To do this, we have to make some more configuration changes to responders configuration file.
 
-We must stop the responder SMB and HTTP server as we don’t want to get the hashes directly but we want to relay them to got to Impacket’s ntlmrelayx.
+We must stop the responder SMB and HTTP server as we don’t want to get the hashes directly but we want to relay them to go to Impacket’s ntlmrelayx.
 
 ```bash
 nano ~/git-tools/Responder/Responder.conf
@@ -306,7 +306,7 @@ nano ~/git-tools/Responder/Responder.conf
 Turn Off Services
 ///
 
-Once you've turned off SMB and HTTP. in the configuration. you can start Responder back up using the same command. that you ran before in the first section of this lab. As you can see from the screenshot below, it should be indicated when responder starts up that both those services are disabled.
+Once you've turned off SMB and HTTP in the configuration, you can start Responder back up using the same command that you ran before in the first section of this lab. As you can see from the screenshot below, it should be indicated when responder starts up that both those services are disabled.
 
 ```bash
 sudo -E -H $VIRTUAL_ENV/bin/python Responder.py -I ens36
@@ -373,7 +373,7 @@ sudo /home/telchar/.local/bin/ntlmrelayx.py -tf ~/smb_relay.txt --delegate-acces
     - **`-socks`**: Starts a SOCKS server for proxying traffic through relayed connections, enabling direct interaction with the network through the credentials of relayed authentication sessions.
     - **`| tee -a smb-relay.log`**: Pipes the output of the entire command into **`tee`**, which is instructed to append (**`a`**) the output to **`smb-relay.log`**. This file will log the output of the command for later review.
 
-The output from this command is shown below, which highlights the SMB authentication success after relaying a hash. The `whoami` command being executed on a target machine. Lastly, a SOCKS proxy being added after the successful connection. This SOCKS proxy could then be used to pivot to new targets.
+The output from this command is shown below, which highlights the SMB authentication success after relaying a hash. The `whoami` command is being executed on a target machine. Lastly, a SOCKS proxy is being added after the successful connection. This SOCKS proxy could then be used to pivot to new targets.
 
 ???+ note
     This can take a few minutes for anything to happen. And even longer still for a successful SMB connection and SOCKS proxy to be established. So be patient.

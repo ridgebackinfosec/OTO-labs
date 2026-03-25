@@ -107,11 +107,11 @@ The above image shows a ruse aimed at abusing the trust of employees by mimickin
 
 The confidentiality verbiage was specifically highlighted in the email signature of the POC, which added support to theory that employees would be visually familiar with these items and expect their inclusion in communications.
 
-The phishing email also included implied a sense of urgency for employees to respond to the survey before the end of the testing period by stating the survey link would expire.
+The phishing email also implied a sense of urgency for employees to respond to the survey before the end of the testing period by stating the survey link would expire.
 
 #### Landing Page Form
 
-Next, Ridgeback InfoSec crafted a landing page hosted on the dog-phish.com domain via the GoPhish server and is shown in the below image. Again, Dog Fish Clothing UI design elements we leveraged to make the form feel legitimate to users.
+Next, Ridgeback InfoSec crafted a landing page hosted on the dog-phish.com domain via the GoPhish server and is shown in the below image. Again, Dog Fish Clothing UI design elements were leveraged to make the form feel legitimate to users.
 
 ![img/landing-page.png](img/landing-page.png){ width="70%" }
 /// caption 

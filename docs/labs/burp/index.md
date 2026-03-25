@@ -94,7 +94,7 @@ You can access most of Burp Suite's settings via the **Settings** dialog. To a
 Settings
 ///
 
-There are two categories of settings “User” and “Project” level.
+There are two categories of settings: “User” and “Project” level.
 
 ![Burp Suite settings dialog with expanded navigation showing User and Project configuration categories](img/burp-settings-expanded.png){ width="70%" }
 /// caption
@@ -214,14 +214,14 @@ Some explanations for these various settings are listed below.
 - [Resource pool](https://portswigger.net/burp/documentation/desktop/tools/intruder/configure-attack/resource-pool) - The allocation of resources to the attack.
 - [Attack settings](https://portswigger.net/burp/documentation/desktop/tools/intruder/configure-attack/settings) - Burp Intruder attack settings.
 
-Your choice of “Attack Type” will have the biggest impact on you target. There are four to choose from.
+Your choice of “Attack Type” will have the biggest impact on your target. There are four to choose from.
 
 ![Burp Suite Intruder attack type selection menu displaying Sniper, Battering ram, Pitchfork, and Cluster bomb options](img/burp-attack-types.png){ width="70%" }
 /// caption
 Attack Types
 ///
 
-Once your finished defining your payload positions and selected an attack type, it’s time to choose you specific payloads.
+Once you’re finished defining your payload positions and selected an attack type, it’s time to choose your specific payloads.
 
 ![Burp Suite Intruder Payloads configuration tab showing payload set selection and list management](img/burp-intruder-payloads.png){ width="70%" }
 /// caption
@@ -237,7 +237,7 @@ Payloads
 
 The Target tool enables you to define which targets are in scope for your current work. It also contains the site map and **Crawl paths** tab, which show you detailed information about your target applications. You can use the information about your target application's content and functionality to drive the workflow for your penetration testing.
 
-You can do a lot from the but the most important is to set your scope. You can do this by right clicking on a “target” and selecting “Add to scope”.
+You can do a lot from the Target tab, but the most important is to set your scope. You can do this by right clicking on a “target” and selecting “Add to scope”.
 
 ![Burp Suite Target tab context menu with Add to scope option](img/burp-add-to-scope.png){ width="70%" }
 /// caption
@@ -346,7 +346,7 @@ You can use Burp extensions to change Burp Suite's behavior in many ways, includ
 ???+ note "OWASP Juice Shop"
     Start Juice Shop First:
 
-    Start up a the OWASP Juice Shop vulnerable web application. It will be available at `http://127.0.0.1:3000`.
+    Start up the OWASP Juice Shop vulnerable web application. It will be available at `http://127.0.0.1:3000`.
 
     ```bash
     cd ~/git-tools/juice-shop && npm start
@@ -354,7 +354,7 @@ You can use Burp extensions to change Burp Suite's behavior in many ways, includ
 
     After you’re done, make sure you shut down OWASP Juice Shop by pressing **Ctrl+C** in the terminal where it is running.
 
-In this part of the lab, you will use first use "the **Request Minimizer** extension in Burp Suite to strip unnecessary parts of HTTP requests and analyze their impact on server responses.
+In this part of the lab, you will first use the **Request Minimizer** extension in Burp Suite to strip unnecessary parts of HTTP requests and analyze their impact on server responses.
 
 This extension performs HTTP request minimization. It deletes parameters that are not relevant such as: random ad cookies, cachebusting nonces, etc.
 
@@ -401,14 +401,14 @@ Burp Browser
 
 #### Identify an authenticated HTTP request
 
-Now go to Burp **HTTP history** sub-tab under **Proxy** tab and see all the highlighted JWTs. It's that easy to make your life easier using Extenstions!
+Now go to Burp **HTTP history** sub-tab under **Proxy** tab and see all the highlighted JWTs. It's that easy to make your life easier using Extensions!
 
 ![Burp Suite HTTP History displaying requests containing JSON Web Tokens highlighted in blue](img/burp-jwt-highlighted-history.png){ width="70%" }
 /// caption
 JWTs Discovered
 ///
 
-Now that we've found JWTs, let's go one step further by decoding them. Click on any of the blue highlighted rows in the HTTP history tab. This wil bring up the request and response for that row. 
+Now that we've found JWTs, let's go one step further by decoding them. Click on any of the blue highlighted rows in the HTTP history tab. This will bring up the request and response for that row.
 
 ![Burp Suite request viewer displaying HTTP request with JWT token visible in Authorization header](img/burp-request-with-jwt.png){ width="70%" }
 /// caption
@@ -523,7 +523,7 @@ Observe changes:
   
   - Unnecessary fields (e.g., `User-Agent`) stripped out.
 
-Now imagine a web application that uses numerouse cookie values and request headers. This extension will sort through all the cruft and help you focus on session tokens for investigations and attacks.
+Now imagine a web application that uses numerous cookie values and request headers. This extension will sort through all the cruft and help you focus on session tokens for investigations and attacks.
 
 This is the most direct and no nonsense request that can be sent to the server and get an expected complete response. Pointing you in the direction of only the most crucial decision driving values for the web server. Like whether a request is part of a valid/active session or not.
 

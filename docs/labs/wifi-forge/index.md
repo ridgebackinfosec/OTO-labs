@@ -6,7 +6,7 @@
     A forked version can be found at [https://github.com/ridgebackinfosec/Wifi-Forge](https://github.com/ridgebackinfosec/Wifi-Forge) which should work with this Lab.
 
 ???- warning "Disk Space Requirements"
-    Wifi-Forge can take up a lot of space on a VM and can create unpredicatable consequences between dependencies. It is recommended that you either create a new VM from The Forge base image or snapshot your class VM ***before*** installing Wifi-Forge.
+    Wifi-Forge can take up a lot of space on a VM and can create unpredictable consequences between dependencies. It is recommended that you either create a new VM from The Forge base image or snapshot your class VM ***before*** installing Wifi-Forge.
 
 ## Overview
 

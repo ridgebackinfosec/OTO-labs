@@ -60,7 +60,7 @@ Set New DB Password
 ///
 
 ### Step 2: Launching BloodHound 
-Next, we need the interface that’ll let us visualize everything. Open another terminal and navigate to your BloodHound directory and start to up the BloodHound GUI with the commands below.
+Next, we need the interface that’ll let us visualize everything. Open another terminal and navigate to your BloodHound directory and start up the BloodHound GUI with the commands below.
 
 ```bash
 cd ~/BloodHound-linux-x64
@@ -186,7 +186,7 @@ Domain Admins
 ///
 
 ???+ note
-    This is just one of many pre-built queries. Feel free to continue exploring other on your own.
+    This is just one of many pre-built queries. Feel free to continue exploring other queries on your own.
 
 ### Step 6: Running PlumHound for Automated Analysis  
 BloodHound is great, but manually sifting through data can be a pain. That’s where PlumHound comes in—it automates the analysis for us. PlumHound is an offensive security tool that processes BloodHound JSON data to identify security risks, privilege escalation paths, and lateral movement opportunities in Active Directory environments. This guide explains how to extract, analyze, and interpret BloodHound data using PlumHound.

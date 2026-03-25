@@ -1,7 +1,7 @@
 # Lab - Nuclei
 
 ???+ warning "Prerequisites"
-    Start up a the OWASP Juice Shop vulnerable web application. It will be available at `http://127.0.0.1:3000`.
+    Start up the OWASP Juice Shop vulnerable web application. It will be available at `http://127.0.0.1:3000`.
 
     ```bash
     cd ~/git-tools/juice-shop && npm start
@@ -59,7 +59,7 @@ There’s a LOT in that `help` output, but first and foremost it gives us some o
 
 First, let’s look at an example template since template are what makes Nuclei awesome. Go to [apache-solr-log4j-rce.yaml](https://github.com/ridgebackinfosec/nuclei-templates/blob/main/http/vulnerabilities/apache/apache-solr-log4j-rce.yaml) in a browser and you should see the template to detect the Log4J remote code execution vulnerability. 
 
-This vulnerability gained some notoriety in for being particularly wide spread and critical. It was so severe that the Cybersecurity & Infrastructure Security Agency (CISA) issued guidance on it ([CISA Alert](https://www.cisa.gov/news-events/news/apache-log4j-vulnerability-guidance)).
+This vulnerability gained some notoriety for being particularly widespread and critical. It was so severe that the Cybersecurity & Infrastructure Security Agency (CISA) issued guidance on it ([CISA Alert](https://www.cisa.gov/news-events/news/apache-log4j-vulnerability-guidance)).
 
 ![Text editor displaying nuclei YAML template structure with id, info, and requests sections for Log4j vulnerability](img/nuclei-log4j-template.png){ width="70%" }
 /// caption
@@ -77,7 +77,7 @@ Further down in the template we see the actual HTTP request and matching rules u
 
 ### HTTP
 
-Now, let’s take a look at the available templates nuclei uses via the nuclei command itself.. There are thousands. So, we’re going to take a glimpse at just the HTTP ones by running the below command which pipes nuclei’s output to`grep` and filters it.
+Now, let’s take a look at the available templates nuclei uses via the nuclei command itself. There are thousands. So, we’re going to take a glimpse at just the HTTP ones by running the below command which pipes nuclei’s output to`grep` and filters it.
 
 ```bash
 nuclei -tl | grep "http/"
@@ -150,7 +150,7 @@ This will produce more broad results as it is a proper deployed web application 
 ginandjuice.shop
 ///
 
-Since this target has encryption enabled, we see which versions of TLS is supported. We also see whois lookup details and nuclei detected this web application is hosted in AWS.
+Since this target has encryption enabled, we see which versions of TLS are supported. We also see whois lookup details and nuclei detected this web application is hosted in AWS.
 
 ### Network
 
@@ -218,7 +218,7 @@ In this lab, you will:
 4. **Chain multiple Nuclei templates** together for a deeper scan.
 
 ### **Prerequisites**
-- Make a custom template directory is set up:  
+- Make sure a custom template directory is set up:
   ```sh
   mkdir -p ~/nuclei-templates/custom
   ```

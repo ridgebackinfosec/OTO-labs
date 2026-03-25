@@ -16,7 +16,7 @@ Hashcat is an advanced password recovery utility, capable of cracking encrypted 
     rm /home/telchar/.local/share/hashcat/hashcat.potfile
     ```
 
-This Lab is fairly straightforward we're going to take the hashes we captured with responder from the previous labs and we're going to attempt to crack them using hashcat. It's always good practice to attempt to crack any hashes that you get on an engagement. This can help provide us with additional valid credentials to use throughout the environment in later stages.
+This Lab is fairly straightforward. We're going to take the hashes we captured with responder from the previous labs and we're going to attempt to crack them using hashcat. It's always good practice to attempt to crack any hashes that you get on an engagement. This can help provide us with additional valid credentials to use throughout the environment in later stages.
 
 Hashcat supports the cracking of a TON of different hash types by assigning a specific “hash-mode” value to each hash type. 
 

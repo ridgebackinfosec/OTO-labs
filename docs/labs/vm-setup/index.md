@@ -3,7 +3,7 @@
 ???+ warning "Prerequisites"
     These VMs are BIG! The initial zip file is ~**27GB**. You will need ~**85-100GB** of free disk space once everything is imported into VMware and setup is complete.
 
-    You will NOT need to be running all the VMs at one time during the class. So, don't unless you have plenty of resources on your host machine.
+    You will NOT need to be running all the VMs at one time during the class. So, don't run them all unless you have plenty of resources on your host machine.
 
 **Complete the below checklist:**
 
@@ -34,7 +34,7 @@ The Forge VM is a customized Debian-based ParrotOS Linux system. This will be th
 The diagram below depicts two GOAD VMs (GOAD-DC02, and GOAD-SRV02). We will be targeting these for our class.
 
 ???+ note "Credentials"
-    You shouldn’t *need* to login to these, but the username in `vagrant` and password is `vagrant` if you are curious or need to troubleshoot a machine.
+    You shouldn’t *need* to login to these, but the username is `vagrant` and password is `vagrant` if you are curious or need to troubleshoot a machine.
 
     Game of Active Directory (GOAD) is a pentest Active Directory LAB project. The purpose of this lab is to give pentesters a vulnerable Active directory environment ready to use to practice usual attack techniques.
 
