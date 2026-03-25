@@ -2,7 +2,8 @@
 """lab_walker.py — OTO Labs step-by-step terminal walker.
 
 Parses bash command blocks from each lab's index.md and walks students
-through them one at a time, executing commands inline and streaming output.
+through them one at a time. Each command runs with full terminal control
+via App.suspend() so interactive prompts (sudo, nano, etc.) work correctly.
 
 Launch via:  lab-walker
 """
@@ -21,7 +22,6 @@ from textual.binding import Binding
 from textual.containers import Horizontal
 from textual.screen import Screen
 from textual.widgets import Footer, Header, ListItem, ListView, Label, RichLog, Static
-from textual.worker import get_current_worker
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
 
@@ -234,7 +234,6 @@ class LabWalkerScreen(Screen):
         self.lab = lab
         self.steps = steps
         self.current_index = 0
-        self._proc: subprocess.Popen | None = None
 
     # ── Layout ────────────────────────────────────────────────────────────────
 
@@ -294,84 +293,43 @@ class LabWalkerScreen(Screen):
     # ── Actions ───────────────────────────────────────────────────────────────
 
     def action_run_step(self) -> None:
-        self._cancel_running()
         step = self.steps[self.current_index]
         output_log = self.query_one("#output-panel", RichLog)
         step_counter = self.query_one("#step-counter", Static)
-        idx = self.current_index
-        total = len(self.steps)
 
         output_log.clear()
+        output_log.write(Text("Running…", style="dim"))
 
-        self.run_worker(
-            lambda: self._stream_command(step, output_log, step_counter, idx, total),
-            thread=True,
-            exclusive=True,
-        )
-
-    def _stream_command(
-        self,
-        step: Step,
-        output_log: RichLog,
-        step_counter: Static,
-        idx: int,
-        total: int,
-    ) -> None:
-        """Runs in a thread. Streams subprocess output into the output panel."""
-        worker = get_current_worker()
-        try:
-            self._proc = subprocess.Popen(
-                ["bash", "-c", step.command],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                text=True,
-                bufsize=1,
-            )
-            assert self._proc.stdout is not None
-            for raw_line in self._proc.stdout:
-                if worker.is_cancelled:
-                    break
-                # Use Text.from_ansi so tool colors (nmap, nxc, etc.) render
-                rendered = Text.from_ansi(raw_line.rstrip("\n"))
-                self.call_from_thread(output_log.write, rendered)
-            self._proc.wait()
-        except Exception as exc:
-            err = Text(f"Error: {exc}", style="bold red")
-            self.call_from_thread(output_log.write, err)
-        finally:
-            self._proc = None
+        # suspend() restores the terminal to normal mode so sudo password
+        # prompts, nano, and all other interactive commands work correctly.
+        with self.app.suspend():
+            result = subprocess.run(["bash", "-c", step.command])
 
         step.run_count += 1
-        self.call_from_thread(
-            step_counter.update,
-            f"Step {idx + 1} of {total} ✓",
+        step_counter.update(
+            f"Step {self.current_index + 1} of {len(self.steps)} ✓"
         )
-
-    def _cancel_running(self) -> None:
-        if self._proc and self._proc.poll() is None:
-            try:
-                self._proc.kill()
-            except OSError:
-                pass
+        output_log.clear()
+        rc = result.returncode
+        output_log.write(Text(
+            f"[exit {rc}]",
+            style="dim" if rc == 0 else "bold red",
+        ))
 
     def action_next_step(self) -> None:
-        self._cancel_running()
         if self.current_index < len(self.steps) - 1:
             self.current_index += 1
             self._render_step()
 
     def action_prev_step(self) -> None:
-        self._cancel_running()
         if self.current_index > 0:
             self.current_index -= 1
             self._render_step()
 
     def action_back_to_menu(self) -> None:
-        self._cancel_running()
         self.app.pop_screen()
 
     def action_quit_app(self) -> None:
-        self._cancel_running()
         self.app.exit()
 
 
