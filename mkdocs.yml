@@ -65,6 +65,14 @@ theme:
     - navigation.tracking
     # - navigation.tabs
   palette:
+    # Light Mode (default)
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Light mode
+      primary: blue
+      accent: deep orange
+
     # Dark Mode
     - scheme: slate
       toggle:
@@ -72,14 +80,6 @@ theme:
         name: Dark mode
       primary: green
       accent: deep purple
-
-    # Light Mode
-    - scheme: default
-      toggle:
-        icon: material/weather-night
-        name: Light mode
-      primary: blue
-      accent: deep orange
 
 markdown_extensions:
   - def_list
