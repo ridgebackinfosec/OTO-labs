@@ -2,7 +2,6 @@
 # Source this file; do not execute directly.
 
 FAILURES=()
-FAILURE_OUTPUTS=()
 
 run_step() {
     local label="$1"; shift
@@ -29,7 +28,6 @@ run_step() {
     fi
     echo -e "\e[0;31m[FAILED] $label\e[m"
     FAILURES+=("$label")
-    FAILURE_OUTPUTS+=("$(tail -10 "$tmpfile")")
     rm -f "$tmpfile"
 }
 
@@ -42,12 +40,9 @@ tools_summary_and_exit() {
     if [ ${#FAILURES[@]} -eq 0 ]; then
         echo -e "\e[0;32m[$script_name] All steps completed successfully.\e[m"
     else
-        echo -e "\e[0;31m[$script_name] ${#FAILURES[@]} step(s) failed:\e[m"
+        echo -e "\e[0;31m[$script_name] ${#FAILURES[@]} tool(s) failed to install:\e[m"
         for i in "${!FAILURES[@]}"; do
             echo -e "  \e[0;31m- ${FAILURES[$i]}\e[m"
-            if [ -n "${FAILURE_OUTPUTS[$i]:-}" ]; then
-                echo "${FAILURE_OUTPUTS[$i]}" | sed 's/^/    /'
-            fi
         done
         echo ""
         echo "Full output: $LOG_FILE"
