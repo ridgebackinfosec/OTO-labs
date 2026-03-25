@@ -304,6 +304,7 @@ class LabWalkerScreen(Screen):
         # prompts, nano, and all other interactive commands work correctly.
         with self.app.suspend():
             result = subprocess.run(["bash", "-c", step.command])
+            input("\n── Press Enter to return to lab-walker ──")
 
         step.run_count += 1
         step_counter.update(
