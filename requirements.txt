@@ -1,8 +1,9 @@
 mkdocs
 mkdocs-material
-mkdocs-macros-plugin 
+mkdocs-macros-plugin
 mkdocstrings
 mkdocs-table-reader-plugin
 mkdocs-glightbox
 # mkdocs-git-revision-date-localized-plugin
 # mike
+textual>=0.80
