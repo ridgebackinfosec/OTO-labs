@@ -185,6 +185,15 @@ Results of Emails
 
 The overall click-rate of 17.5% indicates the level of susceptibility within the organization, while 0.5% of users entered identifiable information into the attacker provided form, highlighting potential risks associated with social engineering. Additionally, 0% of users (trackable by GoPhish) reported the phishing attempt, providing insight into the effectiveness of security training.
 
+### Defensive Considerations
+
+| Attack Technique | Detection | Defense |
+|---|---|---|
+| Phishing domain / spoofed sender | DMARC reject/quarantine policy violations; SPF/DKIM failures in email gateway logs | Implement DMARC with `p=reject`; configure SPF and DKIM; register common typosquat variants defensively |
+| Credential harvesting landing pages | User-reported suspicious links; proxy logs showing redirects to lookalike domains | Deploy URL filtering and sandboxed link preview; train users to report suspicious emails via one-click button |
+| Phishing campaign delivery infrastructure | Email headers revealing hosting provider IPs not in SPF record; short-lived domains | SMTP TLS certificate monitoring; threat intel feeds for newly registered lookalike domains |
+| Credential compromise via phishing | Successful logins from unexpected geo-locations or new devices after campaign | MFA on all accounts (phished passwords alone become useless); conditional access policies |
+
 ## Key Takeaways
 
 - **Campaign lifecycle**: Successful phishing follows a consistent chain — organizational recon → domain registration → GoPhish/infrastructure setup → email delivery → landing page → credential capture or follow-on action. Understanding each step helps both attackers and defenders reason about where the campaign can be disrupted.

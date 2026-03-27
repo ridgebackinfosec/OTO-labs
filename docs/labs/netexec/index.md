@@ -290,6 +290,15 @@ export hosts detailed nxc-hosts.csv
 Exporting Hosts
 ///
 
+### Defensive Considerations
+
+| Attack Technique | Detection | Defense |
+|---|---|---|
+| Unauthenticated SMB enumeration | Null session connections in SMB audit logs; Event ID 4624 Type 3 with null account name on successful anonymous bind | Disable null sessions via registry (`RestrictAnonymous=2`); require SMB signing on all hosts |
+| Password policy disclosure | Anonymous SMB requests returning domain password policy | Restrict anonymous access to SAM accounts (`RestrictAnonymousSAM=1`) |
+| SMB signing detection | NetExec flags hosts without signing in nxcdb | Enforce SMB signing via Group Policy: `Microsoft network server: Digitally sign communications (always)` |
+| User enumeration via RID cycling | High volume of SID/RID lookup requests in security event logs | Restrict anonymous SID/name translation; monitor for RID brute force patterns |
+
 ## Finding Context with Cerno
 
 Cerno reads from NetExec's database to enrich Nessus findings with reconnaissance context. When you've run NetExec commands (like the SMB scans earlier in this lab), Cerno can display the gathered data alongside your vulnerability findings.

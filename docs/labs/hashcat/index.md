@@ -254,3 +254,12 @@ Now we can see that `robb.stark` is the only user with a legitimately valid pass
 
 ???+ tip "Verification Mindset"
     Always validate your findings before trusting them! Password spraying can produce false positives due to Guest accounts, misconfigured systems, or other environmental factors. When something seems too good to be true (like every username being valid), investigate further.
+
+### Defensive Considerations
+
+| Attack Technique | Detection | Defense |
+|---|---|---|
+| Offline NTLM hash cracking | No real-time detection — cracking happens offline after hash exfiltration | Enforce strong, long passwords (16+ characters); the cracking resistance is the password policy itself |
+| Kerberoast TGS hash cracking | Event ID 4769 spike (see pivot-escalate); but cracking is offline and undetectable | gMSAs with auto-rotated 120-character passwords; monitor for 4769 RC4 TGS requests as upstream signal |
+| Rule-based password mutation | Patterns like `Password1!`, `Summer2024!` crack quickly under rule sets | Block predictable base words via custom blocklists in your password filter; enforce complexity + length |
+| Password spraying (netexec tie-in) | Multiple Event ID 4625 failures across many accounts in short time window | Account lockout policy + observation window; alert on distributed low-and-slow spray patterns across DCs |

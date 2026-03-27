@@ -187,4 +187,13 @@ Per-Host Credential Detail
 ???+ info
     Cerno reads from `~/.nxc/workspaces/default/` by default. If you're using a different NetExec workspace, you can configure the path with `cerno config set nxc_workspace_path /path/to/workspace`.
 
+### Defensive Considerations
+
+| Attack Technique | Detection | Defense |
+|---|---|---|
+| Authenticated SMB enumeration | Event ID 4624 (logon) + rapid subsequent SMB tree connects from the same account | Monitor for accounts authenticating to many hosts in short succession; alert on off-hours enumeration |
+| Logged-on user discovery | `--loggedon-users` reveals Domain Admins actively logged on to member servers | Enforce tiered administration — DAs should not log on to lower-tier hosts; use jump servers |
+| Share enumeration with credentials | Bulk `IPC$`/share access events in file server logs | Apply least-privilege share permissions; remove default administrative shares (`C$`, `ADMIN$`) where not needed |
+| User enumeration via RID cycling | High volume of `lsarpc` LookupSid calls; bulk SID translation requests visible in network traffic | Restrict anonymous SID/name translation; monitor for repeated RID lookup patterns from non-admin hosts |
+
 This integration lets you see at a glance which credentials from your NetExec enumeration have access to systems affected by specific vulnerabilities—helping you prioritize which findings to exploit next.

@@ -134,6 +134,15 @@ For more information, see the [Certipy documentation](https://github.com/ly4k/Ce
 
 ---
 
+### Defensive Considerations
+
+| Attack Technique | Detection | Defense |
+|---|---|---|
+| Egress port scanning | Outbound connections to external IPs on non-standard ports from internal hosts | Implement explicit egress filtering — block outbound ports not required for business operations |
+| SSH reverse tunneling / port forwarding | Persistent outbound SSH connections to external IPs; unusual `sshd` activity on internal hosts | Block outbound SSH to unauthorized destinations; monitor for long-lived SSH sessions and reverse tunnel patterns |
+| Proxychains lateral movement | Internal traffic routed through an unusual relay host | Network segmentation with east-west firewalling; detect hosts acting as unexpected routing hops |
+| ADCS ESC privilege escalation | Certificate enrollment events for unusual templates; DA-level certs issued to non-DA accounts | Audit certificate templates regularly; restrict enrollment permissions; enable ADCS audit logging |
+
 ## Key Takeaways
 
 | Technique | When to Use |
