@@ -145,15 +145,6 @@ You now have two different automated analysis tools that consume BloodHound data
 
 In practice, many pentesters use both—PlumHound for quick operator-focused analysis during an engagement, and AD Miner for generating the final deliverable report.
 
-### Defensive Considerations
-
-| Attack Technique | Detection | Defense |
-|---|---|---|
-| Automated AD vulnerability report generation | Same data exposure as BloodHound — AD Miner runs Cypher queries against Neo4j directly | The report is attacker intelligence; treat AD Miner findings as a remediation priority list |
-| Missing Kerberos pre-authentication | AD Miner flags AS-REP-roastable accounts | Enable Kerberos pre-authentication on all accounts; enforce strong passwords on exceptions |
-| Dangerous ACL relationships | GenericAll, WriteDACL, and DCSync paths surfaced in HTML report | Remediate ACL findings on a scheduled basis; use BloodHound + AD Miner as recurring audit tools |
-| Stale/misconfigured accounts | AD Miner highlights inactive accounts with elevated access | Implement account lifecycle management; disable stale accounts; remove unnecessary group memberships |
-
 ## Lab Cleanup
 
 Once you're done exploring the AD Miner report:
@@ -184,3 +175,12 @@ If you're done with all BloodHound-related labs, press `CTRL+C` in the Neo4j ter
 - **Control categories** (Kerberos, Passwords, Permissions, Misc) organize findings by security domain for easier analysis
 - **Interactive HTML reports** are client-ready and don't require recipients to have BloodHound installed
 - **Use AD Miner alongside PlumHound**—PlumHound for quick operational checks, AD Miner for comprehensive audit reports
+
+## Defensive Considerations
+
+| Attack Technique | Detection | Defense |
+|---|---|---|
+| Automated AD vulnerability report generation | Same data exposure as BloodHound — AD Miner runs Cypher queries against Neo4j directly | The report is attacker intelligence; treat AD Miner findings as a remediation priority list |
+| Missing Kerberos pre-authentication | AD Miner flags AS-REP-roastable accounts | Enable Kerberos pre-authentication on all accounts; enforce strong passwords on exceptions |
+| Dangerous ACL relationships | GenericAll, WriteDACL, and DCSync paths surfaced in HTML report | Remediate ACL findings on a scheduled basis; use BloodHound + AD Miner as recurring audit tools |
+| Stale/misconfigured accounts | AD Miner highlights inactive accounts with elevated access | Implement account lifecycle management; disable stale accounts; remove unnecessary group memberships |

@@ -428,7 +428,7 @@ For detailed information on creating custom workflows, see the [Custom Workflows
 
 You're now set to move Nessus findings straight into an operator-friendly flow.
 
-### Defensive Considerations
+## Defensive Considerations
 
 | Attack Technique | Detection | Defense |
 |---|---|---|

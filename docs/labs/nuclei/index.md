@@ -370,7 +370,13 @@ Instead of running templates one by one, let’s scan Juice Shop using **multipl
     - Create a template to detect **insecure HTTP headers**.
     - Automate the scan by running it as a scheduled **cron job**.
 
-### Defensive Considerations
+## Further Learning
+Watch the incomparable BB King’s [Nuclei webcast](https://www.youtube.com/watch?v=oajbdFOnVEY&t=2522s) and attempt to create your own Nuclei template for Apache’s server status.
+
+???+ note
+    If web apps are your thing, then I highly recommend [BB’s classes](https://www.antisyphontraining.com/instructor/bb-king/).
+
+## Defensive Considerations
 
 | Attack Technique | Detection | Defense |
 |---|---|---|
@@ -378,9 +384,3 @@ Instead of running templates one by one, let’s scan Juice Shop using **multipl
 | CVE probe traffic | IDS signatures matching specific CVE exploitation probe patterns (e.g., Log4j JNDI strings) | Virtual patching via WAF while permanent patches are applied; patch management discipline |
 | Network service probing | Unusual connection attempts across multiple protocols and ports in rapid succession | Network segmentation; restrict internet exposure of management services; monitor for scanning patterns |
 | Technology fingerprinting | Server version strings and technology headers in responses provide intel to attackers | Suppress version disclosure headers (`Server:`, `X-Powered-By:`); keep exposed software updated |
-
-## Further Learning
-Watch the incomparable BB King’s [Nuclei webcast](https://www.youtube.com/watch?v=oajbdFOnVEY&t=2522s) and attempt to create your own Nuclei template for Apache’s server status.
-
-???+ note
-    If web apps are your thing, then I highly recommend [BB’s classes](https://www.antisyphontraining.com/instructor/bb-king/).

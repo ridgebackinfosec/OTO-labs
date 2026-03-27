@@ -187,7 +187,7 @@ Per-Host Credential Detail
 ???+ info
     Cerno reads from `~/.nxc/workspaces/default/` by default. If you're using a different NetExec workspace, you can configure the path with `cerno config set nxc_workspace_path /path/to/workspace`.
 
-### Defensive Considerations
+## Defensive Considerations
 
 | Attack Technique | Detection | Defense |
 |---|---|---|

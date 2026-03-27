@@ -286,15 +286,6 @@ This is where all our work pays off. The report will highlight attack paths, mis
 
 Want to dig deeper? Try tweaking collection parameters or using custom tasks in PlumHound for even more targeted analysis. Happy hunting!🐺
 
-### Defensive Considerations
-
-| Attack Technique | Detection | Defense |
-|---|---|---|
-| SharpHound AD collection | Large volumes of LDAP queries from a single host; Event ID 4662 (object access) spike | Monitor for bulk LDAP enumeration; restrict non-admin accounts from reading sensitive AD properties |
-| Attack path visualization (BloodHound) | BloodHound data reveals dangerous ACLs, unconstrained delegation, Kerberos misconfigs | Regularly audit with BloodHound yourself — find and break attack paths before attackers do; enforce Tier 0 isolation |
-| Privilege escalation via ACL abuse | GenericAll/WriteDACL/DCSync rights on non-privileged accounts | Audit AD ACLs; remove unnecessary delegated permissions; alert on ACL changes to sensitive objects |
-| Kerberos delegation exposure | Unconstrained/constrained delegation flagged in BloodHound queries | Disable unconstrained delegation; use resource-based constrained delegation only where necessary |
-
 ## Lab Cleanup🧹
 
 Once you're done analyzing AD attack paths, it's important to shut everything down properly to free up system resources. Follow these steps:
@@ -350,3 +341,12 @@ Did you know that NetExec is capable of tying in to BloodHound? Well, it can!
 Here's the [first step](https://www.netexec.wiki/getting-started/bloodhound-integration) of getting it integrated.
 
 Have fun exploring!
+
+## Defensive Considerations
+
+| Attack Technique | Detection | Defense |
+|---|---|---|
+| SharpHound AD collection | Large volumes of LDAP queries from a single host; Event ID 4662 (object access) spike | Monitor for bulk LDAP enumeration; restrict non-admin accounts from reading sensitive AD properties |
+| Attack path visualization (BloodHound) | BloodHound data reveals dangerous ACLs, unconstrained delegation, Kerberos misconfigs | Regularly audit with BloodHound yourself — find and break attack paths before attackers do; enforce Tier 0 isolation |
+| Privilege escalation via ACL abuse | GenericAll/WriteDACL/DCSync rights on non-privileged accounts | Audit AD ACLs; remove unnecessary delegated permissions; alert on ACL changes to sensitive objects |
+| Kerberos delegation exposure | Unconstrained/constrained delegation flagged in BloodHound queries | Disable unconstrained delegation; use resource-based constrained delegation only where necessary |

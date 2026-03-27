@@ -534,7 +534,7 @@ This is the most direct and no nonsense request that can be sent to the server a
 
 Want to get creative and learn how to make your own Burp Extensions? Check out this [BHIS webcast](https://www.youtube.com/watch?v=lyJihH8FYkI).
 
-### Defensive Considerations
+## Defensive Considerations
 
 | Attack Technique | Detection | Defense |
 |---|---|---|

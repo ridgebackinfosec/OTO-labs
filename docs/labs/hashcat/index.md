@@ -255,7 +255,7 @@ Now we can see that `robb.stark` is the only user with a legitimately valid pass
 ???+ tip "Verification Mindset"
     Always validate your findings before trusting them! Password spraying can produce false positives due to Guest accounts, misconfigured systems, or other environmental factors. When something seems too good to be true (like every username being valid), investigate further.
 
-### Defensive Considerations
+## Defensive Considerations
 
 | Attack Technique | Detection | Defense |
 |---|---|---|

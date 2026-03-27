@@ -428,15 +428,6 @@ less smb-relay.log
 ???+ note "What these SOCKS proxies mean"
     You now have authenticated SOCKS proxies to SRV02 as `eddard.stark` (with admin access) and `robb.stark`. These proxies let you tunnel other tools through the compromised host to reach systems that aren't directly accessible from The Forge. In the **Pivot and Escalate** lab, you'll see how to use harvested credentials to move laterally between systems using exactly this kind of access.
 
-### Defensive Considerations
-
-| Attack Technique | Detection | Defense |
-|---|---|---|
-| LLMNR/NBT-NS/mDNS poisoning | Unexpected ARP/mDNS responses; IDS rules for Responder traffic patterns | Disable LLMNR (GPO: `Turn off multicast name resolution`) and NetBIOS over TCP/IP on all hosts |
-| NTLMv2 hash capture | Event ID 4625 with NTLMv2 authentication to unexpected hosts | Enforce NTLMv2 + session security; consider disabling NTLM entirely in favor of Kerberos where possible |
-| NTLM relay to SMB targets | Unexpected SMB authentications to sensitive servers from workstation IPs | Require SMB signing on all hosts — this is the single most effective NTLM relay countermeasure |
-| Relay pivot via SOCKS proxy | Downstream lateral connections following initial relay event | Monitor for authentication chains (host A → relay → host B) in SIEM; network segmentation limits blast radius |
-
 ## Resetting The Board
 
 Responder logs and execution history can be found in `~/git-tools/Responder/`.
@@ -461,4 +452,13 @@ If you don't do this, the Lab *should* still work but the terminal won't *show* 
 /// caption
 Skipping Hash Output
 ///
+
+## Defensive Considerations
+
+| Attack Technique | Detection | Defense |
+|---|---|---|
+| LLMNR/NBT-NS/mDNS poisoning | Unexpected ARP/mDNS responses; IDS rules for Responder traffic patterns | Disable LLMNR (GPO: `Turn off multicast name resolution`) and NetBIOS over TCP/IP on all hosts |
+| NTLMv2 hash capture | Event ID 4625 with NTLMv2 authentication to unexpected hosts | Enforce NTLMv2 + session security; consider disabling NTLM entirely in favor of Kerberos where possible |
+| NTLM relay to SMB targets | Unexpected SMB authentications to sensitive servers from workstation IPs | Require SMB signing on all hosts — this is the single most effective NTLM relay countermeasure |
+| Relay pivot via SOCKS proxy | Downstream lateral connections following initial relay event | Monitor for authentication chains (host A → relay → host B) in SIEM; network segmentation limits blast radius |
 

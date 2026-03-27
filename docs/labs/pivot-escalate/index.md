@@ -435,17 +435,6 @@ psexec.py 'north.sevenkingdoms.local/Administrator@192.168.56.22' -hashes ':dbd1
 3. Validating new credentials (even without escalation)
 4. Understanding DCSync and PtH techniques
 
-### Defensive Considerations
-
-| Attack Technique | Detection | Defense |
-|---|---|---|
-| Kerberoasting | Event ID 4769 with RC4 encryption type and non-standard account; bulk TGS requests | Use 25+ character random passwords for service accounts; implement Group Managed Service Accounts (gMSAs) |
-| SAM/LSA credential dumping | Event ID 4656/4663 on SAM hive access; LSASS access by non-system processes | Enable Credential Guard; restrict debug privileges; use Windows Defender Credential Guard or PPL for LSASS |
-| NTDS.dit extraction via VSS | Volume Shadow Copy creation events (Event ID 7036); secretsdump traffic to DC | Monitor VSS creation on DCs; restrict DCSync rights; alert on shadow copy operations outside backup windows |
-| Pass-the-Hash lateral movement | Event ID 4624 Type 3 logons with NTLM from workstations to servers; unexpected lateral auth | Add sensitive accounts to Protected Users group (disables NTLM); enforce Kerberos-only authentication for tier-0 |
-| DCSync (replication abuse) | Event ID 4662 with `Replicating Directory Changes` access; unexpected replication partners | Audit accounts with `DS-Replication-Get-Changes` rights; remove replication rights from non-DC accounts |
-| Lateral movement / pivoting | Unexpected administrative logons across multiple hosts in short succession | Network segmentation; restrict local admin reuse (LAPS); monitor for pass-the-hash authentication patterns |
-
 ### Persistence (For Awareness)
 
 With the access demonstrated in this lab, an attacker could establish persistence via:
@@ -476,3 +465,14 @@ You've completed the core Day 2 labs and demonstrated pivoting and escalation te
 - **AD Miner** - Prettier Active Directory vulnerability assessment
 - **Bonus VMs** - Additional GOAD environment systems for self-directed practice
 - **Operator Techniques** - Egress testing, SSH tunneling, and ADCS attacks
+
+## Defensive Considerations
+
+| Attack Technique | Detection | Defense |
+|---|---|---|
+| Kerberoasting | Event ID 4769 with RC4 encryption type and non-standard account; bulk TGS requests | Use 25+ character random passwords for service accounts; implement Group Managed Service Accounts (gMSAs) |
+| SAM/LSA credential dumping | Event ID 4656/4663 on SAM hive access; LSASS access by non-system processes | Enable Credential Guard; restrict debug privileges; use Windows Defender Credential Guard or PPL for LSASS |
+| NTDS.dit extraction via VSS | Volume Shadow Copy creation events (Event ID 7036); secretsdump traffic to DC | Monitor VSS creation on DCs; restrict DCSync rights; alert on shadow copy operations outside backup windows |
+| Pass-the-Hash lateral movement | Event ID 4624 Type 3 logons with NTLM from workstations to servers; unexpected lateral auth | Add sensitive accounts to Protected Users group (disables NTLM); enforce Kerberos-only authentication for tier-0 |
+| DCSync (replication abuse) | Event ID 4662 with `Replicating Directory Changes` access; unexpected replication partners | Audit accounts with `DS-Replication-Get-Changes` rights; remove replication rights from non-DC accounts |
+| Lateral movement / pivoting | Unexpected administrative logons across multiple hosts in short succession | Network segmentation; restrict local admin reuse (LAPS); monitor for pass-the-hash authentication patterns |

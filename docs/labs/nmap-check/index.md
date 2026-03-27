@@ -172,7 +172,7 @@ sudo nmap -Pn --script=smb-vuln* -p 139,445 $GOAD
 smb-vuln*
 ///
 
-### Defensive Considerations
+## Defensive Considerations
 
 | Attack Technique | Detection | Defense |
 |---|---|---|

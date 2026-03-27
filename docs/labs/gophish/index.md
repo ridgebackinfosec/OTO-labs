@@ -185,7 +185,14 @@ Results of Emails
 
 The overall click-rate of 17.5% indicates the level of susceptibility within the organization, while 0.5% of users entered identifiable information into the attacker provided form, highlighting potential risks associated with social engineering. Additionally, 0% of users (trackable by GoPhish) reported the phishing attempt, providing insight into the effectiveness of security training.
 
-### Defensive Considerations
+## Key Takeaways
+
+- **Campaign lifecycle**: Successful phishing follows a consistent chain — organizational recon → domain registration → GoPhish/infrastructure setup → email delivery → landing page → credential capture or follow-on action. Understanding each step helps both attackers and defenders reason about where the campaign can be disrupted.
+- **Metrics tell different stories**: A 17.5% click rate reflects susceptibility to the pretext. A 0.5% form submission rate reflects how many targets went all the way. A 0% reporting rate is arguably the most important finding — it means the security team had zero visibility into an active attack.
+- **Domain trust is engineered**: Dog-phish.com succeeds not through technical deception but because users scan for the brand name and don't scrutinize the full domain. SPF alignment (sending from the registered domain) helps evade email filters. Both are deliberate infrastructure choices, not accidents.
+- **Defenders detect phishing at multiple layers**: DMARC/DKIM enforcement on the receiving side, URL reputation in email security gateways, and user reporting programs are the three most reliable detection controls. Each one addresses a different phase of the kill chain.
+
+## Defensive Considerations
 
 | Attack Technique | Detection | Defense |
 |---|---|---|
@@ -193,10 +200,3 @@ The overall click-rate of 17.5% indicates the level of susceptibility within the
 | Credential harvesting landing pages | User-reported suspicious links; proxy logs showing redirects to lookalike domains | Deploy URL filtering and sandboxed link preview; train users to report suspicious emails via one-click button |
 | Phishing campaign delivery infrastructure | Email headers revealing hosting provider IPs not in SPF record; short-lived domains | SMTP TLS certificate monitoring; threat intel feeds for newly registered lookalike domains |
 | Credential compromise via phishing | Successful logins from unexpected geo-locations or new devices after campaign | MFA on all accounts (phished passwords alone become useless); conditional access policies |
-
-## Key Takeaways
-
-- **Campaign lifecycle**: Successful phishing follows a consistent chain — organizational recon → domain registration → GoPhish/infrastructure setup → email delivery → landing page → credential capture or follow-on action. Understanding each step helps both attackers and defenders reason about where the campaign can be disrupted.
-- **Metrics tell different stories**: A 17.5% click rate reflects susceptibility to the pretext. A 0.5% form submission rate reflects how many targets went all the way. A 0% reporting rate is arguably the most important finding — it means the security team had zero visibility into an active attack.
-- **Domain trust is engineered**: Dog-phish.com succeeds not through technical deception but because users scan for the brand name and don't scrutinize the full domain. SPF alignment (sending from the registered domain) helps evade email filters. Both are deliberate infrastructure choices, not accidents.
-- **Defenders detect phishing at multiple layers**: DMARC/DKIM enforcement on the receiving side, URL reputation in email security gateways, and user reporting programs are the three most reliable detection controls. Each one addresses a different phase of the kill chain.
