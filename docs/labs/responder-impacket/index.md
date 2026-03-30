@@ -355,13 +355,14 @@ Remember how we did this manually with Nmap during the NetExec Lab and then used
 The command below invokes **`impacket-ntlmrelayx`**, a tool from the Impacket suite designed for NTLM relay attacks. These attacks exploit the NTLM authentication protocol to relay credential authentication requests to other network services. The tool is highly configurable, allowing for various attack scenarios. 
 
 ```bash
-sudo ntlmrelayx.py -tf ~/smb_relay.txt --delegate-access -ts -of /opt/work/relays --dump-laps -l /opt/work/loot -smb2support -c whoami -socks | tee -a smb-relay.log
+sudo ~/.local/bin/ntlmrelayx.py -tf ~/smb_relay.txt --delegate-access -ts -of /opt/work/relays --dump-laps -l /opt/work/loot -smb2support -c whoami -socks | tee -a smb-relay.log
 ```
 
 
 ???- note "Command Options/Arguments Explained"
     There's a lot packed into that one command so lets breakdown its components:
 
+    - **`sudo ~/.local/bin/ntlmrelayx.py`**: Full path required because pipx installs binaries to `~/.local/bin/`, which is not in the `PATH` when running with `sudo`. Without the full path, the command will fail with "command not found".
     - **`-tf ~/smb_relay.txt`**: Specifies a targets file (**`tf`**) that contains a list of IP addresses to relay the NTLM authentication attempts to. **`~/**smb_relay.txt` should be a file path to the list of target IP addresses, presumably those running SMB services.
     - **`--delegate-access`**: Enables delegation of access, allowing the attacker to request any service ticket on behalf of the user, expanding the scope of the attack.
     - **`-ts`**: Adds timestamp to every logging output
