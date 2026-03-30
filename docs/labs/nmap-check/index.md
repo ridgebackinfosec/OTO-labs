@@ -2,16 +2,7 @@
 
 ???+ warning "Prerequisites"
     - Have at least one GOAD VM running. GOAD-DC02 will respond best for the LDAP script steps. GOAD-SRV02 will give better results in the vulners portion of this Lab.
-    - Run the below command to set up an environment variable on The Forge VM.
-
-    ```bash
-    export GOAD="192.168.56.10-25"
-    ```
-
-    ![Terminal output displaying the successful setup of the GOAD environment variable with IP range 192.168.56.10-25](img/nmap-check-goad-env-variable.png){ width="70%" }
-    /// caption
-    Terminal Output
-    ///
+    - The `$GOAD` environment variable (`192.168.56.10-25`) is set automatically by `setup.sh` and available in every terminal session.
 
 ## Intro
 

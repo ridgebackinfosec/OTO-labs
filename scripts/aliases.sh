@@ -2,6 +2,9 @@
 # Each alias auto-detects the *-labs repo in $HOME, or accepts a course name arg
 # (e.g., `run-labs OTO`). Do not execute this file directly; source it.
 
+# GOAD lab target IP range (used in nmap and other lab commands as $GOAD)
+export GOAD="192.168.56.10-25"
+
 # Show local IP addresses (quick reference for The Forge's interface IPs)
 alias me='ip address | grep inet'
 
