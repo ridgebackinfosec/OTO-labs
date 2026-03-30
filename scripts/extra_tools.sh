@@ -43,16 +43,20 @@ cd
 
 # jwt_tool (custom: explicit pip packages, no requirements.txt)
 if [ ! -d "$HOME/git-tools/jwt_tool" ]; then
-    run_step "git: jwt_tool" bash -c '
-        git clone https://github.com/ridgebackinfosec/jwt_tool ~/git-tools/jwt_tool &&
+    run_step "git: jwt_tool" bash -c 'git clone https://github.com/ridgebackinfosec/jwt_tool ~/git-tools/jwt_tool'
+else
+    echo "  jwt_tool already cloned, skipping..."
+fi
+if [ -d "$HOME/git-tools/jwt_tool" ] && [ ! -d "$HOME/git-tools/jwt_tool/venv" ]; then
+    run_step "venv: jwt_tool" bash -c '
         cd ~/git-tools/jwt_tool &&
         python3 -m venv venv &&
         source venv/bin/activate &&
         pip install termcolor cprint pycryptodomex requests &&
         deactivate
     '
-else
-    echo "  jwt_tool already cloned, skipping..."
+elif [ -d "$HOME/git-tools/jwt_tool" ]; then
+    echo "  jwt_tool venv already set up, skipping..."
 fi
 cd
 

@@ -78,16 +78,20 @@ clone_tool_venv() {
     local label="$1" url="$2"
     local dir="$HOME/git-tools/$label"
     if [ ! -d "$dir" ]; then
-        run_step "git: $label" bash -c "
-            git clone $url $dir &&
+        run_step "git: $label" bash -c "git clone $url $dir"
+    else
+        echo "  $label already cloned, skipping..."
+    fi
+    if [ -d "$dir" ] && [ ! -d "$dir/venv" ]; then
+        run_step "venv: $label" bash -c "
             cd $dir &&
             python3 -m venv venv &&
             source venv/bin/activate &&
             pip install -r requirements.txt &&
             deactivate
         "
-    else
-        echo "  $label already cloned, skipping..."
+    elif [ -d "$dir" ]; then
+        echo "  $label venv already set up, skipping..."
     fi
 }
 

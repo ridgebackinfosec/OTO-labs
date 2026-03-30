@@ -51,8 +51,12 @@ mkdir -p ~/git-tools
 # Responder captures network traffic and must run as root. Its dependencies must
 # also be installed as root so they're importable when invoked via sudo.
 if [ ! -d "$HOME/git-tools/Responder" ]; then
-    run_step "git: Responder" bash -c '
-        git clone https://github.com/ridgebackinfosec/Responder ~/git-tools/Responder &&
+    run_step "git: Responder" bash -c 'git clone https://github.com/ridgebackinfosec/Responder ~/git-tools/Responder'
+else
+    echo "  Responder already cloned, skipping..."
+fi
+if [ -d "$HOME/git-tools/Responder" ] && [ ! -d "$HOME/git-tools/Responder/venv" ]; then
+    run_step "venv: Responder" bash -c '
         cd ~/git-tools/Responder &&
         python3 -m venv venv &&
         source venv/bin/activate &&
@@ -60,8 +64,8 @@ if [ ! -d "$HOME/git-tools/Responder" ]; then
         sudo -E -H $VIRTUAL_ENV/bin/python -m pip install -r requirements.txt &&
         deactivate
     '
-else
-    echo "  Responder already cloned, skipping..."
+elif [ -d "$HOME/git-tools/Responder" ]; then
+    echo "  Responder venv already set up, skipping..."
 fi
 cd
 
@@ -82,13 +86,14 @@ cd
 
 # juice-shop (custom: npm install)
 if [ ! -d "$HOME/git-tools/juice-shop" ]; then
-    run_step "git: juice-shop" bash -c '
-        git clone https://github.com/ridgebackinfosec/juice-shop ~/git-tools/juice-shop &&
-        cd ~/git-tools/juice-shop &&
-        npm install
-    '
+    run_step "git: juice-shop" bash -c 'git clone https://github.com/ridgebackinfosec/juice-shop ~/git-tools/juice-shop'
 else
     echo "  juice-shop already cloned, skipping..."
+fi
+if [ -d "$HOME/git-tools/juice-shop" ] && [ ! -d "$HOME/git-tools/juice-shop/node_modules" ]; then
+    run_step "npm: juice-shop" bash -c 'cd ~/git-tools/juice-shop && npm install'
+elif [ -d "$HOME/git-tools/juice-shop" ]; then
+    echo "  juice-shop node_modules already installed, skipping..."
 fi
 cd
 
