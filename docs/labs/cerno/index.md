@@ -43,11 +43,8 @@ You'll see the top-level description and subcommands. Here's what each does (you
 * **config** — View and modify Cerno configuration (results directory, default tool, page size, etc.).
 * **workflow** — List available verification workflows that map specific plugin IDs to step-by-step validation procedures.
 
-Before going any further, let's install command completion for Cerno.
-
-```bash
-cerno --install-completion
-```
+???+ note "Shell Completion Already Installed"
+    Shell completion for Cerno was installed automatically when you ran `get-tools`. You can use ++tab++ to autocomplete `cerno` subcommands and options in your terminal.
 
 ---
 

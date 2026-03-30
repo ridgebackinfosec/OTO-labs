@@ -43,6 +43,7 @@ pipx_install "ad-miner"   "https://github.com/ridgebackinfosec/AD_Miner"        
 
 pipx ensurepath
 sudo pipx ensurepath
+run_step "cerno: install-completion" bash -c '~/.local/bin/cerno --install-completion'
 
 # GitHub method
 mkdir -p ~/git-tools
