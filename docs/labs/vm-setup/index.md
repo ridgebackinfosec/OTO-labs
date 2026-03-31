@@ -87,21 +87,6 @@ Once the VMs are imported, click “VM” → “Settings” in VMware for each 
 - GOAD-DC02
 - GOAD-SRV02
 
-Click “Add”.
-
-![VMware VM settings dialog with Add button highlighted to add new virtual hardware](img/vm-setup-add-hardware.png){ width="70%" }
-/// caption
-Add Virtual Hardware
-///
-
-Select “Network Adapter” and click “Finish”.
-
-![Hardware selection dialog showing Network Adapter option selected for adding to VM](img/vm-setup-add-network-adapter.png){ width="70%" }
-/// caption
-Add Network Adapter
-///
-
-You should now have a new “Network Adapter 2” (or similar) for the VM.
 
 !!! danger “Select Network Adapter 2 — NOT Network Adapter”
     You must configure **Network Adapter 2**, NOT **Network Adapter**. The first adapter is the NAT interface that provides internet access — changing it will break all labs. Only Network Adapter 2 should be assigned to the Host-only (GOAD) network. The GOAD target VMs were built with their static IPs bound to the 2nd adapter, so this assignment must match.
