@@ -129,7 +129,7 @@ Since we've added a new network interface and that network doesn't have DHCP ena
 3. Run the below commands to run a script that automates the static IP address assignment.
     
     ```bash
-    sudo ~/OTO-labs/scripts/set-static-ip.sh
+    set-static-ip
     ```
 
     ![Script Execution Example](img/static_ip_script.png){ width="70%" }
@@ -167,11 +167,11 @@ Once all of the steps above have been completed...
     For this verification step, turn on **all three VMs** so the script can confirm connectivity to both GOAD targets. Once setup is confirmed, you don’t need to keep all VMs running simultaneously during class — start and stop them as your host resources allow.
 
 ```bash
-~/OTO-labs/scripts/verify-lab-env.sh
+verify-lab
 ```
 
 ???- note "Command Options/Arguments Explained"
-    - `~/OTO-labs/scripts/verify-lab-env.sh`: The verification script that tests network connectivity to GOAD VMs by sending ping requests. This ensures your network configuration is correct before proceeding with labs.
+    - `verify-lab`: Tests network connectivity to GOAD VMs by sending ping requests. Ensures your network configuration is correct before proceeding with labs.
 
 If everything is setup correctly, you should see `0% packet loss` following each ping command.
 
