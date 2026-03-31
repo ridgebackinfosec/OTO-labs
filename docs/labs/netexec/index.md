@@ -84,12 +84,12 @@ It looks like 192.168.56.11 has SMB signing enabled AND required, but 192.168.56
 We can also use the below NetExec command to accomplish the same check that Nmap just did but with much less noise in the output.
 
 ```bash
-nxc smb 192.168.56.10-23
+nxc smb $GOAD
 ```
 
 ???- note "Command Options/Arguments Explained"
     - **`smb`**: Specifies that the SMB module of NetExec is to be used. This module focuses on actions and enumeration tasks that can be performed over the SMB protocol.
-    - **`192.168.56.10-23`**: This defines the target range for the command. It tells NetExec to operate on a range of IP addresses starting from 192.168.56.10 through 192.168.56.23. The tool will attempt to connect to each IP address in this range and perform its SMB protocol-based operations.
+    - **`$GOAD`**: This defines the target range for the command. It tells NetExec to operate on a range of IP addresses starting from 192.168.56.10 through 192.168.56.23. The tool will attempt to connect to each IP address in this range and perform its SMB protocol-based operations.
 
 ![NetExec SMB signing check confirming signing not required vulnerability on Windows domain controller](img/netexec-smb-signing-check.png){ width="70%" }
 /// caption
@@ -114,7 +114,7 @@ You may have asked yourself then “what if I have a LOT of in-scope systems”.
     The output from the below command will be used in another Lab. So be sure to run this!
 
 ```bash
-nxc smb 192.168.56.10-23 --gen-relay-list ~/smb_relay.txt
+nxc smb $GOAD --gen-relay-list ~/smb_relay.txt
 ```
 
 ???- note "Command Options/Arguments Explained"
@@ -128,7 +128,7 @@ nxc smb 192.168.56.10-23 --gen-relay-list ~/smb_relay.txt
 In some cases, it’s possible to list out the users of a system via SMB. Let’s try it out with the below command.
 
 ```bash
-nxc smb 192.168.56.10-23 --users
+nxc smb $GOAD --users
 ```
 
 ???- note "Command Options/Arguments Explained"
@@ -145,7 +145,7 @@ User Enumeration
 You can also easily export the list of only the enumerated usernames by using the `--users-export` option.
 
 ```bash
-nxc smb 192.168.56.10-23 --users-export enumerated_users.txt
+nxc smb $GOAD --users-export enumerated_users.txt
 ```
 
 ???- note "Command Options/Arguments Explained"
@@ -167,7 +167,7 @@ Next, let’s obtain the password policy of users on these systems?
     This will also require you to have `192.168.56.11` (GOAD-DC02) running to get results.
 
 ```bash
-nxc smb 192.168.56.10-23 --pass-pol
+nxc smb $GOAD --pass-pol
 ```
 
 ???- note "Command Options/Arguments Explained"

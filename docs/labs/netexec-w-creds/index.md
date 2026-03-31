@@ -16,11 +16,11 @@ Here are a few NetExec commands that can really open up doors in an environment.
 Remember that `--loggedon-users` flag from the netexec lab that required a local admin's credentials to work? Give it a try now that we have some creds...
 
 ```bash
-nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --loggedon-users
+nxc smb $GOAD -u robb.stark -p sexywolfy --loggedon-users
 ```
 
 ???- note "Command Options/Arguments Explained"
-    - `nxc smb 192.168.56.10-23`: NetExec targeting SMB protocol across IP range
+    - `nxc smb $GOAD`: NetExec targeting SMB protocol across IP range
     - `-u robb.stark -p sexywolfy`: Authenticates with domain credentials (obtained from hashcat lab)
     - `--loggedon-users`: Enumerates currently logged-on users on each target system
     - Why credentials matter: This flag requires at least local admin rights on targets to query logged-on user sessions via remote registry or WMI
@@ -32,7 +32,7 @@ nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --loggedon-users
 Enumerate local groups, if a group is specified then its members are enumerated...
 
 ```bash
-nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --local-groups
+nxc smb $GOAD -u robb.stark -p sexywolfy --local-groups
 ```
 
 ???- note "Command Options/Arguments Explained"
@@ -52,7 +52,7 @@ Local Groups
 Enumerate network interfaces of targets...
 
 ```bash
-nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --interfaces
+nxc smb $GOAD -u robb.stark -p sexywolfy --interfaces
 ```
 
 ???- note "Command Options/Arguments Explained"
@@ -75,7 +75,7 @@ Network Interfaces
 Enumerate SMB shares accessible with your credentials. This reveals what network resources you can read or write to:
 
 ```bash
-nxc smb 192.168.56.10-23 -u robb.stark -p sexywolfy --shares
+nxc smb $GOAD -u robb.stark -p sexywolfy --shares
 ```
 
 ???- note "Command Options/Arguments Explained"
