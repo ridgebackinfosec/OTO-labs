@@ -88,7 +88,7 @@ Once the VMs are imported, click “VM” → “Settings” in VMware for each 
 - GOAD-SRV02
 
 
-!!! danger “Select Network Adapter 2 — NOT Network Adapter”
+???+ danger
     You must configure **Network Adapter 2**, NOT **Network Adapter**. The first adapter is the NAT interface that provides internet access — changing it will break all labs. Only Network Adapter 2 should be assigned to the Host-only (GOAD) network. The GOAD target VMs were built with their static IPs bound to the 2nd adapter, so this assignment must match.
 
 Select **Network Adapter 2** and choose the “Custom: Specific virtual network” radio button. From there, use the dropdown to select the name of the Host-only virtual network you created in a previous step.
