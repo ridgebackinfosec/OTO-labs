@@ -9,6 +9,18 @@ Please read through and complete the instructions below regarding supported virt
 
 Additional setup details for each VM (credentials, network config, etc.) will be covered during class.
 
+## Pre-Class Checklist
+
+Work through these steps in order. Detailed instructions are in the sections below.
+
+1. [ ] Download the VMs (link in your email or Discord)
+2. [ ] Extract the VM files using 7-Zip
+3. [ ] Import the VMs into VMware
+4. [ ] Take a snapshot of each VM
+5. [ ] Start The Forge, clone the repo, and run setup
+6. [ ] Run `get-tools` and wait for it to finish (20–45 min)
+7. [ ] Shut down all VMs and wait for class
+
 <details>
 
 <summary>Virtualization Software</summary>
@@ -77,9 +89,7 @@ This enables us to quickly revert back if you run into any issues during class o
 
 </details>
 
-<details>
-
-<summary>Lab Guide Setup</summary>
+## Lab Guide Setup
 
 Turn The Forge VM on, login using the creds `telchar:ridgeback`, open a terminal, and run the below commands.
 
@@ -96,12 +106,10 @@ This will download and set up the Lab Guides, install the necessary Python depen
 ```bash
 # beginning of extra command
 
-git checkout tags/v1.0.1 # <-- Replace this version number with the corresponding number from the recordinings
+git checkout tags/v1.0.1 # <-- Replace this version number with the corresponding number from the recordings
 
 # end of extra command
 ```
-
-</details>
 
 ## Install Tools Before Class
 
@@ -115,9 +123,10 @@ This will install all the tools needed for the class.
 
 If any tools show as failed, re-run `get-tools`. The script is idempotent —
 already-installed tools are skipped. A second run resolves most failures caused
-by transient network or mirror issues.
+by transient network or mirror issues. Check `/tmp/oto-labs-lab-tools.log` for
+details on any failures.
 
-Now shutdown the VMs and wait for class to begin.
+That's it — your VM is ready for class. Shut everything down and see you there.
 
 ## Waiting is hard
 
