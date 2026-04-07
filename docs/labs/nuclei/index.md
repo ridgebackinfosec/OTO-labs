@@ -54,6 +54,7 @@ There’s a LOT in that `help` output, but first and foremost it gives us some o
     All the Nuclei templates should get automatically installed locally at `/home/telchar/nuclei-templates` when you run the tool for the first time. You can also explore them there if you wish. Take a look by running the below command.
 
     ```bash
+    nuclei
     ll ~/nuclei-templates
     ```
 
