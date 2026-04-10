@@ -84,6 +84,13 @@ if [ ! -f "/usr/local/bin/nuclei" ]; then
 else
     echo "  Nuclei already installed, skipping..."
 fi
+
+# Nuclei templates (first-run download)
+if [ ! -d "$HOME/nuclei-templates" ]; then
+    run_step "nuclei: download templates" bash -c 'nuclei'
+else
+    echo "  Nuclei templates already downloaded, skipping..."
+fi
 cd
 
 # juice-shop (custom: npm install)
